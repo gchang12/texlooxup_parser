@@ -1,127 +1,73 @@
 """
-Gets a list of TeX commands from `book.sdx'
 """
 
 import re
+import logging
 from pathlib import Path
 from shutil import rmtree
 
-SECTION_LIST = ("genops", "paras", "math", "modes", "pages")
+def compile_entries(section):
+    """
+    """
+    src_text = Path('sections', section + '.tex').read_text()
+    definition_text = src_text.split('\\begindescriptions')[-1].split('\\enddescriptions')[0]
+    definition_list = [definition.split('\\begindesc')[-1] for definition in definition_text.split('\\enddesc')]
+    definition_list.pop()
+    index_dir = Path('input', section, 'index')
+    index_dir.mkdir(parents=True, exist_ok=True)
+    for entry_index, entry in enumerate(definition_list):
+        index_file = index_dir.joinpath( str(entry_index) + '.tex' )
+        linelist = entry.split('\n')
+        linelist.insert(0, '\\input macros')
+        linelist.insert(1, '\\begindescriptions')
+        linelist.insert(2, '\\begindesc')
+        linelist.append('\\enddesc')
+        linelist.append('\\enddescriptions')
+        linelist.append('\\end')
+        index_file.write_text( '\n'.join(linelist) )
+    return range(len(definition_list))
 
-def get_command_list():
+
+def compile_cmd_list():
     """
-    Returns a list of TeX commands listed in
-    `book.sdx', an index file of sorts.
+    book.sdx
     """
-    # Each command is in a line of the form:
-    # - "\indexentry {0}{...}{C}.*"
-    pattern = "\\\\indexentry \{0\}\{(.+)\}\{C\}.*"
-    command_list = []
     linelist = Path('book.sdx').read_text().split('\n')
+    cmd_list = set()
     for line in linelist:
-        match = re.fullmatch(pattern, line)
-        if not match:
+        cmd = re.search('^\\\\indexentry \{0\}\{(\w+)\}\{C\}.*$', line)
+        if cmd is None:
             continue
-        command_list.append(match.groups()[0])
-    return command_list
+        cmd_list.add(cmd.groups()[0])
+    return cmd_list
 
 
-def get_command_definitions(tex_command):
+def write_cmd_definition(filename, command, section):
     """
-    Returns a dict of indices, each corresponding to
-    a definition tied to the TeX command passed as a parameter.
     """
-    if tex_command[0] == '\\':
-        return {}
-    entry_dict = {}
-    root = "sections/"
-    error_lines = {}
-    for section in SECTION_LIST:
-        entry_index = 0
-        entry_dict[section] = set()
-        linelist = Path(root, section + ".tex").read_text().split('\n')
-        for line in linelist:
-            if line == '\\begindescr':
-                entry_index += 1
-                continue
-            try:
-                if re.search(f"\\\\cts\w* {tex_command} ", line) is None:
-                    continue
-            except re.error:
-                try:
-                    error_lines[section].append(line)
-                except KeyError:
-                    error_lines[section] = []
-            if entry_index:
-                entry_dict[section].add(entry_index)
-        if not entry_dict[section]:
-            entry_dict.pop(section)
-    with open('error_lines.log', 'a') as wfile:
-        for section, linelist in entry_dict.items():
-            for line in linelist:
-                error_line = f"{section}: {line}"
-                print(error_line, file=wfile)
-    return entry_dict
-
-
-def generate_entries(section):
-    """
-    Writes each TeX definition to file by index.
-    Each file will be saved in accordance with the following structure.
-    - ./input/{section}/{entry_index}.tex
-    """
-    write_mode = False
-    entry_index = 0
-    entry_dict = {}
-    # Compile sections into dict
-    linelist = Path('sections', section + '.tex').read_text().split('\n')
-    for line in linelist:
-        if re.search("\\\\(begin|end)desc[^r]?", line) is not None:
-            write_mode = not write_mode
-            entry_index += write_mode
-        if write_mode and re.search('\\\\(sub)?section', line) is None:
-            try:
-                entry_dict[entry_index].append(line)
-            except KeyError:
-                entry_dict[entry_index] = [line]
-    print(entry_dict)
-    raise Exception
-    # Write sections to file by index
-    input_path = Path('input', section, 'index')
-    input_path.mkdir(parents=True, exist_ok=True)
-    for entry_index, linelist in entry_dict.items():
-        linelist.insert(0, "\\input macros")
-        linelist.insert(1, "\\begindescriptions")
-        linelist.append("\\enddescriptions")
-        entry_path = input_path.joinpath( str(entry_index) + '.tex' )
-        entry_path.write_text( '\n'.join(linelist) )
+    index_text = filename.read_text()
+    if re.search(f'\\\\cts\w* {command} .*', index_text) is None:
+        return
+    def_file = Path('input', section, command + '.tex')
+    if def_file.exists():
+        print(filename, command, section)
+        raise Exception
+    def_file.write_text(index_text)
 
 
 def main():
     """
-    Generate index.
-    Generate entries from index.
-    Write each entry to pdf.
     """
     rmtree('input', ignore_errors=True)
+    SECTION_LIST = ('genops', 'math', 'modes', 'pages', 'paras')
+    COMMAND_LIST = compile_cmd_list()
     for section in SECTION_LIST:
-        generate_entries(section)
-    for tex_command in get_command_list():
-        entry_dict = get_command_definitions(tex_command)
-        for section, index_list in entry_dict.items():
-            root_path = Path('input', section)
-            for entry_index in index_list:
-                src_path = root_path.joinpath('index', str(entry_index) + '.tex')
-                tgt_path = root_path.joinpath(tex_command + '.tex')
-                iteration = 1
-                while tgt_path.exists():
-                    tgt_path = root_path.joinpath(
-                            tex_command + str(iteration) + '.tex'
-                            )
-                    iteration += 1
-                print(section, entry_index, tex_command)
-                tgt_path.write_text( src_path.read_text() )
-
+        entry_index_list = compile_entries(section)
+        for command in COMMAND_LIST:
+            #print(command)
+            for entry_index in entry_index_list:
+                src_file = Path('input', section, 'index', str(entry_index) + '.tex')
+                write_cmd_definition(src_file, command, section)
 
 if __name__ == '__main__':
     main()
