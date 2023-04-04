@@ -2,7 +2,6 @@
 """
 
 import re
-import logging
 from pathlib import Path
 from shutil import rmtree
 
