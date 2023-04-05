@@ -5,10 +5,12 @@ https://ctan.org/pkg/impatient?lang=en
 
 Usage
 ===
-```python
+```bash
 python main.py
 
 chmod 700 typeset.sh
+
+./typeset.sh
 
 ./lookup.sh #1
 ```
