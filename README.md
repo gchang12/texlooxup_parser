@@ -1,10 +1,14 @@
-Proof that I didn't steal this
+Source
 ===
 https://ctan.org/pkg/impatient?lang=en
 
 
-How to use
+Usage
 ===
+```python
 python main.py
 
 chmod 700 typeset.sh
+
+./lookup.sh #1
+```
