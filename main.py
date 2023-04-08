@@ -96,12 +96,12 @@ def compile_concept_list():
     """
     logger.info("Reading 'kernel2/concepts.tex' to compile list of concepts.")
     src_text = Path('kernel2', 'concepts.tex').read_text()
-    concept_list = set()
+    concept_list = list()
     for line in src_text.split('\n'):
         concept = re.fullmatch("\\\\concept ?\{?([\\\\a-zA-Z ]+)\}?\s*", line)
         if concept is None:
             continue
-        concept_list.add( concept.groups()[0].replace(' ', '-') )
+        concept_list.append( concept.groups()[0].replace(' ', '-') )
     logger.info("Concept list compiled.")
     return concept_list
 
@@ -113,20 +113,20 @@ def main2():
     logger.setLevel(logging.INFO)
     src_text = Path('kernel2', 'concepts.tex').read_text()
     definition_text = src_text.split('\\beginconcepts')[-1].split('\\endconcepts')[0]
-    definition_list = [definition.split('\\concept')[-1] for definition in definition_text.split('\\endconcept')]
+    definition_list = [re.split("^\\\\concept", definition, flags=re.DOTALL) for definition in definition_text.split('\\endconcept')]
     definition_list.pop()
+    concept_list = compile_concept_list()
+    assert len(concept_list) == len(definition_list)
     index_dir = Path('output', 'concepts')
     logger.info("Now remaking '%s'.", str(index_dir))
     rmtree(str(index_dir), ignore_errors=True)
     index_dir.mkdir(parents=True, exist_ok=True)
     logger.info("Now indexing concepts.")
-    concept_list = compile_concept_list()
-    for entry_name, entry in zip(compile_concept_list(), definition_list):
+    for entry_name, entry in zip(concept_list, definition_list):
         index_file = index_dir.joinpath( entry_name.strip('\\') + '.tex' )
-        linelist = entry.split('\n')
+        linelist = re.sub("\\\\pagebreak", "", entry[0]).split('\n')
         linelist.insert(0, '\\input macros')
         linelist.insert(1, '\\beginconcepts')
-        linelist[2] = '\\concept ' + linelist[2]
         linelist.append('\\endconcept')
         linelist.append('\\endconcepts')
         linelist.append('\\end')
@@ -135,11 +135,9 @@ def main2():
 if __name__ == '__main__':
     from sys import argv
     if len(argv) == 1:
-        print(f"Please open {__file__}, go to the bottom, then unmute the function to call.")
+        print("Please choose one of either 'definitions' or 'concepts' as an argument.")
     else:
         if argv[1] == "definitions":
             main() # Unmute to output definition dvi's
         elif argv[1] == "concepts":
             main2() # Unmute too output the rest of `TeX for the Impatient'
-        else:
-            print("Please choose one of either 'definitions' or 'concepts' as an argument.")
