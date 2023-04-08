@@ -25,4 +25,4 @@ for i in {genops,math,modes,pages,paras}; do (
     echo "tex, aux, idx, log files removed from 'output/$i' folder.";
     cd ..;
 ); done;
-echo "Definition sections saved in 'output'.";
+echo "genops, math, modes, pages, and paras folders saved in 'output'.";

@@ -15,4 +15,4 @@ for section in {usebook,usingtex,examples,tips,errors,usermacs,capsule}; do (
 cd $miscellany_dir;
 rm *.aux *.idx *.log *.tex;
 echo "aux, idx, log, tex, ccs files removed.";
-echo "'miscellany' section folder saved in 'output'.";
+echo "'miscellany' folder saved in 'output'.";
