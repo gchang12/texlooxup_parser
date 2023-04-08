@@ -1,15 +1,17 @@
 pdf_reader="okular";
 cd ./output/;
-if [ "$1" = "miscellany" ]; then
+if [ "$1" == "miscellany" -o "$1" == "misc" ]; then
     fname_list=($(ls miscellany/*.dvi));
 else
     fname_list=($(ls */*.dvi | grep -P "$1(?=[^/]*\.dvi)"));
 fi;
-spacing=0;
-space_factor=1;
-if [ -z "$fname_list" -o -z "$1" ]; then
+if [ -z "$1" ]; then
+    printf "Look up a definition, or pass 'misc' as an argument.";
+elif [ -z "$fname_list" ]; then
     printf "\"$1\" not found.";
 else
+    spacing=0;
+    space_factor=1;
     while [[ "$space_factor" -lt ${#fname_list[@]} ]]; do
         space_factor=$((space_factor*10)); spacing=$((spacing+1));
     done;
@@ -24,7 +26,7 @@ else
     read -p ">   Please make a selection: ";
     fname=${fname_list[$REPLY]};
     if [[ "$REPLY" =~ ^[0-9]+$ && -n "$fname" ]]; then
-        $pdf_reader $fname;
+        $pdf_reader $fname 2>/dev/null;
     fi;
 fi;
 echo;
