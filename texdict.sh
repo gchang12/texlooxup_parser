@@ -1,6 +1,10 @@
 pdf_reader="okular";
 cd ./output/;
-fname_list=($(ls */*.dvi | grep -P "$1(?=[^/]*\.dvi)"));
+if [ "$1" = "miscellany" ]; then
+    fname_list=($(ls miscellany/*.dvi));
+else
+    fname_list=($(ls */*.dvi | grep -P "$1(?=[^/]*\.dvi)"));
+fi;
 spacing=0;
 space_factor=1;
 if [ -z "$fname_list" -o -z "$1" ]; then
