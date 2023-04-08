@@ -8,6 +8,7 @@ import re
 from pathlib import Path
 from shutil import rmtree
 from logging import getLogger
+import logging
 
 logger = getLogger()
 
@@ -77,6 +78,7 @@ def main():
     each command in accordance with its presence
     in each definition-file.
     """
+    logger.setLevel(logging.INFO)
     logger.info("Deleting 'input' directory.")
     rmtree('input', ignore_errors=True)
     SECTION_LIST = ('genops', 'math', 'modes', 'pages', 'paras')
@@ -108,6 +110,7 @@ def main2():
     Compiles a list of concepts in chapter four, 'Concepts'.
     Writes each concept to its own file in output/concepts/.
     """
+    logger.setLevel(logging.INFO)
     src_text = Path('kernel2', 'concepts.tex').read_text()
     definition_text = src_text.split('\\beginconcepts')[-1].split('\\endconcepts')[0]
     definition_list = [definition.split('\\concept')[-1] for definition in definition_text.split('\\endconcept')]
