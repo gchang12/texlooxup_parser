@@ -17,5 +17,6 @@ python main.py concepts
 How to use
 ===
 ```bash
+chmod 700 lookup.sh
 ./lookup.sh #1
 ```
