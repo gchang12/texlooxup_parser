@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "Remaking 'output' directory.";
 rm -r output;
 mkdir -p output;
 cd output;
@@ -17,9 +18,10 @@ for i in {genops,math,modes,pages,paras}; do (
                 ;;
             "fonts.tex") false
                 ;;
-            *) pdftex -output-format dvi -interaction batchmode $j;
+            *) (echo "Now processing '$j'."; pdftex -output-format dvi -interaction batchmode $j 1>/dev/null && echo "'$j' processed successfully.";);
                 ;;
         esac); done);
     rm *.tex *.aux *.idx *.log;
-    cd ..
+    echo "tex, aux, idx, log files removed from 'output/$i' folder.";
+    cd ..;
 ); done
