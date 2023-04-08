@@ -1,5 +1,6 @@
 #!/bin/bash
 output_dir="output/concepts";
+echo "Preparing '$output_dir' folder for typeset operations.";
 for kernel in {config,eplain,macros,fonts}; do (
     cp kernel/$kernel.tex $output_dir;
 ); done;
@@ -14,7 +15,8 @@ for texfile in *.tex; do (
             ;;
         "fonts.tex") false
             ;;
-        *) pdftex -output-format dvi -interaction batchmode $texfile;
+        *) (echo "Now processing '$texfile'."; pdftex -output-format dvi -interaction batchmode $texfile 1>/dev/null && echo "'$texfile' processed successfully.";);
     esac;
 ); done;
 rm *.aux *.idx *.log *.tex *.ccs;
+echo "aux, idx, log, tex, ccs files removed.";
