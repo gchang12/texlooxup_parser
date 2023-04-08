@@ -92,16 +92,18 @@ def compile_concept_list():
     """
     Reads 'kernel2/concepts.tex' to compile a list of concepts.
     """
+    logger.info("Reading 'kernel2/concepts.tex' to compile list of concepts.")
     src_text = Path('kernel2', 'concepts.tex').read_text()
-    concept_list = list()
+    concept_list = set()
     for line in src_text.split('\n'):
         concept = re.fullmatch("\\\\concept ?\{?([\\\\a-zA-Z ]+)\}?\s*", line)
         if concept is None:
             continue
-        concept_list.append( concept.groups()[0].replace(' ', '-') )
+        concept_list.add( concept.groups()[0].replace(' ', '-') )
+    logger.info("Concept list compiled.")
     return concept_list
 
-def compile_concepts():
+def main2():
     """
     Compiles a list of concepts in chapter four, 'Concepts'.
     Writes each concept to its own file in output/concepts/.
@@ -111,6 +113,7 @@ def compile_concepts():
     definition_list = [definition.split('\\concept')[-1] for definition in definition_text.split('\\endconcept')]
     definition_list.pop()
     index_dir = Path('output', 'concepts')
+    logger.info("Now remaking '%s'.", str(index_dir))
     rmtree(str(index_dir), ignore_errors=True)
     index_dir.mkdir(parents=True, exist_ok=True)
     logger.info("Now indexing concepts.")
@@ -134,6 +137,6 @@ if __name__ == '__main__':
         if argv[1] == "definitions":
             main() # Unmute to output definition dvi's
         elif argv[1] == "concepts":
-            compile_concepts() # Unmute too output the rest of `TeX for the Impatient'
+            main2() # Unmute too output the rest of `TeX for the Impatient'
         else:
             print("Please choose one of either 'definitions' or 'concepts' as an argument.")
