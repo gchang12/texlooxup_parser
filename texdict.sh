@@ -1,6 +1,7 @@
 pdf_reader="okular";
 cd ./output/;
 fname_list=($(ls */*.dvi | grep -P "$1(?=[^/]*\.dvi)"));
+spacing=1;
 if [ -z "$fname_list" -o -z "$1" ]; then
     printf "\"$1\" not found.";
 else
