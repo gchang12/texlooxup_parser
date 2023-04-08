@@ -1,16 +1,20 @@
 pdf_reader="okular";
 cd ./output/;
 fname_list=($(ls */*.dvi | grep -P "$1(?=[^/]*\.dvi)"));
-spacing=1;
+spacing=0;
+space_factor=1;
 if [ -z "$fname_list" -o -z "$1" ]; then
     printf "\"$1\" not found.";
 else
+    while [[ "$space_factor" -lt ${#fname_list[@]} ]]; do
+        space_factor=$((space_factor*10)); spacing=$((spacing+1));
+    done;
     echo;
     echo "    View a definition";
     echo "    =================";
     for ((i=0; i<${#fname_list[@]}; i=i+1)); do
         fname=${fname_list[$i]};
-        printf "    %2d: %s\n" $i ${fname%.dvi};
+        printf "    %*d: %s\n" $spacing $i ${fname%.dvi};
     done;
     echo;
     read -p ">   Please make a selection: ";
