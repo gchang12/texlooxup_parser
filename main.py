@@ -78,7 +78,7 @@ def main():
     each command in accordance with its presence
     in each definition-file.
     """
-    logger.setLevel(logging.INFO)
+    logging.basicConfig(level=logging.INFO)
     logger.info("Deleting 'input' directory.")
     rmtree('input', ignore_errors=True)
     SECTION_LIST = ('genops', 'math', 'modes', 'pages', 'paras')
@@ -110,10 +110,10 @@ def main2():
     Compiles a list of concepts in chapter four, 'Concepts'.
     Writes each concept to its own file in output/concepts/.
     """
-    logger.setLevel(logging.INFO)
+    logging.basicConfig(level=logging.INFO)
     src_text = Path('kernel2', 'concepts.tex').read_text()
     definition_text = src_text.split('\\beginconcepts')[-1].split('\\endconcepts')[0]
-    definition_list = [re.split("^\\\\concept", definition, flags=re.DOTALL) for definition in definition_text.split('\\endconcept')]
+    definition_list = [definition for definition in definition_text.split('\\endconcept')]
     definition_list.pop()
     concept_list = compile_concept_list()
     assert len(concept_list) == len(definition_list)
@@ -124,7 +124,7 @@ def main2():
     logger.info("Now indexing concepts.")
     for entry_name, entry in zip(concept_list, definition_list):
         index_file = index_dir.joinpath( entry_name.strip('\\') + '.tex' )
-        linelist = re.sub("\\\\pagebreak", "", entry[0]).split('\n')
+        linelist = re.sub("\\\\pagebreak", "", entry).split('\n')
         linelist.insert(0, '\\input macros')
         linelist.insert(1, '\\beginconcepts')
         linelist.append('\\endconcept')
@@ -138,6 +138,6 @@ if __name__ == '__main__':
         print("Please choose one of either 'definitions' or 'concepts' as an argument.")
     else:
         if argv[1] == "definitions":
-            main() # Unmute to output definition dvi's
+            main() # output definition dvi's
         elif argv[1] == "concepts":
-            main2() # Unmute too output the rest of `TeX for the Impatient'
+            main2() # output the rest of `TeX for the Impatient'
