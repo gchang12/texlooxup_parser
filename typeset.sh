@@ -24,4 +24,5 @@ for i in {genops,math,modes,pages,paras}; do (
     rm *.tex *.aux *.idx *.log;
     echo "tex, aux, idx, log files removed from 'output/$i' folder.";
     cd ..;
-); done
+); done;
+echo "Definition sections saved in 'output'.";
