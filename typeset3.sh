@@ -1,6 +1,5 @@
 #!/bin/bash
 output_dir="output/concepts";
-unalias cp;
 for kernel in {config,eplain,macros,fonts}; do (
     cp kernel/$kernel.tex $output_dir;
 ); done;
