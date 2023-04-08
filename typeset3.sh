@@ -20,4 +20,4 @@ for texfile in *.tex; do (
 ); done;
 rm *.aux *.idx *.log *.tex *.ccs;
 echo "aux, idx, log, tex, ccs files removed.";
-echo "'concepts' section saved in 'output'.";
+echo "'concepts' folder saved in 'output'.";
