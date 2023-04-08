@@ -1,12 +1,21 @@
 """
+Reads the `TeX for the Impatient' source files and
+outputs them into a format that can be typeset
+and consumed easily.
 """
 
 import re
 from pathlib import Path
 from shutil import rmtree
+from logging import getLogger
+
+logger = getLogger()
 
 def compile_entries(section):
     """
+    Iterates over each 'section' file and writes each
+    definition within that file to its own file.
+    Also returns a 'range' object to access the files.
     """
     src_text = Path('sections', section + '.tex').read_text()
     definition_text = src_text.split('\\begindescriptions')[-1].split('\\enddescriptions')[0]
@@ -14,6 +23,7 @@ def compile_entries(section):
     definition_list.pop()
     index_dir = Path('input', section, 'index')
     index_dir.mkdir(parents=True, exist_ok=True)
+    logger.info("Now indexing definitions for the '%s' section.", section)
     for entry_index, entry in enumerate(definition_list):
         index_file = index_dir.joinpath( str(entry_index) + '.tex' )
         linelist = entry.split('\n')
@@ -24,49 +34,106 @@ def compile_entries(section):
         linelist.append('\\enddescriptions')
         linelist.append('\\end')
         index_file.write_text( '\n'.join(linelist) )
+    logger.info("Finished indexing definitions. Returning index iterator.")
     return range(len(definition_list))
 
 
 def compile_cmd_list():
     """
-    book.sdx
+    Reads the command index in 'book.sdx' and constructs
+    a list of commands to be iterated over in Python.
     """
     linelist = Path('book.sdx').read_text().split('\n')
     cmd_list = set()
+    logger.info("Now compiling command list from 'book.sdx'.")
     for line in linelist:
         cmd = re.search('^\\\\indexentry \{0\}\{(\w+)\}\{C\}.*$', line)
         if cmd is None:
             continue
         cmd_list.add(cmd.groups()[0])
+    logger.info("Compilation complete. Returning command list.")
     return cmd_list
 
 
 def write_cmd_definition(filename, command, section):
     """
+    Checks if the given command is in the file
+    specified, then copies the file per command
+    and section specified.
     """
     index_text = filename.read_text()
     if re.search(f'\\\\cts\w* {command} .*', index_text) is None:
         return
     def_file = Path('input', section, command + '.tex')
     if def_file.exists():
-        print(filename, command, section)
-        raise Exception
+        logger.warning("Error encountered with '%s' command in '%s' section. Skipping.", command, section)
+        return
     def_file.write_text(index_text)
 
 
 def main():
     """
+    Iterates over command list, and typesets
+    each command in accordance with its presence
+    in each definition-file.
     """
+    logger.info("Deleting 'input' directory.")
     rmtree('input', ignore_errors=True)
     SECTION_LIST = ('genops', 'math', 'modes', 'pages', 'paras')
     COMMAND_LIST = compile_cmd_list()
     for section in SECTION_LIST:
         entry_index_list = compile_entries(section)
         for command in COMMAND_LIST:
-            #print(command)
             for entry_index in entry_index_list:
                 src_file = Path('input', section, 'index', str(entry_index) + '.tex')
                 write_cmd_definition(src_file, command, section)
 
+def compile_concept_list():
+    """
+    Reads 'kernel2/concepts.tex' to compile a list of concepts.
+    """
+    src_text = Path('kernel2', 'concepts.tex').read_text()
+    concept_list = list()
+    for line in src_text.split('\n'):
+        concept = re.fullmatch("\\\\concept ?\{?([\\\\a-zA-Z ]+)\}?\s*", line)
+        if concept is None:
+            continue
+        concept_list.append( concept.groups()[0].replace(' ', '-') )
+    return concept_list
+
+def compile_concepts():
+    """
+    Compiles a list of concepts in chapter four, 'Concepts'.
+    Writes each concept to its own file in output/concepts/.
+    """
+    src_text = Path('kernel2', 'concepts.tex').read_text()
+    definition_text = src_text.split('\\beginconcepts')[-1].split('\\endconcepts')[0]
+    definition_list = [definition.split('\\concept')[-1] for definition in definition_text.split('\\endconcept')]
+    definition_list.pop()
+    index_dir = Path('output', 'concepts')
+    rmtree(str(index_dir), ignore_errors=True)
+    index_dir.mkdir(parents=True, exist_ok=True)
+    logger.info("Now indexing concepts.")
+    concept_list = compile_concept_list()
+    for entry_name, entry in zip(compile_concept_list(), definition_list):
+        index_file = index_dir.joinpath( entry_name.strip('\\') + '.tex' )
+        linelist = entry.split('\n')
+        linelist.insert(0, '\\input macros')
+        linelist.insert(1, '\\beginconcepts')
+        linelist[2] = '\\concept ' + linelist[2]
+        linelist.append('\\endconcept')
+        linelist.append('\\endconcepts')
+        linelist.append('\\end')
+        index_file.write_text( '\n'.join(linelist) )
+
 if __name__ == '__main__':
-    main()
+    from sys import argv
+    if len(argv) == 1:
+        print(f"Please open {__file__}, go to the bottom, then unmute the function to call.")
+    else:
+        if argv[1] == "definitions":
+            main() # Unmute to output definition dvi's
+        elif argv[1] == "concepts":
+            compile_concepts() # Unmute too output the rest of `TeX for the Impatient'
+        else:
+            print("Please choose one of either 'definitions' or 'concepts' as an argument.")
