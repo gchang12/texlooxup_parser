@@ -17,5 +17,5 @@ for texfile in *.tex; do (
             ;;
         *) pdftex -output-format dvi -interaction batchmode $texfile;
     esac;
-) done;
+); done;
 rm *.aux *.idx *.log *.tex *.ccs;
