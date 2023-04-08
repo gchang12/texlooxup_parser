@@ -1,4 +1,4 @@
-alias pdf_reader="xr";
+pdf_reader="okular";
 cd ./output/;
 fname_list=($(ls */*.dvi | grep -P "$1(?=[^/]*\.dvi)"));
 if [ -z "$fname_list" -o -z "$1" ]; then
@@ -15,7 +15,7 @@ else
     read -p ">   Please make a selection: ";
     fname=${fname_list[$REPLY]};
     if [[ "$REPLY" =~ ^[0-9]+$ && -n "$fname" ]]; then
-        pdf_reader $fname;
+        $pdf_reader $fname;
     fi;
 fi;
 echo;
