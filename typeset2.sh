@@ -10,6 +10,6 @@ for section in {usebook,usingtex,examples,tips,errors,usermacs,capsule}; do (
     cd $miscellany_dir;
     pdftex -output-format dvi -interaction batchmode $section;
     cd ../../;
-) done;
+); done;
 cd $miscellany_dir;
 rm *.aux *.idx *.log *.tex;
