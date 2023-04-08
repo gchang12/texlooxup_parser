@@ -6,7 +6,7 @@ else
     fname_list=($(ls */*.dvi | grep -P "$1(?=[^/]*\.dvi)"));
 fi;
 if [ -z "$1" ]; then
-    printf "Pass either a definition or 'misc' as an argument.";
+    printf "Pass either a control word or 'misc' as an argument.";
 elif [ -z "$fname_list" ]; then
     printf "\"$1\" not found.";
 else
