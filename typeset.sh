@@ -18,7 +18,7 @@ for i in {genops,math,modes,pages,paras}; do (
                 ;;
             "fonts.tex") false
                 ;;
-            *) (echo "Now processing '$j'."; pdftex -output-format dvi -interaction batchmode $j 1>/dev/null && echo "'$j' processed successfully.";);
+            *) (echo -n "Now processing '$i/$j'... "; pdftex -output-format dvi -interaction batchmode $j 1>/dev/null && echo "OK" || echo "Failed";);
                 ;;
         esac); done);
     rm *.tex *.aux *.idx *.log;

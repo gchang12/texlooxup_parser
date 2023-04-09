@@ -15,7 +15,7 @@ for texfile in *.tex; do (
             ;;
         "fonts.tex") false
             ;;
-        *) (echo "Now processing '$texfile'."; pdftex -output-format dvi -interaction batchmode $texfile 1>/dev/null && echo "'$texfile' processed successfully.";);
+        *) (echo -n "Now processing '$texfile'... "; pdftex -output-format dvi -interaction batchmode $texfile 1>/dev/null && echo "OK" || echo "Failed";);
     esac;
 ); done;
 rm *.aux *.idx *.log *.tex *.ccs;
