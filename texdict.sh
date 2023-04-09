@@ -1,12 +1,12 @@
 pdf_reader="okular";
 cd ./output/;
-if [ "$1" == "miscellany" -o "$1" == "misc" ]; then
-    fname_list=($(ls miscellany/*.dvi));
+if [ "${1::1}" == "-" ]; then
+    fname_list=($(ls */*.dvi | grep -P ".*${1#-}.*(?=/)"));
 else
     fname_list=($(ls */*.dvi | grep -P "$1(?=[^/]*\.dvi)"));
 fi;
 if [ -z "$1" ]; then
-    printf "Pass either a control word or 'misc' as an argument.";
+    printf "Pass either a control word or section name as an argument.";
 elif [ -z "$fname_list" ]; then
     printf "\"$1\" not found.";
 else

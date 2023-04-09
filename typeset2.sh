@@ -10,10 +10,10 @@ cp kernel2/xmptext.tex $miscellany_dir;
 for section in {usebook,usingtex,examples,tips,errors,usermacs,capsule}; do (
     cp kernel2/$section.tex $miscellany_dir;
     cd $miscellany_dir;
-    (echo "Now processing $section.tex"; pdftex -output-format dvi -interaction batchmode $section 1>/dev/null && echo "'$section.tex' processed successfully.");
+    (echo -n "Now processing '$section.tex'... "; pdftex -output-format dvi -interaction batchmode $section 1>/dev/null && echo "OK" || echo "Failed");
     cd ../../;
 ); done;
 cd $miscellany_dir;
 rm *.aux *.idx *.log *.tex;
-echo "aux, idx, log, tex, ccs files removed.";
+echo "aux, idx, log, tex files removed.";
 echo "'miscellany' folder saved in 'output'.";
