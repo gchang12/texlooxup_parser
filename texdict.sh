@@ -1,10 +1,14 @@
-pdf_reader="okular";
+dvi_reader="okular";
 cd ./output/;
+
+# Determine whether or not to search by section.
 if [ "${1::1}" == "-" ]; then
     fname_list=($(ls */*.dvi | grep -P ".*${1#-}.*(?=/)"));
 else
     fname_list=($(ls */*.dvi | grep -P "$1(?=[^/]*\.dvi)"));
 fi;
+
+# Execute action based on parameter and resultset
 if [ -z "$1" ]; then
     printf "Pass either a control word or section name as an argument.";
 elif [ -z "$fname_list" ]; then
@@ -26,7 +30,7 @@ else
     read -p ">   Please make a selection: ";
     fname=${fname_list[$REPLY]};
     if [[ "$REPLY" =~ ^[0-9]+$ && -n "$fname" ]]; then
-        $pdf_reader $fname 2>/dev/null;
+        $dvi_reader $fname 2>/dev/null;
     fi;
 fi;
 echo;
