@@ -10,7 +10,9 @@ fi;
 
 # Execute action based on parameter and resultset
 if [ -z "$1" ]; then
-    printf "Pass either a control word or section name as an argument.";
+    echo -e "Please pass either a control word or section as an argument.\n";
+    echo "e.g. 'texdict par'  or 'texdict input'";
+    echo -e "'texdict -{section}', where section is one of:\nconcepts, genops, math, modes, paras, pages, miscellany";
 elif [ -z "$fname_list" ]; then
     printf "\"$1\" not found.";
 else
