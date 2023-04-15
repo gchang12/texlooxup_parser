@@ -12,6 +12,25 @@ import logging
 
 logger = getLogger()
 
+
+def get_definition_text(src_text):
+    """
+    Retrieves the inner body of a source text.
+    """
+    definition_text = src_text.split('\\begindescriptions')[-1]
+    definition_text = definition_text.split('\\enddescriptions')[0]
+    return definition_text
+
+
+def get_definition_list(definition_text):
+    """
+    Retrieves a list of definitions delimited by \\enddesc
+    """
+    definition_list = definition_text.split('\\enddesc')
+    for definition in definition_list[:-1]:
+        yield definition.split('\\begindesc')[-1]
+
+
 def compile_entries(section):
     """
     Iterates over each 'section' file and writes each
@@ -19,13 +38,10 @@ def compile_entries(section):
     Also returns a 'range' object to access the files.
     """
     src_text = Path('sections', section + '.tex').read_text()
-    definition_text = src_text.split('\\begindescriptions')[-1].split('\\enddescriptions')[0]
-    definition_list = [definition.split('\\begindesc')[-1] for definition in definition_text.split('\\enddesc')]
-    definition_list.pop()
     index_dir = Path('input', section, 'index')
     index_dir.mkdir(parents=True, exist_ok=True)
     logger.info("Now indexing definitions for the '%s' section.", section)
-    for entry_index, entry in enumerate(definition_list):
+    for entry_index, entry in enumerate(get_definition_list(src_text)):
         index_file = index_dir.joinpath( str(entry_index) + '.tex' )
         linelist = entry.split('\n')
         linelist.insert(0, '\\input macros')
@@ -78,7 +94,6 @@ def main():
     each command in accordance with its presence
     in each definition-file.
     """
-    logging.basicConfig(level=logging.INFO)
     logger.info("Deleting 'input' directory.")
     rmtree('input', ignore_errors=True)
     SECTION_LIST = ('genops', 'math', 'modes', 'pages', 'paras')
@@ -94,6 +109,7 @@ def compile_concept_list():
     """
     Reads 'kernel2/concepts.tex' to compile a list of concepts.
     """
+    # test this function
     logger.info("Reading 'kernel2/concepts.tex' to compile list of concepts.")
     src_text = Path('kernel2', 'concepts.tex').read_text()
     concept_list = list()
@@ -110,9 +126,10 @@ def main2():
     Compiles a list of concepts in chapter four, 'Concepts'.
     Writes each concept to its own file in output/concepts/.
     """
-    logging.basicConfig(level=logging.INFO)
     src_text = Path('kernel2', 'concepts.tex').read_text()
+    # Make a function returning this.
     definition_text = src_text.split('\\beginconcepts')[-1].split('\\endconcepts')[0]
+    # Make a function returning this.
     definition_list = [definition for definition in definition_text.split('\\endconcept')]
     definition_list.pop()
     concept_list = compile_concept_list()
@@ -134,10 +151,11 @@ def main2():
 
 if __name__ == '__main__':
     from sys import argv
-    if len(argv) == 1:
+    try:
+        logging.basicConfig(level=logging.INFO)
+        {
+                'definitions': main, # output definition dvi's
+                'concepts': main2 # output the rest of `TeX for the Impatient'
+                }[argv[1]]()
+    except (IndexError, KeyError):
         print("Please choose one of either 'definitions' or 'concepts' as an argument.")
-    else:
-        if argv[1] == "definitions":
-            main() # output definition dvi's
-        elif argv[1] == "concepts":
-            main2() # output the rest of `TeX for the Impatient'
