@@ -41,7 +41,7 @@ def compile_entries(section):
     index_dir = Path('input', section, 'index')
     index_dir.mkdir(parents=True, exist_ok=True)
     logger.info("Now indexing definitions for the '%s' section.", section)
-    for entry_index, entry in enumerate(get_definition_list(src_text)):
+    for entry_index, entry in enumerate(get_definition_list(get_definition_text(src_text))):
         index_file = index_dir.joinpath( str(entry_index) + '.tex' )
         linelist = entry.split('\n')
         linelist.insert(0, '\\input macros')
