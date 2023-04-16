@@ -28,10 +28,13 @@ def get_definition_list(definition_text):
     """
     definition_list = definition_text.split('\\enddesc')
     for definition in definition_list[:-1]:
-        yield definition.split('\\begindesc')[-1]
+        def_text = definition.split('\\begindesc')[-1]
+        if re.search("\\\\cts\w*", def_text) is None:
+            continue
+        yield def_text
 
 
-def compile_entries(section):
+def compile_entries(section, write_mode=True):
     """
     Iterates over each 'section' file and writes each
     definition within that file to its own file.
@@ -50,9 +53,10 @@ def compile_entries(section):
         linelist.append('\\enddesc')
         linelist.append('\\enddescriptions')
         linelist.append('\\end')
-        index_file.write_text( '\n'.join(linelist) )
+        if write_mode:
+            index_file.write_text( '\n'.join(linelist) )
     logger.info("Finished indexing definitions. Returning index iterator.")
-    return range(len(definition_list))
+    return range(entry_index + 1)
 
 
 def compile_cmd_list():
@@ -72,7 +76,7 @@ def compile_cmd_list():
     return cmd_list
 
 
-def write_cmd_definition(filename, command, section):
+def write_cmd_definition(filename, command, section, write_mode=True):
     """
     Checks if the given command is in the file
     specified, then copies the file per command
@@ -84,8 +88,11 @@ def write_cmd_definition(filename, command, section):
     def_file = Path('input', section, command + '.tex')
     if def_file.exists():
         logger.warning("Error encountered with '%s' command in '%s' section. Skipping.", command, section)
-        return
-    def_file.write_text(index_text)
+        return index_text
+    if write_mode:
+        def_file.write_text(index_text)
+    else:
+        return index_text
 
 
 def main():
