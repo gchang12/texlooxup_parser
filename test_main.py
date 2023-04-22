@@ -30,7 +30,7 @@ class TestTexParser(unittest.TestCase):
         - does not contain the pattern \\(begin|end)descriptions
         - comprises sequences of the pattern [\\a-zA-Z]*\\cts\w* \w+ \{.*\}
         """
-        expected_re = "\\\\begindesc([\s.])*[\\\\\w]*\\\\cts\w* [\\\\\w]+ \{.*\}(?=\1*\\\\enddesc)"
+        expected_re = "\\\\begindesc(\n|.)*[\\\\\w]*\\\\cts\w* [\\\\\w]+ \{.*\}(?=\1*\\\\enddesc)"
         for section in self.section_list:
             actual = main.get_definition_text(Path('sections', section + '.tex').read_text())
             self.assertNotIn("\\begindescriptions", actual)
@@ -64,7 +64,7 @@ class TestTexParser(unittest.TestCase):
         \\end
         '''
         """
-        expected_re = "\\\\input macros\n\\\\begindescriptions\n\\\\begindesc([\s.])*\\\\cts\w* \{\w+\}(?=\1*\\\\enddesc\n\\\\enddescriptions\n\\\\end)"
+        expected_re = "\\\\input macros\n\\\\begindescriptions\n\\\\begindesc(\n|.)*\\\\cts\w* [\\\\\w]+ \{.*\}(?=\1*\\\\enddesc\n\\\\enddescriptions\n\\\\end)"
         for section in self.section_list:
             index_list = main.compile_entries(section, write_mode=False)
             index_dir = Path('input', section, 'index')
@@ -72,7 +72,7 @@ class TestTexParser(unittest.TestCase):
             for index in index_list:
                 filename = index_dir.joinpath( str(index) + '.tex' )
                 actual = filename.read_text()
-                self.assertGreater(len(re.findall(expected_re, actual)), 1)
+                self.assertEqual(len(re.findall(expected_re, actual)), 1)
 
     def test_compile_cmd_list(self):
         """
@@ -89,7 +89,7 @@ class TestTexParser(unittest.TestCase):
         Tests that the arguments correspond with the
         contents of the file written.
         """
-        filename = Path("input", "genops", "index", "62.tex") # a.k.a. "input"
+        filename = Path("input", "genops", "index", "62.tex")
         actual = main.write_cmd_definition(filename, "input", "genops", write_mode=False)
         expected_re = "\\\\cts\w* input .*"
         self.assertRegex(actual, expected_re)
