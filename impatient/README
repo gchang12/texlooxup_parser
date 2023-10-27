@@ -1,0 +1,51 @@
+$Id: README,v 1.2 2020/01/02 23:36:14 karl Exp $
+This is the README file for the CTAN (free documentation) edition of the
+book TeX for the Impatient, released under the GNU Free Documentation
+License.  (This README file itself is public domain.)
+
+Information about the free edition is included at the end of the preface
+and on the copyright page.
+
+Home page: https://ctan.org/pkg/impatient/
+Chinese and French translations (independently maintained), as well as
+all sources and PDFs, are available from there.
+
+The book is looking for a maintainer; see README and errata.future for
+ideas. I (Karl) don't plan to make any more releases, unless significant
+bugs are found. But you can email me at karl@freefriends.org if need be.
+
+For convenience, the diffs between all the free releases
+are in the diffs/ subdirectory. To download the full releases, see
+the urls in NEWS.
+
+
+There is also a GNU package for the book, which is maintained
+separately. Its home page: https://gnu.org/software/teximpatient/
+The GNU version does not, at this writing, include the fixes made in
+2020 (see NEWS and ChangeLog).
+
+Original high-resolution scans of the artwork are available from
+http://ftpmirror.gnu.org/teximpatient/artwork.  Reduced-size bitmaps are
+in the artwork/ subdirectory on CTAN.
+
+
+Some random thoughts for people thinking of working with the source:
+
+- See errata.future for some relatively small ideas for enhancements.
+
+- You may want to translate the source into some more standard
+format, such as Texinfo; we used many homegrown macros, mostly just
+to make typing and markup easier.
+
+- You may also want to redo the index creation to use makeindex or some
+other standard program, instead of the homegrown Icon programs (or else
+they need to be fixed; right now somehow the + characters used for
+spaces in book.idx are preserved in book.sdx, which is wrong).  Until
+the index can be easily regenerated, the page breaks can't change
+without the index becoming useless.
+
+- Printing the GFDL required many kludges, a true Eplain-compatible
+version is needed (which in turn would require using the current eplain
+to print the book).
+
+Happy TeXing.
