@@ -1,3 +1,3 @@
 pancakes
 waffles
-oranges
+apples
