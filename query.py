@@ -21,7 +21,6 @@ SECTION_LIST = (
     )
 
 
-# TODO: Finish writing this function
 def texdict(parser: argparse.ArgumentParser):
     """
     Allows user to look up TeX commands by pattern and section.

@@ -1,1 +1,1 @@
-rm -ri input/ output/ __pycache__/ log_texdict2.log
+rm -fr input/ output/ __pycache__/ log_texdict2.log

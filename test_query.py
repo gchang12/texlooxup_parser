@@ -20,7 +20,7 @@ class MockParser:
     def parse_args(self, args=None, namespace=None):
         """
         """
-        pass
+        return self
 
 class TexdictTest(unittest.TestCase):
     """
