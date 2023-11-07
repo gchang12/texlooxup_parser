@@ -1,0 +1,706 @@
+~% -*- coding: utf-8 -*-
+~% This is part of the book TeX for the Impatient.
+~% Copyright (C) 2003 Paul W. Abrahams, Kathryn A. Hargreaves, Karl Berry.
+~% See file fdl.tex for copying conditions.
+~% TeX ignores anything on a line after a %
+~% The next two lines define fonts for the title
+% TeX 忽略一行中 % 之后的任何内容
+% 下面两行定义标题所用的字体
+\font\xmplbx = cmbx10 scaled \magstephalf
+\font\xmplbxti = cmbxti10 scaled \magstephalf
+~% Now here's the title.
+% 现在是标题行
+~%\leftline{\xmplbx Example !xmpnum:\quad\xmplbxti Entering simple text}
+~\bookmark{2}{例!xmpnum：输入简单文本}%
+\leftline{\xmplbx 例!xmpnum:\quad\xmplbxti 输入简单文本}
+\vglue .5\baselineskip % skip an extra half line
+~\count255 = \pageno
+~\xdef\examplepage{\number\count255}
+~\markinfo{Example 1: Entering simple text}
+~\ifrewritetocfile
+~\write\tocfile{\string\tocsectionentry{输入简单文本}{\examplepage}}%
+~\fi
+~^^{脚注} ^^{注释} ^^{标点} ^^{引号}
+~^^{空格符} ^^{横线号} ^^{段落//结束段落}
+~\edef\examplepageno{\number\count255}%
+~%It's easy to prepare ordinary text for \TeX\ since
+~%\TeX\ usually doesn't care about how you break up your input into
+~%lines. It treats the end of a line of text like a space.%
+~%\footnote \dag{\TeX\ treats a tab like a space too, as we point
+~%out in this {\it footnote}.}   If you don't want a space there,
+~%put a per%
+~%cent sign (the comment character) at the end of the line.
+~%   \TeX\ ignores spaces at the start of a line, and treats more
+~%than        one      space as equivalent to a single space,
+~%even after a period.      You indicate a new paragraph by
+~%skipping a line (or more than one line).
+
+由于 \TeX\ 并不关心原始的输入文本中的换行，因此，我们无须关心
+应该给其提供何种格式化的文本。在 \TeX\ 看来，输入文本中的换行符
+和空格等价。%
+\footnote \dag{\TeX\ 将 Tab 也当作空格处理, 就如你在这个
+{\it 脚注}所见到的一样。}   如果你不想在行尾处看到空格，
+可以在行尾处写一个百分号（注释符号）。\TeX\ 忽略行首的空格，
+对多于一个的空格当做一个单独的空格看待 --- 哪怕这些空格位于
+句号后面。你可以用一个或者多个空白行表示一个新的段落的开始。
+
+~%When \TeX\ sees a period followed by a space (or the end of the
+~%line, which is equivalent), it ordinarily assumes you've ended a
+~%sentence and inserts a little extra space after the period.  It
+~%treats question marks and exclamation points the same way.
+当 \TeX\ 看见一个句号后面紧接着一个空格（或者是一个行结束符，这
+两者等价）时，它通常会认为此句号代表一句话的结束，并在句号的后面
+加上一点小小的空格。同样的处理还适用于问号和惊叹号。
+
+~%  But \TeX's rules for handling periods sometimes need fine
+~%tuning. \TeX\ assumes that a capital letter before a period
+~%doesn't end the sentence, so you have to do something a little
+~%different if, say, you're writing about DNA\null.
+有时需要微调 \TeX\ 处理句号的方式。当句号前面紧跟着标题字
+母（大写字母）时，\TeX\ 会认为这个句号并不做为句子的结束符，
+因此在这种情况下，你需要作一些小改动。例如：我们这样写 DNA\null.
+~% The \null prevents TeX from perceiving the capital `A'
+~% as being next to the period.
+% \null 可以阻止 \TeX\ 感知句号前面的标题字母 `A'。
+~%It's a good idea to tie words together in references such as
+~%``see Fig.~8'' and in names such as V.~I\null. Lenin and in
+~%$\ldots$ so that \TeX\ will never split them in an awkward place
+~%between two lines.  (The three dots indicate an ellipsis.)
+~% 这个 references 不知道这样翻译对不对
+如果想将多个单词绑定到一起，中间不分行，则可以将它们放入一个引用中，
+例如：``见 Fig.~8''；或者名字中，例如：V.~I\null. Lenin；
+或者省略号 $\ldots$。在这样的情况下，\TeX\ 不会在它们之间断行
+（三个点表示省略号）。
+
+~%You should put quotations in pairs of left and right
+~%single ``quotes'' so that you get the correct left and right
+~%double quotation marks.  ``For adjacent single and double
+~%quotation marks, insert a `thinspace'\thinspace''. You can
+~%get en-dashes--like so, and em-dashes---like so.
+为得到正确的左右双引号，你需要用两个左右单``引号''。
+``在相邻的单引号和双引号之间，要插入一个`小间隔'\thinspace''。
+连接号--可以这样写，而破折号---可以这样写。
+
+~%\bye % end the document
+\bye % 结束此文档
+:::
+~%\xmpheader !xmpnum/{Indentation}% !xmpheaddef
+\xmpheader !xmpnum/{缩进}% !xmpheaddef
+~^^{缩进} ^^{边距} ^^{段落//窄段落}
+~%\noindent Now let's see how to control indentation.  If an
+~%ordinary word processor can do it, so surely can \TeX. Note
+~%that this paragraph isn't indented.
+\noindent 现在让我们来看看如何控制缩进。如果一个普通的文字处理
+程序都能处理缩进的话，那 \TeX\ 一定也能。请注意，本段并未缩进。
+
+~%Usually you'll either want to indent paragraphs or to leave
+~%extra space between them.  Since we haven't changed anything
+~%yet, this paragraph is indented.
+通常来说，你会想在段落的起始处安排缩进，在段落之间安排一些额外
+的空白。由于我们在此尚未做任何特殊处理，因此本段是缩进的。
+
+{\parindent = 0pt \parskip = 6pt
+~% The left brace starts a group containing the unindented text.
+% 这里的左括弧包裹了一组不缩进的文本
+
+~%Let's do these two paragraphs a different way,
+~%with no indentation and six printer's points of extra space
+~%between paragraphs.
+让我们对这两个段落作一些特殊处理，这两段将不缩进，并且两段
+之间有 6pt 宽的空白。
+
+~%So here's another paragraph that we're typesetting without
+~%indentation.  If we didn't put space between these paragraphs,
+~%you would have a hard time knowing where one ends
+~%and the next begins.
+这是第二段不缩进的文字。如果不在这两段之间插入空白的话，将很难
+分辨段与段之间的结束和起始。
+
+\par % The paragraph *must* be ended within the group.
+}% The right brace ends the group containing unindented text.
+
+~%It's also possible to indent both sides of entire paragraphs.
+~%The next three paragraphs illustrate this:
+你也能在段落的两边同时缩进，下面的 3 段文字演示了双边缩进的效果：
+
+\smallskip % Provide a little extra space here.
+% Skips like this and \vskip below end a paragraph.
+{\narrower
+~% ``We've indented this paragraph on both sides by the paragraph
+~% indentation.  This is often a good way to set long quotations.''
+``我们对这一段作了双边缩进的处理。在长段引用时，通常都会这么做。''
+
+~%``You can do multiple paragraphs this way if you choose.  This
+~%is the second paragraph that's singly indented.''\par}
+``如果你愿意的话，可以同时对多个段落作如此处理.  这是
+第二个轻微缩进的段落.''\par}
+
+~%{\narrower \narrower You can even make paragraphs doubly narrow
+~%if that's what you need.  This is an example of a doubly
+~%narrowed paragraph.\par}
+{\narrower \narrower 如果需要，你也可以让段落缩进双倍长度。
+这就是一个双倍缩进段落的例子.\par}
+\vskip 1pc % Skip down one pica for visual separation.
+~%In this paragraph we're back to the normal margins, as you can
+~%see for yourself.  We'll let it run on a little longer so that
+~%the margins are clearly visible.
+在这一段，如你所见，我们返回到正常的边距状态。我们尽量让这一段
+稍微长一点，这样你可以更清楚地看到边距的效果。
+
+~%{\leftskip .5in Now we'll indent the left margin by half
+~%an inch and leave the right margin at its usual position.\par}
+{\leftskip .5in 现在这一段，我们将其调整为左边距为半英尺，而
+右边距保持原样。\par}
+
+~%{\rightskip .5in Finally, we'll indent the right margin by half
+~%an inch and leave the left margin at its usual position.\par}
+{\rightskip .5in 最后，我们将本段调整为右边距半英尺，而左边距保持
+原样。\par}
+~%\bye % end the document
+\bye % 结束此文档
+:::
+~%\xmpheader !xmpnum/{Fonts and special characters}% !xmpheaddef
+\xmpheader !xmpnum/{字体和特殊字符}% !xmpheaddef
+\chardef \\ = `\\ % Let \\ denote a backslash.
+~^^{字体} ^^{字符//特殊字符} ^^{重音}
+~^^{音符} ^^{花色}
+~\ifoldeplain
+~^^|$| ^^|&| ^^|#| ^^|_| ^^|%| ^^|^| ^^|~| ^^|{| ^^|}| \indexchar \
+~\fi
+~%{\it Here are a few words in an italic font}, {\bf a
+~%few words in a boldface font}, {\it and a\/ {\bf mixture}
+~%of the two, with two\/ {\rm roman words} inserted}.
+~%Where an italic font is followed by a nonitalic font, we've
+~%inserted an ``italic correction'' ({\tt \\/}) to make the
+~%spacing look right.
+{\it 这是一些斜体字词}, {\bf 一些粗体字词}，
+{\it 以及一些 {\bf 二者混合的效果}，
+我们在中间插入一些 {\rm 正常的字词} }.
+当斜体字后面紧跟非斜体字时, 我们在其间插入一个``倾斜校正''
+({\tt \\/})，使得中间的空白看起来较舒适。
+~%Here's a {\sevenrm smaller} word---but the standard \TeX\
+~%fonts won't give you anything smaller than {\fiverm this}.
+这是一些{\sevenrm 更小的} 字词---可是标准的 \TeX\
+字体并不会给出小于 {\fiverm 如此大小}的字体。
+
+~%If you need any of the ten characters:
+如果你需要以下十个字符任意之一：
+\medskip
+\centerline{\$ \quad \& \quad \# \quad \_ \quad \% \quad
+   \char `\^ \quad \char `\~ \quad $\{$ \quad
+   $\}$ \quad $\backslash$}
+% The \quad inserts an em space between characters.
+\medskip
+~%\noindent  you'll need to write them a special way.  Look at
+~%the facing page to see how to do it.
+\noindent 你需要通过特殊的方式来写他们。参照对开页，
+学习正确的记录这些特殊字符的方法.
+
+~%\TeX\ has the accents and letters that you'll need
+~%for French words such as {\it r\^ ole\/} and  {\it \'
+~%el\` eve\/}, for German words such as {\it Schu\ss\/},
+~%and for words in several other languages as well.
+~%You'll find a complete list of \TeX's accents and letters
+~%of European languages on !xrefdelim[accents] and !xrefdelim[fornlets].
+\TeX\ 拥有一些语音和字母，可以用于某些法语词，
+例如：{\it r\^ ole\/} 以及{\it \'el\` eve\/}，
+或者德语词，例如 {\it Schu\ss\/}，或者某些别的什么语言。
+你可以在 !xrefdelim[accents] 和 !xrefdelim[fornlets] 处
+找到 \TeX\ 的 欧洲语音和字母表。
+
+~%You can also get Greek letters such as ``$\alpha$'' and
+~%``$\Omega$'' for use in math, card suits such as
+~%``$\spadesuit$'' and ``$\diamondsuit$'', music symbols
+~%such as ``$\sharp$'' and ``$\flat$'', and many other special
+~%symbols that you'll find listed on !xrefdelim[specsyms].
+~%\TeX\ will only accept these sorts of special symbols in its
+~%``math mode'', so you'll need to enclose them
+~%within `{\tt \$}' characters.
+你也可以写一些希腊字母，例如数学中的 ``$\alpha$'' 以及
+``$\Omega$'' , 扑克牌中的
+``$\spadesuit$'' 以及 ``$\diamondsuit$'', 一些音乐符号，例如：
+``$\sharp$'' 和 ``$\flat$'', 以及一些你可以在 !xrefdelim[specsyms]
+找到的各种符号。\TeX\ 仅在 ``数学模式'' 下接受这些符号, 因此，
+你需要将它们放在两个 `{\tt \$}' 字符中间。
+~%\bye % end the document
+\bye % 结束此文档
+:::
+~%\xmpheader !xmpnum/{Interline spacing}% !xmpheaddef
+\xmpheader !xmpnum/{行间距}% !xmpheaddef
+~^^{间隔//行间距} ^^{基线}
+\baselineskip = 2\baselineskip % double spacing
+\parskip = \baselineskip % Skip a line between paragraphs.
+\parindent = 3em % Increase indentation of paragraphs.
+
+% The following macro definition gives us nice inline
+% fractions.  You'll find it in our eplain macros.
+\def\frac#1/#2{\leavevmode
+   \kern.1em \raise .5ex \hbox{\the\scriptfont0 #1}%
+   \kern-.1em $/$%
+   \kern-.15em \lower .25ex \hbox{\the\scriptfont0 #2}%
+}%
+
+~%Once in a while you may want to print a document with extra
+~%space between the lines.  For instance, bills before Congress
+~%are printed this way so that the legislators can mark them up.
+~%For the same reason, book publishers usually insist that
+~%manuscripts be double-spaced. Double spacing is rarely
+~%appropriate for finished documents, however.
+有的时候，你会想在文档的文字行之间增加一些空白。例如：议会的
+某些讨论稿需要这样做，使得议院们能够在其上作一些标记。书商们
+也基于同样的理由，要求作者提交的手稿具有双倍的行间距。当然，
+对最终的出版物来说，双倍行间距的情形极其少见。
+
+~%A baseline is an imaginary line that acts like the lines
+~%on a pad of ruled paper.   You can control the interline
+~%spacing---what printers call ``leading''---%
+~%by setting the amount of space between baselines. Take a
+~%look at the input to see how to do it. You could use
+~%the same method for $1\;1/2$ spacing as well, using {\tt 1.5}
+~%instead of {\tt 2}. (You can also write $1\frac 1/2$
+~%a nicer way.)
+基线是一条想象出来的线，其作用类似于带横格标记的纸张上
+横格线的作用。你可以通过控制基线间的距离来控制两行文字
+之间的距离 --- 打印机管这个距离叫做 ``起始空白''。具体
+的做法可以参看这段的源文件。你可以用{\tt 1.5}取代{\tt 2}
+获得 $1\;1/2$空白的效果。（或者可以写成更好看的 $1\frac 1/2$
+形式。）
+
+% Here we've used the macro definition given above.
+
+~%For this example we've also increased the paragraph indentation
+~%and skipped an extra line between paragraphs.
+做为举例，我们这里增加了段落的缩进，并且在两段之间增加了一个空行。
+
+~%\bye % end the document
+\bye % 结束此文档
+:::
+~%\xmpheader !xmpnum/{Spacing, rules, and boxes}% !xmpheaddef
+\xmpheader !xmpnum/{间隔、标线和盒子}% !xmpheaddef
+~^^{描述列表} ^^{盒子//绘制盒子} ^^{修订线}
+~%Here's an example of a ``description list''.  In practice you'd
+~%be better off using a macro to avoid the repetitive constructs
+~%and to make sure that the subhead widths are wide enough:
+这里展示的是 ``描述列表''的实例。实际使用时，最好将这些重复结构
+定义成宏，并且保证子标题的宽度足够宽。
+
+\bigskip
+~% Call the indentation for descriptions \descindent
+~% and set it to 8 picas.
+% 用 \descindent 表示描述列表的缩进量，并设定它的值为 8 派卡。
+\newdimen\descindent \descindent = 8pc
+~% Indent paragraphs by \descindent.
+~% Skip an additional half line between paragraphs.
+% 整个段落缩进 \descindent。段落间增加半个行距的间距。
+{\noindent \leftskip = \descindent  \parskip = .5\baselineskip
+~% Move the description to the left of the paragraph.
+% 将描述放在段落的左边。
+\llap{\hbox to \descindent{\bf Queen of Hearts\hfil}}%
+An ill-tempered woman, prone to saying ``Off with his
+head!!''\ at the slightest provocation.\par
+\noindent\llap{\hbox to \descindent{\bf Cheshire Cat\hfil}}%
+A cat with an enormous smile that Alice found
+in a tree.\par
+\noindent\llap{\hbox to \descindent{\bf Mock Turtle\hfil}}%
+A lachrymose creature, quite a  storyteller, who was a
+companion to the Gryphon. Reputedly the prin\-cipal ingredient
+of Mock Turtle Soup.
+\par}
+\bigskip\hrule\bigskip % A line with vertical space around it.
+~%Here's an example of some words in a ruled box, just as
+~%Lewis Carroll wrote them:
+这个例子在一个标线盒子中放入一些词句，它们是路易斯·卡罗所写的：
+\bigskip
+~% Put 8pt of space between the text and the surrounding rules.
+% 在文本和四周标线之间留有 8pt 宽的间隔。
+\hbox{\vrule\vbox{\hrule
+   \hbox spread 8pt{\hfil\vbox spread 8pt{\vfil
+~%    \hbox{Who would not give all else for twop}%
+~%    \hbox{ennyworth only of Beautiful Soup?}%
+      \hbox{谁不是最想尝一尝，}%
+      \hbox{两便士一碗的好汤？}%
+   \vfil}\hfil}
+\hrule}\vrule}%
+
+\bigskip\line{\hfil\hbox to 3in{\leaders\hbox{ * }\hfil}\hfil}
+\bigskip
+
+\line{\hskip -4pt\vrule\hfil\vbox{
+~%Here we've gotten the effect of a revision bar on the material
+~%in this paragraph.  The revision bar might indicate a change.}}
+我们给此段落内容添加了修订线效果。修订线用于表示内容改动。}}
+~%\bye % end the document
+\bye % 结束此文档
+:::
+~%\xmpheader !xmpnum/{Odds and ends}% !xmpheaddef
+\xmpheader !xmpnum/{杂项}% !xmpheaddef
+~^^{连字} ^^{定理} ^^{引理} ^^{有序列表}
+~^^{居左对齐} ^^{居右对齐} ^^{居中对齐}
+~%\chardef \\ = `\\ % Let \\ denote a backslash.
+\chardef \\ = `\\ % 用 \\ 表示反斜杠。
+\footline{\hfil{\tenit - \folio -}\hfil}
+~\global\footline{\hfil{\tenit - \folio\ -}\hfil}
+~% \footline provides a footer line.
+~% Here it's a centered, italicized page number.
+% \footline 给出页脚行；此处为居中的意大利体页码。
+~%\TeX\ knows how to hyphenate words, but  it isn't infallible.
+~%If you are discussing the chemical
+~%${\it 5}$-[p-(Flouro\-sul\-fonyl)ben\-zoyl]-l,%
+~%$N^6$-ethe\-no\-adeno\-sine
+~%and \TeX\ complains to you about an ``overfull hbox'', try
+~%inserting some ``discretionary hyphens''. The notation
+~%`{\tt \\-}' tells \TeX\ about a  dis\-cre\-tion\-ary hyphen,
+~%that is, one that it might not have inserted otherwise.
+\TeX\ 懂得如何将单词连字化，但它并非绝对可靠的。若你在讨论化学
+${\it 5}$-[p-(Flouro\-sul\-fonyl)ben\-zoyl]-l,%
+$N^6$-ethe\-no\-adeno\-sine 时，
+\TeX\ 给出关于``水平盒子溢出''的警告，
+你可以尝试插入某些``自定连字符''。
+`{\tt \\-}'记号告诉 \TeX\ 一个自定连字符位置；
+在此位置 \TeX\ 本来是不会插入连字符的。
+\medskip
+~%{\raggedright   You can typeset text unjustified, i.e., with
+~%an uneven right margin. In the old days, before word
+~%processors were common, typewritten documents were
+~%unjustified because there was no convenient alternative.
+~%Some people  prefer text to be  unjustified so that the
+~%spacing between words can be uniform.  Most books are set
+~%with justified margins, but not all. \par}
+{\raggedright 你可以不对齐地排版文字，即让右页边不对齐。
+在过去，文字处理软件还未普及，
+因为没有其他方便的选择，排版的文档都是不对齐的。
+有些人更喜欢不对齐地排版文字，因为此时单词间距是一致的。
+大部分书籍都设置为页边对齐，但并非都是。\par}
+
+~%\proclaim Assertion 27. There is an easy way to typeset
+~%the headings of assertions, lemmas, theorems, etc.
+\proclaim 断言 27. 有很简单的方法排版断言、引理、定理等的标题。
+
+~%Here's an example of how to typeset an itemized list two
+~%levels deep.  If you need more levels, you'll have to
+~%program it yourself, alas.
+~%\smallskip
+~%\item {1.} This is the first item.
+~%\item {2.} This is the second item.  It consists of two
+~%paragraphs.  We've indented the second paragraph so that
+~%you can easily see where it starts.
+这个例子显示如何排版两层的有序列表。
+如果需要更多层级，唉，你得自己编程。
+\smallskip
+\item {1.} 这是第一个列表项。
+\item {2.} 这是第二个列表项。它由两个段落组成。
+为让你看清楚第二个段落从哪里开始，我们缩进了该段落。
+
+~%\item{} \indent The second paragraph has three subitems
+~%underneath it.
+~%\itemitem {(a)} This is the first subitem.
+~%\itemitem {(b)} This is the second subitem.
+~%\itemitem {(c)} This is the third subitem.
+~%\item {$\bullet$} This is a strange-looking item because it's
+~%completely different from the others.
+\item{} \indent 第二个段落下边有三个子列表项。
+\itemitem {(a)} 这是第一个子列表项。
+\itemitem {(b)} 这是第二个子列表项。
+\itemitem {(c)} 这是第三个子列表项。
+\item {$\bullet$} 这是一个看起来很奇怪的列表项，
+因为它和其他列表项不同。
+\smallskip
+~%\leftline{Here's a left-justified line.$\Leftarrow$}
+~%\rightline{$\Rightarrow$Here's a right-justified line.}
+~%\centerline{$\Rightarrow$Here's a centered line.$\Leftarrow$}
+\leftline{这是一个左对齐的行。$\Leftarrow$}
+\rightline{$\Rightarrow$这是一个右对齐的行。}
+\centerline{$\Rightarrow$这是一个居中的行。$\Leftarrow$}
+~% Don't try to use these commands within a paragraph.
+% 不要在段落内部使用这些命令。
+~%\bye % end the document
+\bye % 结束此文档
+:::
+~%\xmpheader !xmpnum/{Using fonts from other sources}% !xmpheaddef
+\xmpheader !xmpnum/{使用其他来源的字体}% !xmpheaddef
+~\xrdef{palatino}
+~\idxref{Palatino 字体}
+~\idxref{Zapf, Hermann}
+~\idxref{计算机现代字体} ^^{\Metafont}
+\font\tenrm = pplr % Palatino
+% Define a macro for invoking Palatino.
+\def\pal{\let\rm = \tenrm \baselineskip=12.5pt \rm}
+\pal % Use Palatino from now on.
+
+~%You aren't restricted to using the Computer Modern fonts that
+~%come with \TeX.  Other fonts are available from many sources,
+~%and you may prefer them.  For instance, we've set this page
+~%in 10-point Palatino Roman. Palatino was designed by
+~%Hermann Zapf, considered to be one of the greatest type
+~%designers of the twentieth century.  This page will
+~%give you some idea of what it looks like.
+你并不局限于只能使用随 \TeX 发行的 Computer Modern 系列字体。
+从其他很多渠道你都可以得到一些你可能会更喜欢的字体。例如我们
+当前页面就被设置为 10p 大小的 Palatino Roman 字体。Palatino
+是一种由 Hermann Zapf 所设计的字体，它被认为是二十世纪最伟大的
+字体设计之一。从本页的输出可以获得关于这个字体的一些直观印
+象（由于译本的缘故，本页的字体并未被设为 Palatino 字体）。
+
+~%Fonts can be provided either as outlines or as bitmaps.  An
+~%outline font describes the shapes of the characters, while a
+~%bitmap font specifies each pixel (dot) that makes up each
+~%character.  A font outline can be used to generate many
+~%different sizes of the same font.  The Metafont program
+~%that's associated with \TeX\  provides a particularly
+~%powerful way of generating bitmap fonts, but it's not the
+~%only way.
+字体既可以是轮廓字体，也可以是位图字体。轮廓字体的意思是它
+描述的是各个字符的形状，而位图字体则是标识了每个字符形状所
+占据的像素点。轮廓字体可用来产生同一种字体的多种不同大小。
+随 \TeX\ 而发行的 metafont 程序是一个产生位图字体的强大工具，
+而且它并不是唯一的工具。
+
+~%The fact that a single outline can generate a great range of
+~%point sizes for a font tempts many vendors of digital
+~%typefaces to provide just one set of outlines for a typeface
+~%such as Palatino Roman.  This may be a sensible economic
+~%decision, but it is an aesthetic sacrifice.  Fonts cannot be
+~%scaled up and down linearly without loss of quality.
+~%Larger sizes of letters should not, in general, have the
+~%same proportions as smaller sizes; they just don't look
+~%right.  For example, a font that's linearly scaled down will
+~%tend to have too little space between strokes, and its
+~%x-height will be too~small. % tie added to avoid widow word
+由于单一的轮廓字体文件既可生成多种不同大小的字体，因此很多
+数字字体提供商倾向于仅提供字体的单一文件 ——例如 Palatino
+Roman 即是如此。这也许是个经济的决定，可它却同时是个美学上
+的重大牺牲。字体无法做到在不损害其显示质量的前提下，线性地
+放大或者缩小。一个字符的大字体版本，通常来说，与小字体的版
+本应该有不同的比例 —— 而如果我们坚持这么做的话，其结果看
+起来将不会那么好看。例如：如果将一个字体线性缩小的话，其各
+笔画间的间距将会显得过窄，而它的 x-height 值也会显得过小。
+
+~%A type designer can compensate for these changes by
+~%providing different outlines for different point sizes, but
+~%it's necessary to go to the expense of designing these
+~%different outlines.  One of the great advantages of Metafont
+~%is that it's possible to parameterize the descriptions of
+~%characters in a font.  Metafont can then maintain the
+~%typographical quality of characters over a range of point
+~%sizes by adjusting the character shapes accordingly.
+字体的设计者可以为不同大小的字体设计不同的轮廓形状，从而
+对这个问题进行弥补，可这同时需要付出额外的代价。使用 Metafont
+程序的一个巨大的好处就是可以将字符符号形状的描述参数化。
+这样在改变字体大小的时候，Metafont 可以视情况做一些自动处理，
+从而得到较好的效果。
+~%\bye % end the document
+\bye % 结束此文档
+:::
+~\idxref{蘑菇}
+~%\xmpheader !xmpnum/{A ruled table}% !xmpheaddef
+\xmpheader !xmpnum/{标线表格}% !xmpheaddef
+\bigskip
+~%\offinterlineskip % So the vertical rules are connected.
+\offinterlineskip % 让竖直标线连接起来
+~% \tablerule constructs a thin rule across the table.
+% \tablerule 构造横穿表格的细标线
+\def\tablerule{\noalign{\hrule}}
+~% \tableskip creates 9pt of space between entries.
+% \tableskip 在单元格之间生成 9pt 的空隙
+\def\tableskip{\omit&height 9pt&&&\omit\cr}
+~% & separates templates for each column. TeX substitutes
+~% the text of the entries for #. We must have a strut
+~% present in every row of the table; otherwise, the boxes
+~% won't butt together properly, and the rules won't join.
+% 用 & 分开模版各列。TeX 将把 # 替换为单元格的文本。
+% 在表格每行都要有一个支架（strut）；
+% 否则盒子将不能良好接合，标线也不能连接起来。
+~%\halign{\tabskip = .7em plus 1em  % glue between columns
+~% Use \vtop for short multiline entries in the first column.
+~% Typeset the lines ragged right, without hyphenation.
+~%   \vtop{\hsize=6pc\pretolerance = 10000\hbadness = 10000
+~%      \normalbaselines\noindent\it#\strut}%
+~%  &\vrule #&#\hfil &\vrule #% the rules and middle column
+\halign{\tabskip = .7em plus 1em  % 各列之间的粘连
+% 用 \vtop 得到表格第一列中的多行单元格。
+% 让多行文本右边不对齐，且不连字化。
+   \vtop{\hsize=6pc\pretolerance = 10000\hbadness = 10000
+      \normalbaselines\noindent\it#\strut}%
+  &\vrule #&#\hfil &\vrule #% 标线和中间各列
+~%% Use \vtop to get whole paragraphs in the last column.
+~%  &\vtop{\hsize=11pc \parindent=0pt \normalbaselineskip=12pt
+~%    \normalbaselines \rightskip=3pt plus2em #}\cr
+% 用 \vtop 得到表格最后一列中的段落。
+  &\vtop{\hsize=11pc \parindent=0pt \normalbaselineskip=12pt
+    \normalbaselines \rightskip=3pt plus2em #}\cr
+~% The table rows begin here.
+% 表格各行从这里开始。
+~%\noalign{\hrule height2pt depth2pt \vskip3pt}
+~%  % The header row spans all the columns.
+~%  \multispan5\bf Some Choice Edible Mushrooms\hfil\strut\cr
+\noalign{\hrule height2pt depth2pt \vskip3pt}
+  % 表头行横跨各列。
+  \multispan5\bf 一些上等的食用蘑菇\hfil\strut\cr
+~%\noalign{\vskip3pt} \tablerule
+~%  \omit&height 3pt&\omit&&\omit\cr
+~%  \bf Botanical&&\bf Common&&\omit \bf Identifying \hfil\cr
+~%\noalign{\vskip -2pt}% close up lines of heading
+~%  \bf Name&&\bf Name &&\omit \bf Characteristics \hfil\cr
+\noalign{\vskip3pt} \tablerule
+  \omit&height 3pt&\omit&&\omit\cr
+  \bf 学名&&\bf 常用名&&\omit \bf 识别特征 \hfil\cr
+~%\tableskip Pleurotus ostreatus&&Oyster mushroom&&
+~%  Grows in shelf\kern 1pt like clusters on stumps or logs,
+~%  % without the kern, the `f' and `l' would be too close
+~%  pink-gray oyster-shaped caps, stem short or absent.\cr
+\tableskip Pleurotus ostreatus&&平菇&&
+  Grows in shelf\kern 1pt like clusters on stumps or logs,
+  % 若不加上 \kern ，`f' 和 `l' 将挨得太近
+  pink-gray oyster-shaped caps, stem short or absent.\cr
+~%\tableskip Lactarius hygrophoroides&&Milky hygroph&&
+~%  Butterscotch-brown cap and stem, copious white latex,
+~%  often on ground in woods near streams.\cr
+\tableskip Lactarius hygrophoroides&&稀褶乳菇&&
+  Butterscotch-brown cap and stem, copious white latex,
+  often on ground in woods near streams.\cr
+~%\tableskip Morchella esculenta&&White morel&&Conical cap
+~%  with black pits and white ridges; no gills. Often found
+~%  near old apple trees and dying elms in the spring.\cr
+\tableskip Morchella esculenta&&羊肚菌&&Conical cap
+  with black pits and white ridges; no gills. Often found
+  near old apple trees and dying elms in the spring.\cr
+~%\tableskip Boletus edulus&&King bolete&&Reddish-brown to
+~%  tan cap with yellow pores (white when young),
+~%  bulbous stem, often near conifers, birch, or~aspen.\cr
+\tableskip Boletus edulus&&美味牛肝菌&&Reddish-brown to
+  tan cap with yellow pores (white when young),
+  bulbous stem, often near conifers, birch, or~aspen.\cr
+\tableskip \tablerule \noalign{\vskip 2pt} \tablerule
+}\bye
+:::
+~%\xmpheader !xmpnum/{Typesetting mathematics}% !xmpheaddef
+\xmpheader !xmpnum/{排版数学公式}% !xmpheaddef
+~^^{数学}
+~%For a spherical triangle with sides $a$, $b$, and $c$, and
+~%opposite angles $\alpha$, $\beta$, and $\gamma$, we have:
+设球面三角形的三条边长度分别为$a$，$b$ 和 $c$，
+它们的对角分别为 $\alpha$，$\beta$ 和 $\gamma$，我们有：
+~%$$\cos \alpha = -\cos \beta \cos \gamma +
+~%  \sin \beta \sin \gamma \cos \alpha \quad
+~%  \hbox{(Law of Cosines)}$$
+$$\cos \alpha = -\cos \beta \cos \gamma +
+  \sin \beta \sin \gamma \cos \alpha \quad
+  \hbox{(余弦定理)}$$
+~%and:
+且有：
+~%$$\tan {\alpha \over 2} = \sqrt{
+~%  {- \cos \sigma \cdot \cos(\sigma - \alpha)} \over
+~%  {\cos (\sigma - \beta) \cdot \cos (\sigma - \gamma)}},\quad
+~%  \hbox{where $\sigma = {1 \over 2}(a+b+c)$}$$
+$$\tan {\alpha \over 2} = \sqrt{
+  {- \cos \sigma \cdot \cos(\sigma - \alpha)} \over
+  {\cos(\sigma - \beta) \cdot \cos(\sigma - \gamma)}},\quad
+  \hbox{其中 $\sigma = {1 \over 2}(a+b+c)$}$$
+~%We also have:$$\sin x = {{e^{ix}-e^{-ix}}\over 2i}$$
+~%and:
+~%$$\int _0 ^\infty {{\sin ax \sin bx}\over{x^2}}\,dx
+~%% The \, above produces a thin space
+~%  = {\pi a\over 2}, \quad \hbox{if $a < b$}$$
+我们还有：$$\sin x = {{e^{ix}-e^{-ix}}\over 2i}$$
+且有：
+$$\int _0 ^\infty {{\sin ax \sin bx}\over{x^2}}\,dx
+% 上面的 \, 生成一个小间隔
+  = {\pi a\over 2}, \quad \hbox{如果 $a < b$}$$
+
+~%\noindent The number of combinations ${}_nC_r$ of $n$
+~%things taken $r$ at a time is:
+\noindent 从 $n$ 个物品中任取 $r$ 个的组合数 ${}_nC_r$ 为：
+$$C(n,r) = {}_nC_r = {n \choose r} =
+  {{n(n-1) \cdots (n-r+1)} \over {r(r-1) \cdots (1)}} =
+  {{n!!}\over {r!!(n-r)!!}}$$
+
+\noindent
+~%The value of the determinant $D$ of order $n$:
+$n$ 阶行列式 $D$ 的值：
+$$D = \left|\matrix{a_{11}&a_{12}&\ldots&a_{1n}\cr
+  a_{21}&a_{22}&\ldots&a_{2n}\cr
+  \vdots&\vdots&\ddots&\vdots\cr
+  a_{n1}&a_{n2}&\ldots&a_{nn}\cr}\right| $$
+~%is defined as the sum of $n!!$ terms:
+定义为下面$n!!$项的和：
+$$\sum\>(\pm)\>a_{1i}a_{2j} \ldots a_{nk}$$
+~% The \> above produces a medium space.
+~%where $i$, $j$, \dots,~$k$\/ take on all possible values
+~%between $1$ and $n$, and the sign of the product is
+~%$+$ if the sequence $i$, $j$, \dots,~$k$\/ is an
+~%even permutation and $-$ otherwise.  Moreover:
+其中 $i$, $j$, \dots,~$k$\/ 取遍 $1$ 到 $n$ 的所有可能值，
+且当排列 $i$, $j$, \dots,~$k$\/ 为偶置换时乘积取 $+$ 号，
+否则取 $-$ 号。此外：
+$$Q(\xi) = \lambda_1 y_1^2 \sum_{i=2}^n \sum_{j=2}^n y_i
+b_{ij} y_j,\qquad B = \Vert b_{ij} \Vert = B'$$
+\bye
+:::
+~%\xmpheader !xmpnum/{More mathematics}% !xmpheaddef
+\xmpheader !xmpnum/{更多数学内容}% !xmpheaddef
+%^^{math}
+^^{数学}
+~%The absolute value of $X$, $|x|$, is defined by:
+~%$$|x| = \cases{x, &if $x\ge 0$;\cr
+~%-x,&otherwise.\cr}$$
+~%Now for some numbered equations.
+~%It is the case that for $k \ge 0$:
+~%$$x^{k^2}=\overbrace{x\>x\>\cdots\> x}^{2k\ \rm times}
+~%\eqno (1)$$
+$X$ 的绝对值 $|x|$ 定义为：:
+$$|x| = \cases{x, &if $x\ge 0$;\cr
+-x,&otherwise.\cr}$$
+现在写一些标号了的公式。
+在 $k \ge 0$ 时，我们有：
+$$x^{k^2}=\overbrace{x\>x\>\cdots\> x}^{2k\ \rm times}
+\eqno (1)$$
+
+~%Here's an example that shows some spacing controls, with
+~%a number on the left:
+这是一个展示空格间距调整和公式左编号的例子：
+~%$$[u]!negthin[v][w]\,[x]\>[y]\;[z]\leqno(2a)$$
+$$[u]!negthin[v][w]\,[x]\>[y]\;[z]\leqno(2a)$$
+~%The amount of space between the items in brackets
+~%gradually increases from left to right. (We've made
+~%the space between the first two items be {\it less\/}
+~%than the natural space.)
+从做到右公式中的项和括号的距离逐步增大。
+（我们把前两项的距离设定得比正常距离 {\it 少\/}。
+~%It is sometimes the case that $$\leqalignno{
+~%u'_1 + tu''_2 &= u'_2 + tu''_1&(2b)\cr
+~%\hat\imath &\ne \hat \jmath&(2c)\cr
+~%\vec {\vphantom{b}a}&\approx \vec b\cr}$$
+~%% The \vphantom is an invisible rule as tall as a `b'.
+有时候， $$\leqalignno{
+u'_1 + tu''_2 &= u'_2 + tu''_1&(2b)\cr
+\hat\imath &\ne \hat \jmath&(2c)\cr
+\vec {\vphantom{b}a}&\approx \vec b\cr}$$
+% \vphantom 是一个不可见的和“b”一样高的盒子。
+~%The result is of order $O(n \log\log n)$. Thus
+~%$$\sum_{i=1}^n x_i = x_1+x_2+\cdots+x_n
+~%= {\rm Sum}(x_1,x_2,\ldots,x_n). \eqno(3)$$
+结果为 $O(n \log\log n)$. 因此
+$$\sum_{i=1}^n x_i = x_1+x_2+\cdots+x_n
+= {\rm Sum}(x_1,x_2,\ldots,x_n). \eqno(3)$$
+~%and
+~%$$dx\,dy = r\,dr\,d\theta!negthin.\eqno(4)$$
+~%The set of all $q$ such that $q\le0$ is written as:
+~%$$\{\,q\mid q\le0\, \}$$
+且
+$$dx\,dy = r\,dr\,d\theta!negthin.\eqno(4)$$
+满足 $q\le0$ 的所有的 $q$ 可以被写作：
+$$\{\,q\mid q\le0\, \}$$
+~%Thus
+~%$$\forall x\exists y\;P(x,y)\Rightarrow
+~%\exists x\exists y\;P(x,y)$$
+~%where
+~%$$P(x,y) \buildrel \rm def \over \equiv
+~%\hbox{\rm any predicate in $x$ and $y$} . $$
+因此
+$$\forall x\exists y\;P(x,y)\Rightarrow
+\exists x\exists y\;P(x,y)$$
+其中
+$$P(x,y) \buildrel \rm def \over \equiv
+\hbox{\rm 任何一个能够得出 $x$ 和 $y$} . $$
+\bye
+:::

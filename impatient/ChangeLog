@@ -1,0 +1,100 @@
+2020-01-03  Karl Berry  <karl@freefriends.org>
+
+	* Version 2020 released to ctan.org.
+
+	* config.tex: make non-empty for CTAN.
+	* Makefile (files): include cn fr artwork subdirs for CTAN.
+
+2020-01-02  Karl Berry  <karl@freefriends.org>
+
+	* README: mention diffs/ subdir, etc.
+	* NEWS: urls for previous releases; remove autoconfery.
+	* preface.tex: give ctan url at end of preface, and no email.
+
+2020-01-01  Karl Berry  <karl@freefriends.org>
+
+	* book.sdx (\unorderedlist): correct name from \unnumberedlist
+	index entry. Manually edited generated index file here.
+	(PDF p.388 = printed p.368)
+
+	* concepts.tex (class): has class, not is in class. (PDF p.76 =
+	printed p.56)
+
+	* concepts.tex (category code, character): reword to reduce
+	confusion of (say) character code 65 with
+	typesetting a letter A.
+	Also, it's not plain tex that defines what the catcodes are.
+	Lots more could be done. (PDF pp.74-75 = printed pp.54-55)
+
+	* concepts.tex (category code): explicit kern to avoid $c$grok
+	without space. (PDF p.73 = printed p.53)
+
+	* xmptext.tex (A ruled table): fl would be a ligature.
+	* xmptext.tex (A ruled table): reword \vtop comment.
+	(PDF p.57 = printed p.37)
+
+	* usingtex.tex (Math formulas): mention that \TeX\ does its own
+	spacing math. (PDF p.36 = printed p.16)
+
+	* usingtex.tex (Spaces): supposed to produce -> supposed to
+	do. (PDF p.32 = printed p.12)
+
+	* usebook.tex: mention that chapter (section) 13 is also random access.
+	(PDF p.21 = printed p.1)
+
+	* genops.tex: avoid horrible language list that's now in
+	\fmtversion, running off the page. (PDF p.245 = printed p.225)
+
+	* usingtex.tex: force \eject to avoid underfull \vbox.
+	(PDF p.34 = printed p.14)
+
+	* macros.tex (\hand): the right-pointing hand is \char"2B in
+	pzdr. Report from Will Adams.
+
+	* xmptext.tex: "pages 97 and 100", using new \xrefndelim.
+	(PDF p.46 = printed p.26)
+	* macros.tex (\xrefndelim): new macro.
+
+2020-01-01  Karl Berry  <karl@freefriends.org>
+
+	Because we no longer have that erroneous extra stretchability from
+	the \fontdimen example:
+
+	* fdl.tex: use \spaceskip twice to avoid overfull boxes.
+
+	* genops.tex (\showlists): reword to avoid overfull box.
+	(PDF p.273 = printed p.253)
+
+	* genops.tex: reword "stream numbers...\newread" sentence to
+	avoid overfull box. (PDF p.268 = printed p.248)
+
+2020-01-01  Karl Berry  <karl@freefriends.org>
+
+	Following bugs reported recently by David Fuchs,
+	and by others in the past:
+	
+	* paras.tex (\parshape): explicitly save and restore \fontdimen
+	since those assignments are global. Mention this in description.
+        (PDF pp.138-9 = printed pp.118-9)
+
+	* genops.tex (Naming and reserving registers, etc.): reword first
+	item to avoid the doubling of \fontdimen3, which is not grouped,
+	thus affects all subsequent text (!). (PDF p.264 = printed p.244)
+	
+	(\fontdimen): show the save and restore of \fontdimen value
+	in the example. (PDF p.243 = printed p.223)
+	
+	* paras.tex (\everypar): remove \vglue hack for \secondprinting
+	to avoid overwriting text. A blank line before \example solves it
+	well enough. (PDF p.133 = printed p.113)
+
+	* errata.future: page 113 overlap now fixed; updates for all other
+	changes as needed.
+	
+2020-01-01  Karl Berry  <karl@freefriends.org>
+
+	* copyrght.tex: 2020
+
+	* Start from CTAN release of 13 November 2014 (393 PDF pages).
+	The version at https://savannah.gnu.org/projects/teximpatient has
+	been moved to git, but, it seems, no substantive changes made.

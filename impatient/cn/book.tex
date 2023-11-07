@@ -1,0 +1,63 @@
+% This is part of the book TeX for the Impatient.
+% Copyright (C) 2003 Paul W. Abrahams, Kathryn A. Hargreaves, Karl Berry.
+% See file fdl.tex for copying conditions.
+
+% Top-level control.
+%
+\input macros
+% Here we override part of the configuration 
+% since we're doing a full run.
+\rewritetocfiletrue % always do a table of contents
+\xrefwarningtrue
+\completebooktrue
+\edgetabsfalse
+\includeartwork{0cover}
+\input frontm
+% (not for web)
+\edgetabstrue
+\settabdepth{\bigtab}
+\includeartwork{0watchrock}
+\input usebook
+\includeartwork{ch01-usingbook}
+\input usingtex
+\includeartwork{ch02-usingtex}
+\input examples
+\includeartwork{ch03-examples}
+\nextedgetab
+\input concepts
+\includeartwork{ch04-concepts}
+\nextedgetab
+\settabdepth{\smalltab}
+\input paras
+\includeartwork{ch05-para}
+\nextedgetab
+\input pages
+\includeartwork{ch06-pages}
+\nextedgetab
+\input modes
+\includeartwork{ch07-horizvert}
+\nextedgetab
+\input math
+\includeartwork{ch08-math}
+\nextedgetab
+\input genops
+\includeartwork{ch09-general}
+\nextedgetab
+\settabdepth{\bigtab}
+\input tips
+\includeartwork{ch10-tips}
+\input errors
+\includeartwork{ch11-errors}
+\input usermacs
+\includeartwork{ch12-compendium}
+\nextedgetab
+\input capsule
+\includeartwork{ch13-summary}
+\nextedgetab
+\backmatter
+\input fdl
+\input index
+\edgetabsfalse
+\input backm
+
+\bye
