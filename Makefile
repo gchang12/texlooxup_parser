@@ -1,2 +1,4 @@
-cleanup: source purge.sh
-create: python3 parser.py
+output/:
+	python3 parser.py
+clean:
+	source purge.sh
