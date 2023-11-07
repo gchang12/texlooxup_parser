@@ -6,6 +6,12 @@ Defines functions to extract data from `TeX for the Impatient' source.
 2. Create a directory to store files for this section.
 3. For each definition, create named input file for the commands present.
 4. Log and inspect invalid command names as necessary.
+
+i.      Create input directory.
+ii.     Generate input files.
+iii.    Create output directory.
+iv.     Typeset.
+v.      Clean up output directory.
 """
 
 import logging
@@ -47,32 +53,27 @@ def create_input_files_from_deftext(deftext: str, section: str):
     """
     ifile_head = ["\\input macros", "\\begindescriptions", "\\begindesc"]
     ifile_tail = ["\\enddesc", "\\enddescriptions", "\\end"]
-    exceptions = {
-            'paras': {'/': "_forwardslash"},
-            'modes': {},
-            'genops': {},
-            'math': {},
-            'pages': {},
-            }
     for line in deftext.splitlines():
         search_result = re.search("\\\\cts\w* (\S+)", line)
         if search_result is None:
             continue
         try:
             filename = search_result.group(1)
-            if filename in exceptions[section]:
-                filename = exceptions[section][filename]
         except IndexError:
             continue
-        logging.info("Found '%s/%s' control sequence. Writing.", section, filename)
-        if re.fullmatch("[a-zA-Z]+", filename) is None:
-            logging.warning("'%s/%s' is not a valid filename. Please inspect.", section, filename)
+        logging.info("Found '%s/%s' control sequence.", section, filename)
+        if re.fullmatch("[a-z]+", filename) is None:
+            while re.fullmatch("[a-zA-Z]+", filename) is None:
+                print(deftext)
+                filename = input("'%s/%s' is not a valid filename. Please either input 'SKIP' to skip this file, or input a filename of the form: [a-z]+\n\n")
+            if filename == "SKIP":
+                continue
+            # to denote that this was a filename that needed amending
+            filename = "_" + filename
         ifile_text = "\n".join( ifile_head + deftext.splitlines() + ifile_tail)
-        try:
-            Path("input", section, filename + ".tex").write_text(ifile_text)
-        except PermissionError:
-            logging.warning("PermissionError. '%s/%s' not written.", section, filename)
-            break
+        logging.info("Attempting to write '%s/%s'.", section, filename)
+        Path("input", section, filename + ".tex").write_text(ifile_text)
+        logging.info("Successfully written '%s/%s'.", section, filename)
 
 def typeset_input_files(section: str):
     """
@@ -93,6 +94,7 @@ def typeset_input_files(section: str):
             continue
         logging.info("Processing file #%d of %d: '%s/%s'", filenum, num_files, section, filename.name)
         os.system(f"pdftex -jobname {jobname} -output-directory {str(output_dir)} {str(filename)}")
+    os.chdir("../..")
 
 def cleanup_output(section: str):
     """
@@ -104,13 +106,72 @@ def cleanup_output(section: str):
         logging.info("Removing '%s'.", miscfile.name)
         miscfile.unlink()
 
+def main():
+    """
+    Creates output for the sections: genops, math, modes, pages, paras.
+
+    1. Creates an input directory to store the source files.
+    2. Creates the source files.
+    3. Creates the output directory.
+    4. Typesets the files.
+    5. Cleans up non-PDF files.
+    """
+    section_list = ("genops", "math", "modes", "pages", "paras")
+    for section in section_list:
+        create_input_dir(section)
+        for deftext in get_definition_list(section):
+            create_input_files_from_deftext(deftext, section)
+        typeset_input_files(section)
+        cleanup_output(section)
+
+def main2():
+    """
+    Creates output for the sections: capsule, errors, examples, tips, usebook, usermacs, usingtex
+
+    Stored in 'miscellany' output directory.
+    """
+    miscellany_list = ("usebook", "usingtex", "examples", "tips", "errors", "usermacs", "capsule")
+    output_dir = "miscellany"
+    create_input_dir(output_dir)
+    # examples.tex references xmptext.tex
+    example_text = Path("impatient", "xmptext.tex").read_text()
+    Path("output", output_dir, "xmptext.tex").write_text(example_text)
+    for miscellany in miscellany_list:
+        itext = Path("impatient", miscellany + ".tex").read_text()
+        Path("input", "miscellany", miscellany + ".tex").write_text(itext)
+    typeset_input_files(output_dir)
+    cleanup_output(output_dir)
+
+def main3():
+    """
+    Creates output for the 'concepts' section.
+
+    Stored in 'concepts' output directory.
+    """
+    itext = Path("impatient", "concepts.tex").read_text()
+    concept_defs = re.split(r"\\concept\W+", itext)[1:]
+    output_dir = "concepts"
+    create_input_dir(output_dir)
+    output_path = Path("output", output_dir)
+    output_path.mkdir(parents=True, exist_ok=True)
+    ctrlseq_names = ("anatomy", "plainTeX", "TeXMeX")
+    ifile_head = ["\\input macros", "\\beginconcepts"]
+    ifile_tail = ["\\endconcepts", "\\end"]
+    for concept_def in concept_defs:
+        concept_name = concept_def.splitlines()[0].strip()
+        # for exceptional names encountered
+        if concept_name[:-1] in ctrlseq_names:
+            concept_def = "\\" + concept_def
+        # for spaced names, and special names.
+        if concept_name[-1] == "}":
+            concept_def = "{" + concept_def
+        concept_def = "\\concept " + concept_def.replace("\\pagebreak", "")
+        concept_def = re.sub(r"\\conceptindex.*$", "", concept_def)
+        concept_lines = ifile_head + concept_def.splitlines() + ifile_tail
+        concept_name = re.sub("\W", "", concept_name).replace(" ", "-")
+        Path("input", "concepts").joinpath(concept_name + ".tex").write_text("\n".join(concept_lines))
+    typeset_input_files(output_dir)
+    cleanup_output(output_dir)
+
 if __name__ == '__main__':
-    section = "pages"
     logging.basicConfig(level=logging.INFO, format="%(levelname)s:texdict2:%(message)s", filename="log_texdict2.log")
-    """
-    create_input_dir(section)
-    for deftext in get_definition_list(section):
-        create_input_files_from_deftext(deftext, section)
-    """
-    #typeset_input_files(section)
-    cleanup_output(section)
