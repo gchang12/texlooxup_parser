@@ -188,8 +188,8 @@ def main__concepts():
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format="%(levelname)s:texdict2:%(message)s", filename="log_texdict2.log")
     output_dirlist = ("paras", "miscellany", "concepts")
-    output_creators = (main__sections, main__miscellany, main__concepts)
-    for outdir, outfunc in zip(output_dirlist, output_creators):
+    output_factories = (main__sections, main__miscellany, main__concepts)
+    for outdir, outfunc in zip(output_dirlist, output_factories):
         if Path("output", outdir).exists():
             logging.info("'output/%s' exists. Assuming that '%s' has already been run. Skipping.", outdir, outfunc.__name__)
             continue
