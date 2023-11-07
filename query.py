@@ -20,20 +20,21 @@ SECTION_LIST = (
     "paras",
     )
 
-def texdict(pattern=None, sections=None):
+
+# TODO: Finish writing this function
+def texdict(parser: argparse.ArgumentParser):
     """
-    Allows user to look up TeX commands by patterns and section.
+    Allows user to look up TeX commands by pattern and section.
     """
-    if (pattern, section) == (None, None):
-        logging.warning(
-            "Uh-oh. The 'texdict' function ran by mistake.\n"
-            "Ideally, it should not run if both the pattern and section are blank."
-            )
+    parsed_args = parser.parse_args()
+    pattern, sections = (parsed_args.pattern, parsed_args.sections)
+    if (pattern, sections) == (None, None):
         # return help message
+        parser.parse_args(["-h"])
         return None
-    if pattern == None:
+    if pattern is None:
         pattern = ".*"
-    elif sections == None:
+    elif sections is None:
         sections = SECTION_LIST
     # search by section, then by pattern, if any.
     search_results = []
@@ -62,46 +63,47 @@ def texdict(pattern=None, sections=None):
         user_input = ""
         while user_input not in [str(index) for index in range(len(search_results))]:
             user_input = input("Please make a selection: ")
-        # open PDF: f"output/{search_results[int(user_input)]}"
+        # TODO: open PDF: f"output/{search_results[int(user_input)]}"
         logging.info("Now opening PDF file: 'output/%s'.", search_results[int(user_input)])
     else:
         result_report = f"Your search for the pattern: {pattern}\nin the sections: {','.join(sections)}\nyielded no results."
         print(result_report)
 
-parser = argparse.ArgumentParser(
-        prog="texdict",
-        description="Search for a command to look up by pattern, by section, or by both.",
-        epilog="Have a question?\nhttps://github.com/gchang12",
-    )
-
-def texdict(pattern=None, sections=None):
-    print("pattern:", pattern)
-    print("sections:", sections)
-
-parser.set_defaults(func=texdict)
-
-parser.add_argument("-sections",
-        metavar="sections",
-        type=str,
-        nargs="*",
-        choices = SECTION_LIST,
-        required=False,
-        action="extend",
-        help="specify which sections to search (default: <all>)",
-    )
-
-parser.add_argument("pattern",
-        metavar="pattern",
-        type=str,
-        nargs="?",
-        action="store",
-        help="specify the pattern to search for in the list of control sequences (default: .*)",
-    )
+def get_parser():
+    """
+    Creates an argument parser that has a 'pattern' and a 'sections' attribute.
+    """
+    parser = argparse.ArgumentParser(
+            prog="texdict",
+            description="Search for a command to look up by pattern, by section, or by both.",
+            epilog="Have a question?\nhttps://github.com/gchang12",
+        )
+    parser.add_argument("-sections",
+            metavar="sections",
+            type=str,
+            nargs="*",
+            choices = SECTION_LIST,
+            required=False,
+            action="extend",
+            help="specify which sections to search (default: <all>)",
+        )
+    parser.add_argument("pattern",
+            metavar="pattern",
+            type=str,
+            nargs="?",
+            action="store",
+            help="specify the pattern to search for in the list of control sequences (default: .*)",
+        )
+    return parser
 
 if __name__ == '__main__':
+    parser = get_parser()
     parsed_args = parser.parse_args()
     td_args = (parsed_args.pattern, parsed_args.sections)
     if td_args == (None, None):
         parser.parse_args(["-h"])
     else:
+        def texdict(pattern=None, sections=None):
+            print("pattern:", pattern)
+            print("sections:", sections)
         texdict(*td_args)
