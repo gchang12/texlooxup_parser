@@ -2,11 +2,15 @@
 """
 Defines functions to extract, parse, and process data from `TeX for the Impatient' source.
 
+GETTING DEFINITIONS FROM SECTIONS
+=================================
 1. Given a section, compile a list of definitions that are in that section.
 2. Create a directory to store files for this section.
 3. For each definition, create named input file for the commands present.
 4. Log and inspect invalid command names as necessary.
 
+CREATING OUTPUT FILES
+=====================
 i.      Create input directory.
 ii.     Generate input files.
 iii.    Create output directory.
@@ -14,15 +18,17 @@ iv.     Typeset.
 v.      Clean up output directory.
 """
 
+from typing import List
 import logging
 import re
 import os
 from pathlib import Path
 
+
 KERNEL_FILES = ("config", "eplain", "fonts", "macros")
 
 
-def get_definition_list(section: str):
+def get_definition_list(section: str) -> List[str]:
     """
     Retrieves list of definitions delimited by \\enddesc and \\begindesc.
     """
@@ -39,7 +45,9 @@ def get_definition_list(section: str):
 
 def create_input_dir(section: str):
     """
-    Creates a folder for the input files for a given section.
+    Creates a folder for the input files for a given section, and inserts the needed files.
+
+    Needed files, per KERNEL_FILES tuple: config, eplain, fonts, macro
     """
     Path("input", section).mkdir(parents=True, exist_ok=True)
     logging.info("'input/%s' directory created.", section)
@@ -49,7 +57,9 @@ def create_input_dir(section: str):
 
 def create_input_files_from_deftext(deftext: str, section: str):
     """
-    Creates input files from a given definition-text.
+    Creates input files from a given definition-text from a section.
+
+    Allows user to give input to invalid filenames, and skip them if necessary.
     """
     ifile_head = ["\\input macros", "\\begindescriptions", "\\begindesc"]
     ifile_tail = ["\\enddesc", "\\enddescriptions", "\\end"]
@@ -77,7 +87,7 @@ def create_input_files_from_deftext(deftext: str, section: str):
 
 def typeset_input_files(section: str):
     """
-    Typesets all input files created in previous step.
+    Typesets all input files in 'input/{section}', and moves the output into 'output/{section}'.
     """
     logging.info("cd input/%s.", section)
     os.chdir(f"input/{section}")
@@ -112,7 +122,7 @@ def main__sections():
 
     1. Creates an input directory to store the source files.
     2. Creates the source files.
-    3. Creates the output directory.
+    3. Creates an output directory for each section.
     4. Typesets the files.
     5. Cleans up non-PDF files.
     """
@@ -179,8 +189,8 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format="%(levelname)s:texdict2:%(message)s", filename="log_texdict2.log")
     output_dirlist = ("paras", "miscellany", "concepts")
     output_creators = (main__sections, main__miscellany, main__concepts)
-    for odir, func in zip(output_dirlist, output_creators):
-        if Path("output", odir).exists():
-            logging.info("'output/%s' exists. Assuming that '%s' has already been run. Skipping.", odir, func.__name__)
+    for outdir, outfunc in zip(output_dirlist, output_creators):
+        if Path("output", outdir).exists():
+            logging.info("'output/%s' exists. Assuming that '%s' has already been run. Skipping.", outdir, outfunc.__name__)
             continue
-        func()
+        outfunc()
