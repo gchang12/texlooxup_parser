@@ -25,7 +25,7 @@ import os
 from pathlib import Path
 
 
-KERNEL_FILES = ("config", "eplain", "fonts", "macros")
+AUX_FILES = ("config", "eplain", "fonts", "macros")
 
 
 def get_definition_list(section: str) -> List[str]:
@@ -47,14 +47,14 @@ def create_input_dir(section: str):
     """
     Creates a folder for the input files for a given section, and inserts the needed files.
 
-    Needed files, per KERNEL_FILES tuple: config, eplain, fonts, macro
+    Needed files, per AUX_FILES tuple: config, eplain, fonts, macro
     """
     Path("input", section).mkdir(parents=True, exist_ok=True)
     logging.info("'input/%s' directory created.", section)
-    for file in KERNEL_FILES:
+    for file in AUX_FILES:
         intext = Path("impatient").joinpath(file + ".tex").read_text()
         Path("input", section, file + ".tex").write_text(intext)
-    logging.info("input/{%s,%s,%s,%s} files created", *KERNEL_FILES)
+    logging.info("input/{%s,%s,%s,%s} files created", *AUX_FILES)
 
 def create_input_files_from_deftext(deftext: str, section: str):
     """
@@ -64,6 +64,7 @@ def create_input_files_from_deftext(deftext: str, section: str):
     """
     ifile_head = ["\\input macros", "\\begindescriptions", "\\begindesc"]
     ifile_tail = ["\\enddesc", "\\enddescriptions", "\\end"]
+    added_command_list = []
     for line in deftext.splitlines():
         search_result = re.search("\\\\cts\w* (\S+)", line)
         if search_result is None:
@@ -73,11 +74,12 @@ def create_input_files_from_deftext(deftext: str, section: str):
         except IndexError:
             continue
         logging.info("Found '%s/%s' control sequence.", section, filename)
-        if re.fullmatch("[a-z]+", filename) is None:
+        if re.fullmatch("[a-zA-Z]+", filename) is None:
             old_filename = filename
+            print(deftext)
+            print("list of added commands:", added_command_list)
             while re.fullmatch("[a-zA-Z]+", filename) is None:
-                print(deftext)
-                filename = input(f"'{section}/{filename}' is not a valid filename. Please either input 'SKIP' to skip this file, or input a filename of the form: [a-z]+\n\n")
+                filename = input(f"'{section}/{filename}.tex' is not a valid filename. Please either input 'SKIP' to skip this file, or input a filename of the form: [a-zA-Z]+\n\n")
             if filename == "SKIP":
                 logging.warning("Discarding '%s/%s'.", section, old_filename)
                 continue
@@ -88,6 +90,7 @@ def create_input_files_from_deftext(deftext: str, section: str):
         logging.info("Attempting to write '%s/%s'.", section, filename)
         Path("input", section, filename + ".tex").write_text(ifile_text)
         logging.info("Successfully written '%s/%s'.", section, filename)
+        added_command_list.append(filename)
 
 def typeset_input_files(section: str):
     """
@@ -103,11 +106,11 @@ def typeset_input_files(section: str):
     logging.info("%d files found. Now processing.", num_files)
     for filenum, filename in enumerate(ifile_list, start=1):
         jobname = filename.name.replace(".tex", "")
-        if jobname in KERNEL_FILES:
-            logging.info("Skipping kernel file: '%s'.", filename.name)
+        if jobname in AUX_FILES:
+            logging.info("Skipping auxiliary file: '%s'.", filename.name)
             continue
         logging.info("Processing file #%d of %d: '%s/%s'", filenum, num_files, section, filename.name)
-        os.system(f"pdftex -jobname {jobname} -output-directory {str(output_dir)} -interaction batchmode {str(filename)}")
+        os.system(f"pdftex -jobname {jobname} -output-directory {str(output_dir)} -interaction batchmode {str(filename)} > /dev/null")
     os.chdir("../..")
 
 def cleanup_output(section: str):
@@ -157,7 +160,7 @@ def main__miscellany():
     logging.info("'%s' needed for 'examples.tex. Copying.", "impatient/xmptext.tex")
     example_text = Path("impatient", "xmptext.tex").read_text()
     output_path.joinpath("xmptext.tex").write_text(example_text)
-    logging.info("'%s' successfully written from '%s'.", str(output_path.joinpath("xmptext.tex"), "impatient/xmptext.tex"))
+    logging.info("'%s' successfully written from '%s'.", str(output_path.joinpath("xmptext.tex")), "impatient/xmptext.tex")
     for miscellany in miscellany_list:
         itext = Path("impatient", miscellany + ".tex").read_text()
         Path("input", "miscellany", miscellany + ".tex").write_text(itext)
