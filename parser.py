@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Defines functions to extract data from `TeX for the Impatient' source.
+Defines functions to extract, parse, and process data from `TeX for the Impatient' source.
 
 1. Given a section, compile a list of definitions that are in that section.
 2. Create a directory to store files for this section.
@@ -42,7 +42,7 @@ def create_input_dir(section: str):
     Creates a folder for the input files for a given section.
     """
     Path("input", section).mkdir(parents=True, exist_ok=True)
-    logging.info("input/'%s' directory created.", section)
+    logging.info("'input/%s' directory created.", section)
     for file in KERNEL_FILES:
         intext = Path("impatient").joinpath(file + ".tex").read_text()
         Path("input", section, file + ".tex").write_text(intext)
@@ -65,7 +65,7 @@ def create_input_files_from_deftext(deftext: str, section: str):
         if re.fullmatch("[a-z]+", filename) is None:
             while re.fullmatch("[a-zA-Z]+", filename) is None:
                 print(deftext)
-                filename = input("'%s/%s' is not a valid filename. Please either input 'SKIP' to skip this file, or input a filename of the form: [a-z]+\n\n")
+                filename = input(f"'{section}/{filename}' is not a valid filename. Please either input 'SKIP' to skip this file, or input a filename of the form: [a-z]+\n\n")
             if filename == "SKIP":
                 continue
             # to denote that this was a filename that needed amending
@@ -83,7 +83,7 @@ def typeset_input_files(section: str):
     os.chdir(f"input/{section}")
     output_dir = Path("..", "..", "output", section)
     output_dir.mkdir(parents=True, exist_ok=True)
-    logging.info("input/%s directory created.", section)
+    logging.info("'input/%s' directory created.", section)
     ifile_list = list(Path().glob("*.tex"))
     num_files = len(ifile_list)
     logging.info("%d files found. Now processing.", num_files)
@@ -93,7 +93,7 @@ def typeset_input_files(section: str):
             logging.info("Skipping kernel file: '%s'.", filename.name)
             continue
         logging.info("Processing file #%d of %d: '%s/%s'", filenum, num_files, section, filename.name)
-        os.system(f"pdftex -jobname {jobname} -output-directory {str(output_dir)} {str(filename)}")
+        os.system(f"pdftex -jobname {jobname} -output-directory {str(output_dir)} -interaction batchmode {str(filename)} > /dev/null")
     os.chdir("../..")
 
 def cleanup_output(section: str):
@@ -106,7 +106,7 @@ def cleanup_output(section: str):
         logging.info("Removing '%s'.", miscfile.name)
         miscfile.unlink()
 
-def main():
+def main__sections():
     """
     Creates output for the sections: genops, math, modes, pages, paras.
 
@@ -124,7 +124,7 @@ def main():
         typeset_input_files(section)
         cleanup_output(section)
 
-def main2():
+def main__miscellany():
     """
     Creates output for the sections: capsule, errors, examples, tips, usebook, usermacs, usingtex
 
@@ -133,16 +133,18 @@ def main2():
     miscellany_list = ("usebook", "usingtex", "examples", "tips", "errors", "usermacs", "capsule")
     output_dir = "miscellany"
     create_input_dir(output_dir)
+    output_path = Path("output", output_dir)
+    output_path.mkdir(parents=True, exist_ok=True)
     # examples.tex references xmptext.tex
     example_text = Path("impatient", "xmptext.tex").read_text()
-    Path("output", output_dir, "xmptext.tex").write_text(example_text)
+    output_path.joinpath("xmptext.tex").write_text(example_text)
     for miscellany in miscellany_list:
         itext = Path("impatient", miscellany + ".tex").read_text()
         Path("input", "miscellany", miscellany + ".tex").write_text(itext)
     typeset_input_files(output_dir)
     cleanup_output(output_dir)
 
-def main3():
+def main__concepts():
     """
     Creates output for the 'concepts' section.
 
@@ -175,3 +177,10 @@ def main3():
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format="%(levelname)s:texdict2:%(message)s", filename="log_texdict2.log")
+    output_dirlist = ("paras", "miscellany", "concepts")
+    output_creators = (main__sections, main__miscellany, main__concepts)
+    for odir, func in zip(output_dirlist, output_creators):
+        if Path("output", odir).exists():
+            logging.info("'output/%s' exists. Assuming that '%s' has already been run. Skipping.", odir, func.__name__)
+            continue
+        func()
