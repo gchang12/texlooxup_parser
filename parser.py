@@ -54,6 +54,7 @@ def create_input_dir(section: str):
     for file in KERNEL_FILES:
         intext = Path("impatient").joinpath(file + ".tex").read_text()
         Path("input", section, file + ".tex").write_text(intext)
+    logging.info("input/{%s,%s,%s,%s} files created", *KERNEL_FILES)
 
 def create_input_files_from_deftext(deftext: str, section: str):
     """
@@ -73,13 +74,16 @@ def create_input_files_from_deftext(deftext: str, section: str):
             continue
         logging.info("Found '%s/%s' control sequence.", section, filename)
         if re.fullmatch("[a-z]+", filename) is None:
+            old_filename = filename
             while re.fullmatch("[a-zA-Z]+", filename) is None:
                 print(deftext)
                 filename = input(f"'{section}/{filename}' is not a valid filename. Please either input 'SKIP' to skip this file, or input a filename of the form: [a-z]+\n\n")
             if filename == "SKIP":
+                logging.warning("Discarding '%s/%s'.", section, old_filename)
                 continue
             # to denote that this was a filename that needed amending
             filename = "_" + filename
+            logging.info("Renamed '%s/%s' to '%s/%s'.", section, old_filename, section, filename)
         ifile_text = "\n".join( ifile_head + deftext.splitlines() + ifile_tail)
         logging.info("Attempting to write '%s/%s'.", section, filename)
         Path("input", section, filename + ".tex").write_text(ifile_text)
@@ -103,7 +107,7 @@ def typeset_input_files(section: str):
             logging.info("Skipping kernel file: '%s'.", filename.name)
             continue
         logging.info("Processing file #%d of %d: '%s/%s'", filenum, num_files, section, filename.name)
-        os.system(f"pdftex -jobname {jobname} -output-directory {str(output_dir)} -interaction batchmode {str(filename)} > /dev/null")
+        os.system(f"pdftex -jobname {jobname} -output-directory {str(output_dir)} -interaction batchmode {str(filename)}")
     os.chdir("../..")
 
 def cleanup_output(section: str):
@@ -126,7 +130,9 @@ def main__sections():
     4. Typesets the files.
     5. Cleans up non-PDF files.
     """
+    logging.info("Running: main__sections()")
     section_list = ("genops", "math", "modes", "pages", "paras")
+    logging.info("Now creating filesystem for sections: %s", section_list)
     for section in section_list:
         create_input_dir(section)
         for deftext in get_definition_list(section):
@@ -140,14 +146,18 @@ def main__miscellany():
 
     Stored in 'miscellany' output directory.
     """
+    logging.info("Running: main__miscellany()")
     miscellany_list = ("usebook", "usingtex", "examples", "tips", "errors", "usermacs", "capsule")
     output_dir = "miscellany"
     create_input_dir(output_dir)
     output_path = Path("output", output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
+    logging.info("'%s' directory created", str(output_path))
     # examples.tex references xmptext.tex
+    logging.info("'%s' needed for 'examples.tex. Copying.", "impatient/xmptext.tex")
     example_text = Path("impatient", "xmptext.tex").read_text()
     output_path.joinpath("xmptext.tex").write_text(example_text)
+    logging.info("'%s' successfully written from '%s'.", str(output_path.joinpath("xmptext.tex"), "impatient/xmptext.tex"))
     for miscellany in miscellany_list:
         itext = Path("impatient", miscellany + ".tex").read_text()
         Path("input", "miscellany", miscellany + ".tex").write_text(itext)
@@ -160,12 +170,15 @@ def main__concepts():
 
     Stored in 'concepts' output directory.
     """
+    logging.info("Running: main__concepts()")
+    logging.info("reading 'impatient/concepts.tex' to memory.")
     itext = Path("impatient", "concepts.tex").read_text()
     concept_defs = re.split(r"\\concept\W+", itext)[1:]
     output_dir = "concepts"
     create_input_dir(output_dir)
     output_path = Path("output", output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
+    logging.info("'%s' directory created.", str(output_path))
     ctrlseq_names = ("anatomy", "plainTeX", "TeXMeX")
     ifile_head = ["\\input macros", "\\beginconcepts"]
     ifile_tail = ["\\endconcepts", "\\end"]
@@ -182,6 +195,7 @@ def main__concepts():
         concept_lines = ifile_head + concept_def.splitlines() + ifile_tail
         concept_name = re.sub("\W", "", concept_name).replace(" ", "-")
         Path("input", "concepts").joinpath(concept_name + ".tex").write_text("\n".join(concept_lines))
+        logging.info("'input/concepts/%s.tex' written to disk.", concept_name)
     typeset_input_files(output_dir)
     cleanup_output(output_dir)
 
