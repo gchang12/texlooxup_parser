@@ -16,6 +16,16 @@ ii.     Generate input files.
 iii.    Create output directory.
 iv.     Typeset.
 v.      Clean up output directory.
+
+FUNCTIONS DEFINED
+=================
+- get_definition_list
+- create_input_dir
+- create_input_files_from_deftext
+- typeset_input_files
+- cleanup_output
+
+- main__{sections,miscellany,concepts}
 """
 
 from typing import List
@@ -133,7 +143,7 @@ def main__sections():
     4. Typesets the files.
     5. Cleans up non-PDF files.
     """
-    logging.info("Running: main__sections()")
+    logging.info("main__sections()")
     section_list = ("genops", "math", "modes", "pages", "paras")
     logging.info("Now creating filesystem for sections: %s", section_list)
     for section in section_list:
@@ -149,7 +159,7 @@ def main__miscellany():
 
     Stored in 'miscellany' output directory.
     """
-    logging.info("Running: main__miscellany()")
+    logging.info("main__miscellany()")
     miscellany_list = ("usebook", "usingtex", "examples", "tips", "errors", "usermacs", "capsule")
     output_dir = "miscellany"
     create_input_dir(output_dir)
@@ -173,7 +183,7 @@ def main__concepts():
 
     Stored in 'concepts' output directory.
     """
-    logging.info("Running: main__concepts()")
+    logging.info("main__concepts()")
     logging.info("reading 'impatient/concepts.tex' to memory.")
     itext = Path("impatient", "concepts.tex").read_text()
     concept_defs = re.split(r"\\concept\W+", itext)[1:]
@@ -204,6 +214,16 @@ def main__concepts():
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format="%(levelname)s:texdict2:%(message)s", filename="log_texdict2.log")
+    logging.info("Running: main__sections()")
+    section_list = ("genops", "math", "modes", "pages", "paras")
+    logging.info("Now creating filesystem for sections: %s", section_list)
+    for section in section_list:
+        create_input_dir(section)
+        for deftext in get_definition_list(section):
+            create_input_files_from_deftext(deftext, section)
+        #typeset_input_files(section)
+        #cleanup_output(section)
+    exit()
     output_dirlist = ("paras", "miscellany", "concepts")
     output_factories = (main__sections, main__miscellany, main__concepts)
     for outdir, outfunc in zip(output_dirlist, output_factories):

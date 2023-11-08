@@ -3,7 +3,6 @@
 Provides command-line interface to accessing the `TeX for the Impatient' PDF files.
 """
 
-import sys
 import argparse
 from pathlib import Path
 import re
