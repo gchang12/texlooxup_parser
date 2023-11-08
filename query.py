@@ -88,7 +88,7 @@ def get_parser():
     parser = argparse.ArgumentParser(
             prog="texdict",
             description="Search for a command to look up by pattern, by section, or by both.",
-            epilog="Have a question?\nhttps://github.com/gchang12",
+            epilog="Have a question?\nhttps://github.com/gchang12/texdict2",
         )
     parser.add_argument("-sections",
             metavar="sections",
