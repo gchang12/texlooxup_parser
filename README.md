@@ -8,7 +8,7 @@ You can search by pattern, by section, or by both.
 
 HOW TO BUILD
 ===
-`make clean`
+`make clean`  
 `make`
 
 HOW TO USE
@@ -24,7 +24,7 @@ Searching for the pattern 'par' in sections [genops, paras]
     sections: genops, math
     
     5 results found\.
-    \=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=
+    =============================
       0: math/parallel
       1: math/uparrow
       2: math/Uparrow
@@ -38,7 +38,7 @@ Searching for the pattern 'par' in all sections.
     sections: concepts, genops, math, miscellany, modes, pages, paras
     
     13 results found.
-    \=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=
+    =============================
       0: math/parallel
       1: math/uparrow
       2: math/Uparrow
@@ -60,7 +60,7 @@ Searching for commands in the section 'paras'.
     sections: paras
     
     142 results found.
-    \=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=\=
+    ===============================
       0: paras/_italiccorrection
       1: paras/S
       2: paras/P
