@@ -12,21 +12,29 @@ import query
 
 class MockParser:
     """
+    Exists to mock the argparse.ArgumentParser class.
     """
 
     def __init__(self, pattern: str, sections: List[str], called_with: List[Any] = []):
+        """
+        pattern: The pattern to search in the list of filenames.
+        sections: The list of sections whence to get that list of filenames.
+        called_with: Testing purposes only; exists to record the number of calls to 'parse_args'
+        """
         self.pattern = pattern
         self.sections = sections
         self.called_with = []
 
     def parse_args(self, args=None, namespace=None):
         """
+        To be pseudo-mocked by 'texdict'. Records what arguments it is called with.
         """
         self.called_with.append((args, namespace))
         return self
 
 class TexdictTest(unittest.TestCase):
     """
+    Defines tests for query.{get_parser,texdict} methods.
     """
 
     def setUp(self):
