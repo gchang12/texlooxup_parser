@@ -8,6 +8,7 @@ import argparse
 from pathlib import Path
 import re
 import logging
+import webbrowser
 
 
 SECTION_LIST = (
@@ -27,7 +28,7 @@ def texdict(parser: argparse.ArgumentParser):
     """
     parsed_args = parser.parse_args()
     pattern, sections = (parsed_args.pattern, parsed_args.sections)
-    if (pattern, sections) == (None, None):
+    if (pattern, sections) == (None, None) or (pattern, sections) == ("", None):
         # return help message
         parser.parse_args(["-h"])
         return None
@@ -40,32 +41,44 @@ def texdict(parser: argparse.ArgumentParser):
     logging.info("Now searching 'output'/* for sections that are in '%s'.", sections)
     for outdir in Path("output").iterdir():
         if outdir.name not in sections:
-            logging.info("'%s' is not in 'sections' parameter. Skipping..", outdir.name)
+            #logging.info("'%s' is not in 'sections' parameter. Skipping.", outdir.name)
             continue
         logging.info("'%s' is in 'sections' parameter. Searching.", outdir.name)
         for outfile in outdir.iterdir():
             if re.search(pattern, outfile.name) is None:
-                logging.info("'%s' is not matched by specified 'pattern', '%s'. Skipping.", outdir.name)
+                #logging.info("'%s' is not matched by specified 'pattern': '%s'. Skipping.", outfile.name, pattern)
                 continue
-            logging.info("'%s' is matched by specified 'pattern', '%s'. Appending.", outdir.name)
+            logging.info("'%s' is matched by specified 'pattern': '%s'. Appending.", outfile.name, pattern)
             search_results.append("/".join([outdir.name, outfile.name]))
-    logging.info("%d results found with pattern='%s', sections='%s'", len(search_results),  pattern, sections)
+    logging.info("%d results found with pattern='%s', sections='%s'", len(search_results), pattern, sections)
+    result_report = "\n    ".join( [
+                "",
+                f"pattern: '{pattern}'",
+                f"sections: {', '.join(sections)}",
+                "",
+                f"{len(search_results)} results found.",
+                ]
+            )
     if search_results:
-        # print result-set
-        result_report = f"Your search for the pattern: {pattern}\nin the sections: {','.join(sections)}\nyielded the following results:"
+        # print result-set and border
         print(result_report)
-        # print border
-        print("=" * max([len(line) for line in result_report.splitlines()]))
+        # '.pdf' is trimmed off each list item (-4)
+        # the indices are given a minimum width of 3 (+3)
+        # the following colon and space are 2 characters (+2)
+        border = "=" * (max([len(line) for line in search_results]) - 4 + 5)
+        print((" " * 4) + border)
         for index, sresult in enumerate(search_results):
-            print(f"{index}: {sresults}")
+            print((" " * 4) + f"{index:3d}: {sresult.replace('.pdf', '')}")
         # receive user input
         user_input = ""
         while user_input not in [str(index) for index in range(len(search_results))]:
-            user_input = input("Please make a selection: ")
-        # TODO: open PDF: f"output/{search_results[int(user_input)]}"
-        logging.info("Now opening PDF file: 'output/%s'.", search_results[int(user_input)])
+            user_input = input("\n" + (" " * 4) + "Please make a selection: ")
+        selection = search_results[int(user_input)]
+        print("\n    Now opening PDF: '%s'." % selection)
+        webbrowser.open_new(f"output/{selection}")
+        print()
+        return selection
     else:
-        result_report = f"Your search for the pattern: {pattern}\nin the sections: {','.join(sections)}\nyielded no results."
         print(result_report)
 
 def get_parser():
@@ -97,12 +110,4 @@ def get_parser():
 
 if __name__ == '__main__':
     parser = get_parser()
-    parsed_args = parser.parse_args()
-    td_args = (parsed_args.pattern, parsed_args.sections)
-    if td_args == (None, None):
-        parser.parse_args(["-h"])
-    else:
-        def texdict(pattern=None, sections=None):
-            print("pattern:", pattern)
-            print("sections:", sections)
-        texdict(*td_args)
+    texdict(parser)
