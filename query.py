@@ -45,7 +45,7 @@ def texdict(parser: argparse.ArgumentParser):
             continue
         logging.info("'%s' is in 'sections' parameter. Searching.", outdir.name)
         for outfile in outdir.iterdir():
-            if re.search(pattern, outfile.name) is None:
+            if re.search(pattern, outfile.name.replace('.pdf', '') is None:
                 #logging.info("'%s' is not matched by specified 'pattern': '%s'. Skipping.", outfile.name, pattern)
                 continue
             logging.info("'%s' is matched by specified 'pattern': '%s'. Appending.", outfile.name, pattern)
@@ -81,6 +81,7 @@ def texdict(parser: argparse.ArgumentParser):
     else:
         print(result_report)
 
+# TODO: Add in option to specify how to search by pattern (e.g. match, fullmatch, search)
 def get_parser():
     """
     Creates an argument parser that has a 'pattern' and a 'sections' attribute.

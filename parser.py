@@ -64,7 +64,7 @@ def create_input_files_from_deftext(deftext: str, section: str):
     """
     ifile_head = ["\\input macros", "\\begindescriptions", "\\begindesc"]
     ifile_tail = ["\\enddesc", "\\enddescriptions", "\\end"]
-    added_command_list = []
+    renamed_command_list = []
     for line in deftext.splitlines():
         search_result = re.search("\\\\cts\w* (\S+)", line)
         if search_result is None:
@@ -77,8 +77,8 @@ def create_input_files_from_deftext(deftext: str, section: str):
         if re.fullmatch("[a-zA-Z]+", filename) is None:
             old_filename = filename
             print(deftext)
-            print("list of added commands:", added_command_list)
-            while re.fullmatch("[a-zA-Z]+", filename) is None:
+            print("A filename is invalid if it appears in the list of renamed commands:", [cmd[1:] for cmd in renamed_command_list])
+            while (re.fullmatch("[a-zA-Z]+", filename) is None) or ("_" + filename in renamed_command_list):
                 filename = input(f"'{section}/{filename}.tex' is not a valid filename. Please either input 'SKIP' to skip this file, or input a filename of the form: [a-zA-Z]+\n\n")
             if filename == "SKIP":
                 logging.warning("Discarding '%s/%s'.", section, old_filename)
@@ -86,11 +86,11 @@ def create_input_files_from_deftext(deftext: str, section: str):
             # to denote that this was a filename that needed amending
             filename = "_" + filename
             logging.info("Renamed '%s/%s' to '%s/%s'.", section, old_filename, section, filename)
+            renamed_command_list.append(filename)
         ifile_text = "\n".join( ifile_head + deftext.splitlines() + ifile_tail)
         logging.info("Attempting to write '%s/%s'.", section, filename)
         Path("input", section, filename + ".tex").write_text(ifile_text)
         logging.info("Successfully written '%s/%s'.", section, filename)
-        added_command_list.append(filename)
 
 def typeset_input_files(section: str):
     """
