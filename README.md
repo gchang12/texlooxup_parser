@@ -17,7 +17,7 @@ HOW TO USE
 
 EXAMPLES
 ===
-Searching for the pattern 'par' in sections [genops, paras]
+Searching for the pattern '`par`' in sections `[genops, paras]`  
 `python query.py par -section genops para`
 
     pattern: 'par'
@@ -31,7 +31,7 @@ Searching for the pattern 'par' in sections [genops, paras]
       3: math/partial
       4: genops/tracingparagraphs
 
-Searching for the pattern 'par' in all sections.
+Searching for the pattern '`par`' in all sections.  
 `python query.py par`
 
     pattern: 'par'
@@ -53,7 +53,7 @@ Searching for the pattern 'par' in all sections.
      11: paras/parindent
      12: paras/par
 
-Searching for commands in the section 'paras'.
+Searching for commands in the section '`paras`'.  
 `python query.py -section paras`
 
     pattern: '.*'
