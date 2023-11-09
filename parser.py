@@ -231,3 +231,4 @@ if __name__ == '__main__':
             logging.info("'output/%s' exists. Assuming that '%s' has already been run. Skipping.", outdir, outfunc.__name__)
             continue
         outfunc()
+    print("Build done. Run `python3 query.py par -section paras` to test.")

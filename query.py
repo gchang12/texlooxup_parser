@@ -44,7 +44,7 @@ def texdict(parser: argparse.ArgumentParser):
             continue
         logging.info("'%s' is in 'sections' parameter. Searching.", outdir.name)
         for outfile in outdir.iterdir():
-            if re.search(pattern, outfile.name.replace('.pdf', '') is None:
+            if re.search(pattern, outfile.name.replace('.pdf', '')) is None:
                 #logging.info("'%s' is not matched by specified 'pattern': '%s'. Skipping.", outfile.name, pattern)
                 continue
             logging.info("'%s' is matched by specified 'pattern': '%s'. Appending.", outfile.name, pattern)

@@ -3,6 +3,7 @@
 Defines functions that are meant to test the query.texdict function.
 """
 
+import io
 from typing import List, Any
 import logging
 import unittest
@@ -69,12 +70,13 @@ class TexdictTest(unittest.TestCase):
         self.assertEqual(parsed_args.pattern, "para")
         self.assertEqual(parsed_args.sections, ['paras', 'genops'])
 
-    @patch("__main__.input")
-    def test_texdict(self, mockinput):
+    @patch("sys.stdout", new_callable=io.StringIO)
+    @patch("webbrowser.open_new")
+    @patch("builtins.input")
+    def test_texdict(self, mockinput, mock_pdfopener, mock_stdout):
         """
         Tests functionality of 'texdict' function.
         """
-        pdfopener_name = "webbrowser.open_new"
         mockinput.return_value = "0"
         # 1: both pattern and sections are None 
         none = query.texdict(self.mock_parser)
@@ -82,40 +84,41 @@ class TexdictTest(unittest.TestCase):
         self.assertIn((None, None), self.mock_parser.called_with)
         self.assertIn((["-h"], None), self.mock_parser.called_with)
         self.mock_parser.called_with.clear()
+        mock_pdfopener.assert_not_called()
         # 2: sections is None
         self.mock_parser.sections = None
         self.mock_parser.pattern = "par"
-        with patch(pdfopener_name) as mock_pdfopener:
-            selection = query.texdict(self.mock_parser)
+        selection = query.texdict(self.mock_parser)
         mock_pdfopener.assert_called_once_with(f"output/{selection}")
+        mock_pdfopener.reset_mock()
         self.assertIn((None, None), self.mock_parser.called_with)
         self.assertEqual(len(self.mock_parser.called_with), 1)
         self.mock_parser.called_with.clear()
         # 3: pattern is None
         self.mock_parser.sections = ["genops", "paras"]
         self.mock_parser.pattern = None
-        with patch(pdfopener_name) as mock_pdfopener:
-            selection = query.texdict(self.mock_parser)
+        selection = query.texdict(self.mock_parser)
         mock_pdfopener.assert_called_once_with(f"output/{selection}")
+        mock_pdfopener.reset_mock()
         self.assertIn((None, None), self.mock_parser.called_with)
         self.assertEqual(len(self.mock_parser.called_with), 1)
         self.mock_parser.called_with.clear()
         # 4: neither sections nor pattern is None
         self.mock_parser.sections = ["genops", "paras"]
         self.mock_parser.pattern = "par"
-        with patch(pdfopener_name) as mock_pdfopener:
-            selection = query.texdict(self.mock_parser)
+        selection = query.texdict(self.mock_parser)
         mock_pdfopener.assert_called_once_with(f"output/{selection}")
+        mock_pdfopener.reset_mock()
         self.assertIn((None, None), self.mock_parser.called_with)
         self.assertEqual(len(self.mock_parser.called_with), 1)
         self.mock_parser.called_with.clear()
         # 5: pattern not found
         self.mock_parser.sections = ["genops"]
         self.mock_parser.pattern = "^$"
-        with patch(pdfopener_name) as mock_pdfopener:
-            none = query.texdict(self.mock_parser)
+        none = query.texdict(self.mock_parser)
         self.assertIsNone(none)
         mock_pdfopener.assert_not_called()
+        mock_pdfopener.reset_mock()
         self.assertIn((None, None), self.mock_parser.called_with)
         self.assertEqual(len(self.mock_parser.called_with), 1)
 
