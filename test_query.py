@@ -121,6 +121,16 @@ class TexdictTest(unittest.TestCase):
         mock_pdfopener.reset_mock()
         self.assertIn((None, None), self.mock_parser.called_with)
         self.assertEqual(len(self.mock_parser.called_with), 1)
+        self.mock_parser.called_with.clear()
+        # 6: both pattern is "", and sections are None 
+        self.mock_parser.sections = None
+        self.mock_parser.pattern = ""
+        none = query.texdict(self.mock_parser)
+        self.assertEqual(len(self.mock_parser.called_with), 2)
+        self.assertIn((None, None), self.mock_parser.called_with)
+        self.assertIn((["-h"], None), self.mock_parser.called_with)
+        self.mock_parser.called_with.clear()
+        mock_pdfopener.assert_not_called()
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format="%(levelname)s:texdict2:%(message)s")
