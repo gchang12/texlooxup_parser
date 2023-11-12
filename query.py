@@ -80,7 +80,6 @@ def texdict(parser: argparse.ArgumentParser):
     else:
         print(result_report)
 
-# TODO: Add in option to specify how to search by pattern (e.g. match, fullmatch, search)
 def get_parser():
     """
     Creates an argument parser that has a 'pattern' and a 'sections' attribute.

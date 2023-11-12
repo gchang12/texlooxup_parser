@@ -36,6 +36,7 @@ if __name__ == '__main__':
         """
         print("It would be a gigantic pain in the ass to create fixtures for all this.")
     if doing_this:
+        # on the other hand, there's my OCD about this thing working properly
         with patch("unittest.main", side_effect=make_excuse) as mock_unittestmain:
             unittest.main()
     else:

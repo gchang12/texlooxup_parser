@@ -45,9 +45,7 @@ def get_definition_list(section: str) -> List[str]:
     logging.info("parser.get_definition_list('%s')", section)
     filetext = Path("impatient").joinpath(section + ".tex").read_text()
     deflist = []
-    for index, rawtext in enumerate(re.split("\\\\begindesc[^r]", filetext)):
-        if not index:
-            continue
+    for rawtext in re.split("\\\\begindesc[^r]", filetext)[1:]:
         deftext = re.split("\\\\enddesc[^r]", rawtext)
         deflist.append(deftext[0])
     logging.info("%d definitions were found in '%s' section.", len(deflist), section)
