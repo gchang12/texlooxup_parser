@@ -9,6 +9,9 @@ import re
 import logging
 import webbrowser
 
+# not really needed
+# import textwrap
+
 
 SECTION_LIST = (
     "concepts",
@@ -27,9 +30,8 @@ def texdict(parser: argparse.ArgumentParser):
     """
     parsed_args = parser.parse_args()
     pattern, sections = (parsed_args.pattern, parsed_args.sections)
-    if (pattern, sections) == (None, None) or (pattern, sections) == ("", None):
-        # return help message
-        parser.parse_args(["-h"])
+    if (pattern, sections) == (None, None):
+        print("Please provide input.")
         return None
     if pattern is None:
         pattern = ".*"
