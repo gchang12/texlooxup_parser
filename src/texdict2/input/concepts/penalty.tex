@@ -1,0 +1,30 @@
+\input macros
+\beginconcepts
+\concept penalty
+
+A \defterm{penalty} is an item that you can include in a 
+horizontal, vertical, or math list
+in order to discourage \TeX\ from breaking the list
+at that point or encourage \TeX\ to break the list there.  
+^^{horizontal lists//penalties in}
+^^{vertical lists//penalties in}
+A positive penalty indicates a bad break point, while
+a negative penalty indicates a good break point.
+Breaking an
+ordinary horizontal
+list produces a \refterm{line break}, while breaking an
+ordinary vertical list produces
+a \refterm{page break}.  
+(A penalty has no effect in restricted horizontal or 
+internal vertical \refterm{mode}.)
+
+You can use the
+|\penalty| command (\pp\xrefn{hpenalty},~\xrefn{vpenalty})
+to insert a penalty explicitly.
+A penalty of $10000$ or more prevents a break, while a penalty of
+$-10000$  or less forces a break.
+\endconcept
+
+
+\endconcepts
+\end

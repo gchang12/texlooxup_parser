@@ -1,0 +1,82 @@
+\input macros
+\beginconcepts
+\concept number
+
+In \TeX, a \defterm{number} is a positive or negative integer.
+You can write a number in \TeX\ in four different ways:
+\olist\compact
+\li as an ordinary decimal integer, e.g., |52|
+\li as an octal number, e.g., |'14| ^^{octal numbers}
+\li as a hexadecimal number, e.g., |"FF0| ^^{hexadecimal numbers}
+\li as the code for an \refterm{\ascii\ character}, e.g., |`)|
+or |`\)|
+\endolist
+\noindent 
+Any of these forms can be preceded by `|+|' or `|-|'.
+
+An octal number can have only the digits |0|--|7|.
+^^{octal numbers}
+A hexadecimal number can have digits |0|--|9| and
+|A|--|F|, representing
+values from $0$ to $15$.
+^^{hexadecimal numbers}
+You can't, alas, use lowercase letters when you write a hexadecimal number.
+If you need an explanation of octal and hexadecimal numbers,
+you'll find one on \knuth{pages~43--44}.
+
+A decimal, octal, or hexadecimal number 
+ends at the first character that can't be part of the number.
+Thus a decimal number ends when \TeX\ sees, say, a letter, even though a
+letter between `|A|' and `|F|' would not end a hexadecimal number.
+You can end a number with one or more spaces and
+\TeX\ will ordinarily ignore them.\footnote{
+When you're defining a macro that ends in a number, you should always
+put a space after that number; otherwise \TeX\ may later combine that
+number with something else.}
+
+The fourth form above specifies a number as the 
+\minref{\ascii} code for a character.
+^^{characters//\ascii\ codes for}
+\TeX\ ignores spaces after this form of number also.
+You can write a number in this form either as |`|$c$ or as |`\|$c$.
+The second form, though longer, has the advantage that you can use it
+with \emph{any} character, even `|\|', `|%|', or `|^^M|'.
+It does have one rather technical disadvantage: when \TeX\ is expanding
+a token sequence for a command such as |\edef| or |\write|,
+^^|\edef//expansion of {\tt\\'\it c} in|
+^^|\write//expansion of {\tt\\'\it c} in|
+occurrences of `|\|$c$' within numbers will also be expanded if they can be.
+That's rarely the effect you want.
+
+The following are all valid representations of the decimal number
+$78$:
+\csdisplay
+78   +078   "4E   '116   `N   `\N
+|
+
+
+You can't use a number in text by itself since a number isn't
+a command.
+However, you can insert the decimal form of a number in text
+by putting a ^|\number| command (\xref\number) in front of it
+or the roman numeral form by putting a ^|\romannumeral| command
+in front of it.
+
+You can also use ^{decimal constant}s, i.e., numbers with a fractional part,
+for specifying dimensions \seeconcept{dimension}.
+A decimal constant has a ^{decimal point}, which
+can be the first character of the constant.  
+You can use a comma instead of a period to represent the decimal point.
+A decimal constant can be preceded by a plus or minus sign.
+Thus `|.5in|', 
+`|-3.22pt|', and `|+1,5\baselineskip|' are valid dimensions.
+You can't, however, use decimal constants
+in any context \emph{other} than as the ``factor'' part of a dimension,
+i.e., its multiplier.
+
+
+\endconcept
+
+
+\endconcepts
+\end

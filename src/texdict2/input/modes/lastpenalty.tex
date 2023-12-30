@@ -1,0 +1,56 @@
+\input macros
+\begindescriptions
+\begindesc
+^^{boxes//last box in a list}
+^^{kerns//last kern in a list}
+^^{penalties//last penalty in a list}
+^^{glue//last glue item in a list}
+\margin{This section has been moved in its entirety from the chapter
+(`Commands for general operations')}
+\cts lastkern {}
+\cts lastskip {}
+\cts lastpenalty {}
+\cts lastbox {}
+\explain
+These control sequences yield the value of the last item on the current
+list.  They aren't true commands because they can only appear as
+part of an argument.
+If the last item on the list isn't of the indicated type,
+they yield a zero value (or an empty box, in the case of |\lastbox|).
+For example,
+if the last item on the current list is a \minref{kern},
+|\lastkern| yields the dimension of that kern; if it
+isn't a kern, it yields a dimension of $0$.
+
+Using |\lastbox| has the additional effect of removing the last box from
+the list.
+If you want the original |\last!-box| to remain on the list, you
+have to add a copy of it to the list.
+|\last!-box| is not permitted in a math list or in the main
+vertical~list.
+
+These control sequences are
+most useful after macro calls that might have inserted entities of
+the indicated kinds. 
+
+\example
+\def\a{two\kern 15pt}
+one \a\a\hskip 2\lastkern three\par
+% Get three times as much space before `three'.
+\def\a{\hbox{two}}
+one \a
+\setbox0 = \lastbox % Removes `two'.
+three \box0.
+|
+\produces
+\def\a{two\kern 15pt}
+one \a\a\hskip 2\lastkern three\par
+% get three times as much space before `three'
+\def\a{\hbox{two}}
+one \a
+\setbox0 = \lastbox % removes `two'
+three \box0.
+\endexample
+\enddesc
+\enddescriptions
+\end

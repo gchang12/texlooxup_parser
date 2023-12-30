@@ -1,0 +1,28 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts hyphenation {\rqbraces{\<word>\thinspace\vs\ $\ldots$\ \vs
+   \thinspace\<word>}}
+\explain
+\TeX\ keeps a dictionary of exceptions to its ^{hyphenation} rules.
+Each dictionary entry indicates how a particular word should
+be hyphenated.  
+The |\hyphenation| command adds words to the dictionary.
+Its argument is a sequence of words separated by blanks. 
+Uppercase and lowercase letters are equivalent.
+The hyphens in each word indicate the places
+where \TeX\ can hyphenate that word.
+A word with no hyphens in it will never be hyphenated.
+However, you can still override the hyphenation dictionary by
+using |\-| in a particular occurrence of a word.
+You need to provide all the grammatical forms of a word
+that you want \TeX\ to handle, e.g., both the singular and the plural.
+
+\example
+\hyphenation{Gry-phon my-co-phagy}
+\hyphenation{man-u-script man-u-scripts piz-za}
+|
+\endexample
+\enddesc
+\enddescriptions
+\end

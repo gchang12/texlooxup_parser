@@ -1,0 +1,49 @@
+\input macros
+\begindescriptions
+\begindesc
+\easy\cts raggedright {}
+\cts ttraggedright {}
+\explain
+These commands cause \TeX\ to typeset your document 
+``^{ragged right}''.  Interword spaces all 
+have their natural size, i.e., they all have the same width and
+don't stretch or shrink.
+Consequently the right margin is generally not even.
+The alternative, which is \TeX's default, is to typeset your document
+justified,
+^^{justification}
+i.e., with uniform left and right margins.
+In justified text, interword spaces are stretched in order to 
+make the right margin even.
+Some typographers prefer ragged right because 
+it avoids distracting ``rivers'' of white space on the printed page.
+\minrefs{justified text}
+
+You should use the |\ttraggedright| command when typesetting text in a
+monospaced font and the |\raggedright| command when typesetting text in any
+other font.  
+
+Most of the time you'll want to apply these commands to an entire document,
+but you can limit their effects by enclosing them
+in a \minref{group}.
+\example
+\raggedright ``You couldn't have it if you {\it did\/}
+want it,'' the Queen said. ``The rule is, jam tomorrow
+and jam yesterday---but never jam {\it today\/}.''
+``It {\it must\/} come sometimes to `jam today,%
+thinspace'' Alice objected. ``No, it can't'', said the
+Queen. ``It's jam every {\it other\/} day: today isn't
+any {\it other\/} day.''
+|
+\produces
+\raggedright ``You couldn't have it if you {\it did\/}
+want it,'' the Queen said. ``The rule is, jam tomorrow
+and jam yesterday---but never jam {\it today\/}.''
+``It {\it must\/} come sometimes to `jam today,%
+'\thinspace'' Alice objected. ``No, it can't'', said the
+Queen. ``It's jam every {\it other\/} day: today isn't
+any {\it other\/} day.''
+\endexample
+\enddesc
+\enddescriptions
+\end

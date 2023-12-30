@@ -1,0 +1,25 @@
+\input macros
+\begindescriptions
+\begindesc
+\bix^^{styles}
+\cts textstyle {}
+\cts scriptstyle {}
+\cts scriptscriptstyle {}
+\cts displaystyle {}
+\explain
+^^{text style} ^^{script style} ^^{scriptscript style} ^^{display style}
+These commands override the normal \minref{style} and hence the
+font that \TeX\ uses in setting a formula.  Like
+font-setting commands such as |\it|, they are in
+effect until the end of the group containing them.
+They are useful when \TeX's choice of style is inappropriate for the formula
+you happen to be setting.
+\example
+$t+{\scriptstyle t + {\scriptscriptstyle t}}$
+|
+\produces
+$t+{\scriptstyle t + {\scriptscriptstyle t}}$
+\endexample
+\enddesc
+\enddescriptions
+\end

@@ -1,0 +1,19 @@
+\input macros
+\begindescriptions
+\begindesc
+\margin{Two commands interchanged here.}
+\cts boxmaxdepth {\param{dimen}}
+\explain
+This parameter contains a dimension $D$.
+\TeX\ will not construct a box whose depth exceeds $D$.
+If you produce a box whose depth $d$ would exceed $D$,
+\TeX\ will transfer the
+excess depth to the height of the box, effectively moving the 
+\minref{reference point} of the box down by $d-D$.
+If you set |\boxmaxdepth| to zero, \TeX\ will line up a row of vboxes
+so that their bottom boundaries all lie on the same horizontal line.
+\PlainTeX\ sets |\boxmaxdepth| to |\maxdimen| \ctsref{\maxdimen},
+so |\boxmaxdepth| won't affect your boxes unless you change it.
+\enddesc
+\enddescriptions
+\end

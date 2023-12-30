@@ -1,0 +1,22 @@
+\input macros
+\beginconcepts
+\concept vbox
+
+^^{vertical lists//vboxes formed from}
+A \defterm{vbox} (vertical box) is a \refterm{box} that \TeX\ constructs
+by placing the items of a \refterm{vertical list} one after another, top
+to bottom.  A vbox, taken as a unit, is neither inherently horizontal
+nor inherently vertical, i.e., it can appear as an item of either a
+vertical list or a \refterm{horizontal list}.  You can construct a vbox
+with the ^|\vbox| or the ^|\vtop| command
+\ctsref{\vtop}.  The difference is that for |\vbox|,
+the \refterm{reference point}
+of the constructed vbox is derived from that of the last (and
+usually bottommost) constituent list item, but for |\vtop|, it's that of the
+first (and usually topmost) constituent list item.
+\endconcept
+
+
+
+\endconcepts
+\end

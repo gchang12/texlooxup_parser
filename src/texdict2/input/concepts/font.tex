@@ -1,0 +1,109 @@
+\input macros
+\beginconcepts
+\concept font
+
+A \defterm{font} in \TeX\ is a collection of up to $256$ output
+characters, usually having the same typeface design, style (roman,
+italic, bold, condensed, etc.),
+and point size.\footnote{\PlainTeX\ uses a special
+font for constructing ^{math symbols} in which the characters have
+different sizes.  Other special fonts are often useful for applications
+such as typesetting ^{logos}.} The ^{Computer Modern fonts} that
+generally come with \TeX\ have only $128$ characters. The colophon on
+the last page of this book describes the typefaces that we used to set
+this book.
+
+For instance, here is the alphabet in the Palatino Roman $10$ point font:
+^^{Palatino fonts}
+\vskip\abovedisplayskip{\narrower\tenpal
+\noindent ABCDEFGHIJKLMNOPQRSTUVWXYZ\hfil\break
+abcdefghijklmnopqrstuvwxyz\par
+}\vskip\belowdisplayskip
+\noindent
+And here it is in the Computer Modern Bold Extended $12$
+point font:
+^^{Computer Modern fonts}
+\vskip\abovedisplayskip{\narrower\font\twelvebf=cmbx12\twelvebf
+\noindent ABCDEFGHIJKLMNOPQRSTUVWXYZ\hfil\break
+abcdefghijklmnopqrstuvwxyz\par
+}\vskip\belowdisplayskip
+The characters in a font are numbered.
+The numbering usually agrees with the ^{\ascii} numbering
+for those characters that exist in the \ascii\ character set.
+The code table for each font indicates what the character
+with code $n$ looks like in that font.
+Some fonts, such as the ones used for mathematical symbols, have no
+letters at all in them.  You can produce a \refterm{box} containing the
+character numbered $n$, typeset in the current font, by writing `|\char |$n$'
+ \ctsref{\char}.
+
+In order to use a font in your document,
+you must first name it with a control sequence and load it.  Thereafter you
+can select it by typing
+that control sequence whenever you want to use it.
+\PlainTeX\ provides a number of fonts that are already named and~loaded.
+
+You name and load a font as a single operation, using a
+command such as `|\font\twelvebf=cmbx12|'.  Here `|\twelvebf|' is the
+control sequence that you use to name the font
+and `|cmbx12|' identifies the font metrics file
+|cmbx12.tfm| 
+in your computer's file system.
+You then can start to use the font by typing
+`|\twelvebf|'.  After that, the font will be in effect until
+either (a)~you select another font or (b)~you terminate the
+\refterm{group}, if any, in which you started the
+font.  For example, the input:
+
+\csdisplay
+{\twelvebf white rabbits like carrots}
+|
+will cause the |cmbx12| font to be in effect just for the
+text `|white rabbits like carrots|'.
+
+You can use \TeX\ with fonts other than
+Computer Modern (look at the example on \xrefpg{palatino} and
+at the page headers). 
+The files for such fonts need to be
+installed in your computer's file system in a place where \TeX\ can find
+them.  \TeX\ and its companion programs generally need two files for each font:
+one to give its metrics (|cmbx12.tfm|,
+^^{\tfmfile}
+for example) and another to
+give the shape of the characters (|cmbx12.pk|, for example).
+\TeX\ itself uses only the metrics
+file.  Another program, the device driver,
+^^{device drivers}
+converts the \dvifile\
+^^{\dvifile//converted by driver}
+produced by \TeX\ to a form that your printer
+or other output device can handle.  The driver
+uses the shape file (if it exists).
+
+The font metrics file contains the information that \TeX\ needs in
+order to allocate space for each typeset character.
+Thus it includes the size of each character, the ligatures and
+kerns that pertain to sequences of adjacent characters, and so on.
+What the metrics file
+\emph{doesn't} include is any information about the shapes
+of the characters in the font.
+
+{\tighten
+The shape (pixel) file \xrdef{shape}
+^^{pixel file}^^{shape file}
+may be in any of several
+formats. The extension part of the name (the part after the dot)
+tells the driver which format the shape file is in.  For example,
+|cmbx12.pk| ^^{\pkfile} might be the shape file for font |cmbx12| in
+packed format, while |cmbx12.gf| ^^{\gffile} might be the shape file
+for font |cmbx12| in generic font format.
+A shape file may not be needed for a font that's resident in your
+output device.
+\par}
+
+\endconcept
+
+
+
+\endconcepts
+\end

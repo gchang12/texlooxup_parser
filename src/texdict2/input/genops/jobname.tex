@@ -1,0 +1,22 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts jobname {}
+\explain
+This command produces the base 
+name of the file with which \TeX\ was invoked.
+For example, if your main input file is |hatter.tex|,
+|\jobname|
+{\parfillskip=0pt\par\eject\noindent}
+will expand to |hatter|.
+|\jobname| is most useful when you're
+creating an auxiliary file to be associated with a document.
+^^{auxiliary files}
+\example
+\newwrite\indexfile  \openout\indexfile = \jobname.idx
+% For input file `hatter.tex', open index file `hatter.idx'.
+|
+\endexample
+\enddesc
+\enddescriptions
+\end

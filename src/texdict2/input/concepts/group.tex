@@ -1,0 +1,54 @@
+\input macros
+\beginconcepts
+\concept group
+
+A \defterm{group} is a part of your manuscript that \TeX\ treats as a unit.
+You indicate a group by enclosing it in the braces
+`|{|' and `|}|' (or any other characters with the appropriate
+\refterm{category codes}).
+^^|{//starting a group|
+^^|}//ending a group|
+
+The most important property of a group is that any nonglobal
+definition or assignment that you make inside a group disappears when
+the group ends.  For instance, if you write:
+
+\csdisplay
+Please don't pour {\it any} more tea into my hat.
+|
+the |\it| \refterm{control sequence} causes \TeX\ to set the word
+`|any|' in italic type but does not affect the rest of the text.
+As another example, if you use the |\hsize| parameter
+\ctsref{\hsize} to change the line length within a group, the line length
+reverts to its previous value once \TeX\ has gotten past the group.
+
+Groups are also useful as a way of controlling spacing.  For instance, if you
+write:
+
+\csdisplay
+\TeX for the Impatient and the Outpatient too.
+|
+\noindent
+you'll get:
+\display{%
+\TeX for the Impatient and the Outpatient too.
+}
+\noindent
+since the control sequence |\TeX| (which produces the \TeX\
+logo) absorbs the following space. 
+What you probably want is:
+\display{%
+{\TeX} for the Impatient and the Outpatient too.
+}
+\noindent
+One way to get it is to enclose `|\TeX|' in a group:
+\csdisplay
+{\TeX} for the Impatient and the Outpatient too.
+|
+The right brace prevents the control sequence from absorbing the space.
+\endconcept
+
+
+
+\endconcepts
+\end

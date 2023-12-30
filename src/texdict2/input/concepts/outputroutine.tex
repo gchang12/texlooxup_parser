@@ -1,0 +1,49 @@
+\input macros
+\beginconcepts
+\concept {output routine}
+
+When \TeX\ has accumulated
+at least enough material to fill up a page, it chooses a breakpoint
+and places the material before the breakpoint in |\box255|. It then
+calls the
+current \defterm{output routine}, which processes the material and eventually
+sends it to the \dvifile.
+^^{\dvifile//material from output routine}
+The output routine can perform further
+processing, such as inserting headers, footers, and footnotes.  
+\refterm{\PlainTeX:\plainTeX} provides
+a default output routine that inserts a centered page number
+at the bottom of each page.  
+By providing a different output routine you can achieve such
+effects as double-column output.
+You can think of the output routine as having a single responsibility:
+disposing of the material in |\box255| one way or another.
+
+The current output routine is defined by the value of ^|\output|
+\ctsref{\output}, which is a list of \refterm{tokens:token}.  When \TeX\
+is ready to produce a page, it just expands the token list.
+
+You can make some simple changes to the actions of the \plainTeX\
+output routine without actually modifying it.  For example, by assigning
+a list of \refterm{tokens:token} to |\headline| or
+|\footline| \ctsref{\footline} you can have \TeX\ produce a different
+header or footer than it ordinarily would.
+
+The output routine is also
+responsible for collecting any \refterm{insertions:insertion};
+combining those insertions and any
+``decorations'' such as headers and
+footers with the main contents of the page and packaging all
+of this material in a box; and
+eventually sending that box to the \dvifile\ 
+^^{\dvifile//material from output routine}
+with the ^|\shipout|
+command \ctsref{\shipout}.
+Although this is what an output routine most often does,
+a special-purpose output routine might behave differently.
+\endconcept
+
+
+
+\endconcepts
+\end

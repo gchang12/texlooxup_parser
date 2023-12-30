@@ -1,0 +1,23 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts lower {\<dimen> \<box>}
+\cts raise {\<dimen> \<box>}
+\explain
+These commands move \<box> up or down by \<dimen>
+(which can be negative).
+You can only apply |\raise| and |\lower| to a box
+that's in a \minref{horizontal list}.
+\example
+Are you feeling \lower 6pt \hbox{depressed} about the
+                \raise 6pt \hbox{bump} on your nose?
+|
+\produces
+Are you feeling \lower 6pt \hbox{depressed} about the
+                \raise 6pt \hbox{bump} on your nose?
+\endexample
+
+\eix^^{boxes//shifting}
+\enddesc
+\enddescriptions
+\end

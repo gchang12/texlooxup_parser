@@ -1,0 +1,70 @@
+\input macros
+\beginconcepts
+\concept badness
+
+The \defterm{badness} of a line is a measure of how far the interword
+spaces ^^{interword spacing}
+in the line deviate from their natural values,
+i.e., the values specified in the \refterm{fonts:font} used in the line.
+The greater the
+deviation, the greater the badness.  Similarly, the badness of a page is
+a measure of how far the spaces between the boxes that
+make up the page deviate from their ideal values.  (Ordinarily, most of these
+boxes are single lines of paragraphs.)
+
+More precisely, the badness
+is a measure of how much the \refterm{glue} associated with these spaces needs
+to stretch or shrink to fill the line or page exactly.
+\TeX\ computes the badness as approximately $100$
+times the cube of the ratio by which it must stretch or shrink the glue
+in order to compose a line or a page of the required size.
+^^{line breaks//badness for}^^{page breaks//badness for}
+For example, stretching the glue by twice its stated stretch yields a ratio of
+$2$ and a badness of $800$; stretching it by half its stated stretch yields
+a ratio of $.5$ and a badness of $13$.
+\TeX\ treats a badness greater than $10000$ as
+equal to $10000$.
+
+\TeX\ uses the badness of a line when it's breaking a paragraph into lines
+\seeconcept{line break}.  It uses this information in two stages:
+
+\olist
+\li When \TeX\ is choosing line breaks,
+it will eventually accept lines whose badness is less than or equal to
+the value of |\tolerance| (\xref \tolerance).  If \TeX\ cannot avoid setting
+a line whose badness exceeds this
+value, it will set it as an underfull or overfull \refterm{hbox}.
+\TeX\ will set
+an overfull or underfull hbox only as a last resort, i.e., only if there's no
+other way to break the paragraph into lines.
+\li Assuming that all lines are tolerably bad, \TeX\ uses the badness of lines
+in order to evaluate the different ways of breaking the paragraph into lines.
+During this evaluation it associates ``demerits'' with each potential line.
+The badness increases the number of \refterm{demerits}.
+\TeX\ then
+breaks the paragraph into lines in a way that minimizes the 
+total demerits for the paragraph.
+Most
+often \TeX\ arranges the paragraph in a way that minimizes the badness of the
+worst line.  See \knuth{pages~97--98} for the details of how \TeX\
+breaks a paragraph into lines.  
+\endolist
+
+\TeX's procedure for assembling a sequence of lines and other vertical
+mode material into pages is similar to its procedure for line breaking.
+However, assembling pages is
+not as complicated because \TeX\ only considers one page at a time
+when it looks for page breaks.
+Thus the only decision it must make is where to end the current page.
+In contrast, when \TeX\ is choosing line breaks it 
+considers several of them simultaneously.
+(Most word processors choose line breaks one at a time,
+and thus don't do as good a job at it as \TeX\ does.)
+See \knuth{pages~111--113} for the details of how \TeX\ chooses its
+page breaks.
+\endconcept
+
+
+
+\endconcepts
+\end

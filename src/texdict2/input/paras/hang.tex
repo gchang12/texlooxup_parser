@@ -1,0 +1,25 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts hang {}
+\explain
+This command indents the second and subsequent lines of a paragraph
+by |\parindent|, the paragraph ^{indentation}
+(\xref{\parindent}).
+Since the first line is already indented by |\parindent|
+(unless you've cancelled the indentation with |\noindent|), the
+entire paragraph appears to be indented by |\parindent|.
+
+\example
+\parindent=24pt \hang  ``I said you {\it looked} like an
+egg, Sir,'' Alice gently explained to Humpty Dumpty. ``And
+some eggs are very pretty, you know,'' she added.
+|
+\produces
+\parindent=24pt \hang  ``I said you {\it looked} like an
+egg, Sir,'' Alice gently explained to Humpty Dumpty. ``And
+some eggs are very pretty, you know,'' she added.
+\endexample
+\enddesc
+\enddescriptions
+\end
