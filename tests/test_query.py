@@ -9,7 +9,7 @@ import logging
 import unittest
 from unittest.mock import patch
 
-import query
+from texdict2 import query
 
 class MockParser:
     """

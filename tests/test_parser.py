@@ -6,7 +6,7 @@ Defines test methods for functions defined in texdict.query
 import unittest
 from unittest.mock import patch
 
-import query
+import texdict2.query
 
 class ParserTest(unittest.TestCase):
     """
