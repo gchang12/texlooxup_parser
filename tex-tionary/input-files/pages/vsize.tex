@@ -1,0 +1,22 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts vsize {\param{dimen}}
+\explain
+This parameter specifies the current vertical extent of a page.
+\TeX\ examines it only when it is starting a page.  Thus if you change
+|\vsize| in the
+middle of a page, your change won't affect anything until the following page.
+If you want to change the vertical extent of a page when
+you're in the middle of it, you  should assign the new
+height to ^|\pagegoal| (\xref \pagegoal) instead.  (If you
+want the change to affect the following pages too, you should
+change \emph{both} |\vsize| and |\pagegoal|.)
+\PlainTeX\ sets |\vsize| to |8.9in|.
+\eix^^{page dimensions}
+\enddesc
+
+\enddescriptions
+\end

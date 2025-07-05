@@ -1,0 +1,74 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\bix^^{registers//reserving}
+\makecolumns 11/2:
+\ctspecial newcount \ctsxrdef{@newcount}
+\ctspecial newdimen \ctsxrdef{@newdimen}
+\ctspecial newskip \ctsxrdef{@newskip}
+\ctspecial newmuskip \ctsxrdef{@newmuskip}
+\ctspecial newtoks \ctsxrdef{@newtoks}
+\ctspecial newbox \ctsxrdef{@newbox}
+\ctspecial newread \ctsxrdef{@newread}
+\ctspecial newwrite \ctsxrdef{@newwrite}
+\ctspecial newfam \ctsxrdef{@newfam}
+\ctspecial newinsert \ctsxrdef{@newinsert}
+\ctspecial newlanguage \ctsxrdef{@newlanguage}
+\explain
+These commands
+reserve and name an entity of the indicated type:
+\ulist
+\li |\newcount|, |\newdimen|, |\newskip|, |\newmuskip|, |\newtoks|,
+|\newbox| each reserve a \minref{register} of the indicated type.
+^^{count registers//reserved by \b\tt\\newcount\e}
+^^{dimension registers//reserved by \b\tt\\newdimen\e}
+^^{skip registers//reserved by \b\tt\\newskip\e}
+^^{muskip registers//reserved by \b\tt\\newmuskip\e}
+^^{token registers//reserved by \b\tt\\newtoks\e}
+^^{box registers//reserved by \b\tt\\newbox\e}
+\li |\newread| and |\newwrite| reserve an input stream and
+an output stream \minrefs{input stream}\minrefs{output stream}
+respectively.
+^^{input streams//reserved by \b\tt\\newread\e}
+^^{output streams//reserved by \b\tt\\newwrite\e}
+\li |\newfam| reserves a \minref{family} of math fonts.
+^^{family//reserved by \b\tt\\newfam\e}
+\li |\newinsert| reserves an insertion type.
+(Reserving an insertion type involves reserving several different registers.)
+^^{insertions//numbers reserved by \b\tt\\newinsert\e}
+\li |\newlanguage| reserves a set of hyphenation patterns.
+\endulist
+You should use these commands whenever you need one of these entities,
+other than in a very local region,
+in order to avoid numbering conflicts.
+
+There's an important difference among these commands:
+\ulist
+\li The control sequences defined by
+|\newcount|, |\newdimen|, |\newskip|, |\newmuskip|, and |\newtoks|
+each designate an entity of the appropriate type.
+For instance, after the command:
+\csdisplay
+\newdimen\listdimen
+|
+the control sequence |\listdimen| can be used as a dimension.
+\li The control sequences defined by
+|\newbox|, |\newread|, |\newwrite|, |\newfam|, |\newinsert|,
+and |\newlanguage|  each
+evaluate to the \emph{number} of an entity of the appropriate type.
+For instance, after the command:
+\csdisplay
+\newbox\figbox
+|
+the control sequence |\figbox| must be used in conjunction with
+a |\box|-like command, e.g.:
+\csdisplay
+\setbox\figbox = \vbox{!dots}
+|
+\endulist
+\enddesc
+
+\enddescriptions
+\end

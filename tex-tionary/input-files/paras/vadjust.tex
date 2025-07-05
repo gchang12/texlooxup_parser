@@ -1,0 +1,27 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts vadjust {\rqbraces{\<vertical mode material>}}
+\explain
+This command inserts the specified \<vertical mode material> just after the
+output line containing the position where the command occurs.
+^^{vertical lists//inserting in paragraphs}
+You can use it, for instance, to cause a page eject or to insert extra
+space after a certain line.
+
+\example
+Some of these words are \vadjust{\kern8pt\hrule} to be
+found above the line and others are to be found below it.
+|
+\produces
+Some of these words are \vadjust{\kern8pt
+\hbox to \hsize{\hfil\vbox{\advance\hsize by -\parindent
+\hrule width \hsize}}}
+to be found above the line and others are to be found below it.
+\endexample
+\enddesc
+
+\enddescriptions
+\end

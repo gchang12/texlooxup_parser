@@ -1,0 +1,20 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts relax {}
+\explain
+This command tells \TeX\ to do nothing.  It's useful in a context where
+you need to provide a command but there's nothing that you want \TeX\ to do.
+\example
+\def\medspace{\hskip 12pt\relax}
+% The \relax guards against the possibility that
+% The next tokens are `plus' or `minus'.
+|
+
+\endexample
+\enddesc
+
+\enddescriptions
+\end

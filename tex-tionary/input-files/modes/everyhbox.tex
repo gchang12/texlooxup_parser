@@ -1,0 +1,17 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts everyhbox {\param{token list}}
+\cts everyvbox {\param{token list}}
+\explain
+These parameters contain token lists that \TeX\ expands at the start of
+every \minref{hbox} or \minref{vbox} that it constructs.
+Any items resulting from the expansion then become
+the beginning of the list of items for the box.
+By default these token lists are empty.
+\enddesc
+
+\enddescriptions
+\end

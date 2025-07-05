@@ -1,0 +1,33 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\bix^^{spaces//interword}
+\easy\ctsbasic {\\\vs}{}
+\blankidxref\ctsxrdef{@space}
+\explain
+This command explicitly produces an interword
+space called a ``^{control space}''.
+A control space is useful when a
+letter occurs immediately after a control sequence, or in any other
+circumstance where you don't want two tokens to be run together in the
+output.
+The amount of space produced by |\!vs|
+is independent of preceding punctuation, i.e., its space factor
+(\xref\spacefactor) is $1000$.
+
+Incidentally, if you want to print the `\vs' ^^{visible space}
+character that we've used here to denote a space, you can get it by typing
+|{\tt \char `\ }|.
+
+\example
+The Dormouse was a \TeX\ expert, but he never let on.
+|
+\produces
+The Dormouse was a \TeX\ expert, but he never let on.
+\endexample
+\enddesc
+
+\enddescriptions
+\end

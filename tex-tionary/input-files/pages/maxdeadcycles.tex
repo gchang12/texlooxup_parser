@@ -1,0 +1,17 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts maxdeadcycles {\param{number}}
+\explain
+If the value of |\deadcycles| exceeds the value of |\maxdeadcycles|,
+\TeX\ assumes that the output routine has gotten into a loop.
+\TeX\ then complains and runs its own simple output routine,
+equivalent to |\shipout!allowbreak\box255|,
+that is likely to break the loop.
+\PlainTeX\ sets |\maxdeadcycles| \hbox{to $25$}.
+\enddesc
+
+\enddescriptions
+\end

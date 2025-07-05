@@ -1,0 +1,47 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\ctspecial allowbreak {} \xrdef{hallowbreak}
+\explain
+This command tells \TeX\ to
+allow a line break where one could not ordinarily occur.
+It's most often useful within a math formula, since \TeX\
+is reluctant to break lines there.  ^^{line breaks//in math formulas}
+|\allowbreak| can also be used in vertical mode.
+\example
+Under most circumstances we can state with some confidence
+that $2+2\allowbreak=4$, but skeptics may disagree.
+\par For such moronic automata, it is not difficult to
+analyze the input/\allowbreak output behavior in the limit.
+|
+\produces
+Under most circumstances we can state with some confidence
+that $2+2\allowbreak=4$, but skeptics may disagree.
+\par For such moronic automata, it is not difficult to
+analyze the input/\allowbreak output behavior in the limit.
+\endexample\enddesc
+
+\begindesc
+\ctspecial penalty {\<number>} \xrdef{hpenalty}
+\explain
+This command produces a \minref{penalty} item.
+The penalty item makes \TeX\ more or less willing to break a line
+at the point where that item occurs.
+A negative penalty, i.e., a bonus, encourages a line break;
+a positive penalty discourages a line break.
+A penalty of $10000$ or more prevents a break altogether,
+while a penalty of $-10000$ or less forces a break.
+|\penalty| can also be used in vertical mode.
+\secondprinting{\vfill\eject}
+\example
+\def\break{\penalty -10000 } % as in plain TeX
+\def\nobreak{\penalty 10000 } % as in plain TeX
+\def\allowbreak{\penalty 0 } % as in plain TeX
+|
+\endexample
+\enddesc
+
+\enddescriptions
+\end

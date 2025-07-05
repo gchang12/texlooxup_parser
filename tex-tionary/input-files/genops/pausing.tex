@@ -1,0 +1,22 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts pausing {\param{number}}
+\explain
+If this parameter is greater than zero, \TeX\ will pause
+at each line of input to give you an opportunity to
+replace it with a different line.  If you type in a replacement,
+\TeX\ will use that line instead of the original one; if you respond
+with \asciichar{return}, \TeX\ will use the original line.
+
+Setting |\pausing| to $1$ can be useful as a way of patching a document as
+\TeX\ is processing it.  For example,
+you can use this facility to insert ^|\show| commands (see below).
+\eix^^{running \TeX}
+\eix^^{controlling \TeX}
+\enddesc
+
+\enddescriptions
+\end

@@ -1,0 +1,17 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts prevgraf {\param{number}}
+\explain
+In horizontal mode, this parameter specifies the
+number of lines in the paragraph so far; in vertical mode,
+it specifies the number of lines in the previous paragraph.
+\TeX\ only sets |\prevgraf| after it has finished breaking some text into
+lines, i.e., at a math display or at the end of a paragraph.
+See \knuth{page~103} for more details about it.
+\enddesc
+
+\enddescriptions
+\end

@@ -1,0 +1,46 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts item {\<argument>}
+\cts itemitem {\<argument>}
+\explain
+^^{itemized lists}
+These commands are useful for creating ^{itemized lists}.  The entire paragraph
+following \<argument> is indented by |\parindent|
+^^|\parindent//indentation for itemized lists|
+(for |\item|) or by |2\parindent| (for |\itemitem|).
+(See \xrefpg{\parindent} for an explanation of |\parindent|.)
+Then \<argument>,
+followed by an en space, is placed just to
+the left of the text of the
+first line of the paragraph so that it falls within the paragraph indentation
+as specified by |\parindent|.
+
+If you want to include more than one
+paragraph in an item, put |\item{}| in front of the additional paragraphs.
+\example
+{\parindent = 18pt
+\noindent Here is what we require:
+\item{1.}Three eggs in their shells,
+but with the yolks removed.
+\item{2.}Two separate glass cups containing:
+\itemitem{(a)}One-half cup {\it used} motor oil.
+\itemitem{(b)}One cup port wine, preferably French.
+\item{3.}Juice and skin of one turnip.}
+|
+\produces
+{\parindent = 18pt
+\noindent Here is what we require:
+\item{1.}Three eggs in their shells,
+but with the yolks removed.
+\item{2.}Two separate glass cups containing:
+\itemitem{(a)}One-half cup {\it used} motor oil.
+\itemitem{(b)}One cup port wine, preferably French.
+\item{3.}Juice and skin of one turnip.}
+\endexample
+\enddesc
+
+\enddescriptions
+\end

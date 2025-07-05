@@ -1,0 +1,33 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\ctspecial iftrue {}\ctsxrdef{@iftrue}
+\ctspecial iffalse {}\ctsxrdef{@iffalse}
+\explain
+These commands are equivalent to tests that are always true or always
+false.  The main use of these commands is in defining macros that keep
+track of the result of a test.
+\example
+\def\isbigger{\let\bigger=\iftrue}
+\def\isnotbigger{\let\bigger=\iffalse}
+% These \let's MUST be buried in macros!!  If they aren't,
+% TeX erroneously tries to match them with \fi.
+\def\test#1#2{\ifnum #1>#2 \isbigger\else\isnotbigger\fi}
+\test{3}{6}
+\bigger$3>6$\else$3\le6$\fi
+|
+\produces
+\def\isbigger{\let\bigger=\iftrue}
+\def\isnotbigger{\let\bigger=\iffalse}
+% These \let's MUST be buried in macros!
+% If they aren't, TeX erroneously tries to match them with \fi
+\def\test#1#2{\ifnum #1>#2 \isbigger\else\isnotbigger\fi}
+\test{3}{6}
+\bigger$3>6$\else$3\le6$\fi
+\endexample
+\enddesc
+
+\enddescriptions
+\end

@@ -1,0 +1,36 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts adjdemerits {\param{number}}
+\explain
+\minrefs{line break}
+^^{hyphenation//penalties for}
+{\tighten
+This parameter specifies additional \minref{demerits} that \TeX\ attaches to a
+breakpoint between two adjacent lines that are
+``visually incompatible''.
+Such a pair of lines makes a paragraph appear uneven.
+Incompatibility is evaluated in terms of the tightness or looseness
+of lines:
+}
+\olist\compact
+\li A line is tight if its \minref{glue} needs to shrink by at least $50\%$.
+\li A line is decent if its badness is $12$ or less.
+\li A line is loose if its glue needs to stretch by more than $50\%$.
+\li A line is very loose if its glue needs to stretch so much
+that its badness exceeds $100$.
+\endolist
+Two adjacent lines are visually incompatible
+if their categories are not adjacent, e.g., a tight line is next to a loose one
+or a decent line is next to a very loose one.
+
+Demerits are in units of \minref{badness} squared, so
+you need to assign a rather large value to this parameter (in the
+thousands) for it to have any effect.
+\PlainTeX\ sets |\adjdemerits| to~$10000$.
+\enddesc
+
+\enddescriptions
+\end

@@ -1,0 +1,48 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts everycr {\param{token list}}
+\explain
+\TeX\ expands \<token list> whenever it executes
+a |\cr|---at the end of every preamble,
+at the end of every row of a horizontal alignment,
+and at the end of every column of a vertical alignment.
+The |\everycr| commands are expanded just after the |\cr|.
+Thus you can cause \TeX\ to
+execute certain commands at the end of a preamble, row, or column by
+assigning a list of those commands to |\everycr|.
+
+The |\everycr| tokens shouldn't include any commands other than |\no!-align|.
+That's because
+the |\everycr| tokens will reappear after the last
+|\cr| of the alignment. A command other than
+|\noalign| will then make \TeX\ think that it's starting a new
+row or column.
+\TeX\ will complain about a missing |\cr|, insert
+a |\cr|, insert the |\everycr| tokens again, and repeat these actions
+indefinitely.
+\example
+\everycr={\noalign{\smallskip\hrule\smallskip}}
+\halign{#\tabskip = 11pt&\hfil#\hfil&\hfil#\hfil
+\tabskip = 0pt\cr
+$1$&one&first\cr
+$2$&two&second\cr
+$3$&three&third\cr}
+|
+\produces
+\medskip
+\everycr={\noalign{\smallskip\hrule\smallskip}}
+\halign{#\tabskip = 11pt&\hfil#\hfil&\hfil#\hfil
+\tabskip = 0pt\cr
+$1$&one&first\cr
+$2$&two&second\cr
+$3$&three&third\cr}
+\endexample
+
+\eix^^{alignments//commands for}
+\enddesc
+
+\enddescriptions
+\end

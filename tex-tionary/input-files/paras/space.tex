@@ -1,0 +1,23 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts space {}
+\explain
+This command is equivalent to an input space character.
+It differs from ^|\ | in that its
+width \emph{can} be affected by preceding punctuation.
+\example
+Yes.\space No.\space Maybe.\par
+Yes.\!vs!.No.\!vs!.Maybe.
+
+|
+\produces
+Yes.\space No.\space Maybe.\par
+Yes.\ No.\ Maybe.
+\endexample
+\enddesc
+
+\enddescriptions
+\end

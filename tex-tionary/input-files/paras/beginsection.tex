@@ -1,0 +1,36 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+^^{section headings}
+\easy\ctspecial beginsection {\<argument>\thinspace{\bt\\par}}
+\ctsxrdef{@beginsection}
+\explain
+You can use this command to begin a major subdivision of your document.
+\<argument> is intended to serve as a section title.
+|\beginsection| surrounds \<argument>
+by extra vertical space and sets it in
+boldface, left-justified.
+You can produce the |\par| that ends \<argument> with a blank line.
+\let\message = \gobble % Don't bother to tell us about Pig and Pepper.
+\example
+$\ldots$  till she had brought herself down to nine
+inches high.
+
+\beginsection Section 6. Pig and Pepper
+
+For a minute or two she stood looking at the house $\ldots$
+|
+\produces
+$\ldots$  till she had brought herself down to nine
+inches high.
+
+\beginsection Section 6. Pig and Pepper
+
+For a minute or two she stood looking at the house $\ldots$
+\endexample
+\enddesc
+
+\enddescriptions
+\end

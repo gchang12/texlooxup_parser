@@ -1,0 +1,23 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts linepenalty {\param{number}}
+\explain
+\minrefs{line break}
+This parameter specifies the \minref{penalty} that \TeX\ assesses for each line
+break when it is breaking a paragraph into lines.
+The penalty is independent of where the line break occurs.
+Increasing the value
+of this parameter causes \TeX\ to try harder to set a paragraph with a
+minimum number of lines, even at the cost of other aesthetic considerations
+such as avoiding overly tight interword spacing.
+Demerits are in units of \minref{badness} squared, so
+you need to assign a rather large value to this parameter (in the
+thousands) for it to have any effect.
+\PlainTeX\ sets |\linepenalty| to $10$.
+\enddesc
+
+\enddescriptions
+\end

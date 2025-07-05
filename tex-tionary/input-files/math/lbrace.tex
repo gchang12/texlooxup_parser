@@ -1,0 +1,64 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\bix^^{delimiters}
+%
+\dothreecolumns 12
+\easy\ctsdisplay lbrace {}
+\ctsydisplay { @lbrace {}
+\ctsdisplay rbrace {}
+\ctsydisplay } @rbrace {}
+\ctsdisplay lbrack {}
+\ctsdisplay rbrack {}
+\ctsdisplay langle {}
+\ctsdisplay rangle {}
+\ctsdisplay lceil {}
+\ctsdisplay rceil {}
+\ctsdisplay lfloor {}
+\ctsdisplay rfloor {}
+\egroup
+\explain
+These commands produce left and right \minref{delimiter}s.
+Mathematicians use delimiters to indicate the boundaries between parts
+of a formula.  Left delimiters are also called ``^{opening}s'', and
+right delimiters are also called ``^{closing}s''.  Openings and closings
+are two of \TeX's \minref{class}es of math symbols.  \TeX\ puts
+different amounts of space around different \minref{class}es of math
+symbols. You might expect the space that \TeX\ puts around openings and
+closings to be symmetrical, but in fact it isn't.
+
+Some left and right delimiters have more than one command that you can
+use to produce them:
+
+\ulist\compact
+\li `$\{$' (|\lbrace| and |\{|)
+\li `$\}$' (|\rbrace| and |\}|)
+\li `$[$' (|\lbrack| and `|[|')
+\li `$]$' (|\rbrack| and `|]|')
+\endulist
+\noindent You can also use the left and right bracket characters
+(in either form) outside of math mode.
+
+In addition to these commands, \TeX\ treats `|(|' as a left
+delimiter and `|)|' as a right delimiter.
+
+You can have \TeX\
+choose the size for a delimiter by using |\left| and |\right| (\xref\left).
+Alternatively,
+you can get a delimiter of a specific size by using one of the |\big|$x$
+commands (see |\big| et al., \xref{\big}).
+
+\example
+The set $\{\,x \mid x>0\,\}$ is empty.
+|
+\produces
+The set $\{\,x \mid x>0\,\}$ is empty.
+
+\eix^^{delimiters}
+\endexample
+\enddesc
+
+\enddescriptions
+\end

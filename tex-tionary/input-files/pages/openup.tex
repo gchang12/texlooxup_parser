@@ -1,0 +1,52 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts openup {\<dimen>}
+\explain
+This command increases ^|\baselineskip| by \<dimen>.
+An |\openup| command before the end of a paragraph affects
+the entire paragraph, so you shouldn't use |\openup| to
+change |\baseline!-skip| within a paragraph.  |\openup| is
+most useful for typesetting tables and math displays---a
+little extra space between rows often makes them more readable.
+^^{alignments//space between rows of}
+\example
+Alice picked up the White King very gently, and lifted him
+across more slowly than she had lifted the Queen; but before
+she put him on the table, she thought she might well dust
+him a little, he was so covered with ashes.
+\openup .5\baselineskip % 1.5 linespacing.
+|
+\produces
+Alice picked up the White King very gently, and lifted him
+across more slowly than she had lifted the Queen; but before
+she put him on the table, she thought she might well dust
+him a little, he was so covered with ashes.
+\openup .5\baselineskip %1.5 linespacing
+\endexample\enddesc
+
+%==========================================================================
+\section {Page breaks}
+
+%==========================================================================
+\subsection {Encouraging or discouraging page breaks}
+
+\begindesc
+\bix^^{page breaks}
+\bix^^{page breaks//encouraging or discouraging}
+\ctspecial break {} \xrdef{vbreak}
+\explain
+%
+\margin{Four commands identical to ones for line breaks (\xref{hbreak})
+have been added to correct an omission. The descriptions are exactly parallel.}
+%
+This command forces a page break.
+Unless you do something to fill out the page, you're likely to
+get an underfull vbox.
+|\break| can also be used in horizontal mode.
+\enddesc
+
+\enddescriptions
+\end

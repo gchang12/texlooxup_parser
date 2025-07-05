@@ -1,0 +1,24 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts smash {\<argument>}
+\explain
+This command typesets \<argument>,
+but forces the height and depth of its containing \minref{box} to be zero.
+You can use |\smash| and |\vphantom| in combination to give a subformula
+any height and depth that you wish.
+\example
+$${\smash{r_m \brace r_n}\vphantom{r}} \Longrightarrow r$$
+|
+\dproduces
+\kern 4pt
+$${\smash{r_m \brace r_n}\vphantom{r}} \Longrightarrow r$$
+\endexample
+\eix^^{boxes//phantom}
+\eix^^{phantoms}
+\enddesc
+
+\enddescriptions
+\end

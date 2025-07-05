@@ -1,0 +1,61 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\easy\cts hskip {\<dimen$_1$> {\bt plus} \<dimen$_2$> {\bt minus} \<dimen$_3$>}
+\cts vskip {\<dimen$_1$> {\bt plus} \<dimen$_2$> {\bt minus} \<dimen$_3$>}
+^^{vertical skip}^^{vertical glue}
+^^{horizontal skip}^^{horizontal glue}
+\bix^^{horizontal space}
+\bix^^{vertical space}
+\explain
+These commands produce horizontal and vertical glue respectively.
+In the simplest and most common case when only \<dimen$_1$> is present,
+|\hskip| skips to the right by \<dimen$_1$>
+and |\vskip| skips down the page by \<dimen$_1$>.
+More generally, these commands
+produce \minref{glue} whose natural size is
+\<dimen$_1$>, whose stretch is \<dimen$_2$>, and whose shrink is \<dimen$_3$>.
+Either the |plus| \<dimen$_2$>, the |minus |\<dimen$_3$>,
+or both can be omitted.
+If both are present, the |plus| must come before the |minus|.
+An omitted value
+is taken to be zero. Any of the \<dimen>s can be negative.
+
+You can use |\hskip| in math mode, but you can't use |mu| units
+\seeconcept{mathematical unit}
+for any of the dimensions.  If you want |mu| units, use |\mskip|
+(\xref\mskip) instead.
+
+\example
+\hbox to 2in{one\hskip 0pt plus .5in two}
+|
+\produces
+\hbox to 2in{one\hskip 0pt plus 2in two}
+
+\doruler{\8\8}2{in}
+\nextexample
+\hbox to 2in{Help me!! I can't fit
+{\hskip 0pt minus 2in} inside this box!!}
+|
+\produces
+\hbox to 2in{Help me! I can't fit
+{\hskip 0pt minus 2in} inside this box!}
+
+\doruler{\8\8}2{in}
+\nextexample
+\vbox to 4pc{\offinterlineskip% Just show effects of \vskip.
+\hbox{one}\vskip 0pc plus 1pc \hbox{two}
+\vskip .5pc \hbox{three}}
+|
+\produces
+\smallskip
+\vbox to 4pc{\offinterlineskip% Just show effects of \vskip.
+\hbox{one}\vskip 0pc plus 1pc \hbox{two}
+\vskip .5pc \hbox{three}}
+\endexample
+\enddesc
+
+\enddescriptions
+\end

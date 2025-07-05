@@ -1,0 +1,25 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts pagestretch {\param{dimen}}
+\cts pagefilstretch {\param{dimen}}
+\cts pagefillstretch {\param{dimen}}
+\cts pagefilllstretch {\param{dimen}}
+\explain
+These four parameters together specify the amount of \minref{stretch}
+in the \minref{glue} on the current page.  The amount of stretch has
+the form
+{\def\f#1{\hbox{\tt fi#1}}%
+$n_0 + n_1\f{l} + n_2\f{ll} + n_3\f{lll}$}, with the four parameters
+giving the values of the four $n_i$.
+\TeX\ updates these parameters as it adds
+items to the main \minref{vertical list}.
+
+\eix^^{page breaks//parameters for}
+\eix^^{page breaks}
+\enddesc
+
+\enddescriptions
+\end

@@ -1,0 +1,20 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts magstep {\<number>}
+\explain
+This command expands to the \minref{magnification} ratio needed to
+magnify everything in your document
+(other than |true| dimensions)
+by $1.2^r$, where $r$ is
+the value of \<number>. \<number> must be between $0$ and $5$.
+\example
+\magnification = \magstep1 % Magnify by ratio of 1.2.
+|
+\endexample
+\enddesc
+
+\enddescriptions
+\end

@@ -1,0 +1,30 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts language {\param{number}}
+\explain
+Different languages have different sets of hyphenation rules.
+This parameter determines the set of ^{hyphenation rules} that \TeX\ uses.
+By changing |\language| you can get \TeX\
+to hyphenate portions of text or entire documents according to the
+hyphenation rules appropriate to a particular language.
+^^{European languages}
+Your ^{local information} about \TeX\ will tell you if any
+additional sets of hyphenation rules are available (besides the
+ones for English)
+and what the appropriate values of |\language| are.
+The default value of |\language| is $0$.
+
+\TeX\ sets the current language to $0$ at the start of every paragraph,
+and compares |\language| to the current language whenever it adds
+a character to the current paragraph.
+If they are not the same, \TeX\ adds a ^{whatsit} indicating the
+language change.
+This whatsit is the clue in later processing that the language rules
+should change.
+\enddesc
+
+\enddescriptions
+\end

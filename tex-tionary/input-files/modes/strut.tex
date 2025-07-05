@@ -1,0 +1,53 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\margin{This subsection is a merger of two previous subsections.
+The commands have also been reordered.}
+\bix^^{struts}
+\cts strut {}
+\explain
+This command produces a box whose width is zero
+and whose height (|8.5pt|) and depth (|3.5pt|)
+are those of a more or less typical line of type in |cmr10|,
+the default \plainTeX\ font.
+Its main use is in forcing lines to have the same height
+when you've disabled \TeX's interline glue with
+|\offinter!-lineskip| ^^|\offinterlineskip| or a similar command,
+e.g., when you're constructing an alignment.
+If the natural height of a line is
+too short, you can bring it up to standard by including a |\strut|
+in the line.  The strut will force the height and depth of the line
+to be larger, but it won't print anything or consume any horizontal
+space.
+
+If you're setting type in a font that's bigger or smaller than |cmr10|,
+you should redefine |\strut| for that context.
+\example
+\noindent % So we're in horizontal mode.
+\offinterlineskip % So we get the inherent spacing.
+% The periods in this vbox are not vertically equidistant.
+\vtop{\hbox{.}\hbox{.(}\hbox{.x}
+\hbox{.\vrule height 4pt depth 0pt}}\qquad
+% The periods in this vbox are vertically equidistant
+% because of the struts.
+\vtop{\hbox{.\strut}\hbox{.(\strut}\hbox{.x\strut}
+\hbox{.\vrule height 4pt depth 0pt\strut}}
+|
+
+\produces
+\noindent % So we're in horizontal mode.
+\offinterlineskip % So we get the inherent spacing.
+% The periods in this vbox are not vertically equidistant.
+\vtop{\hbox{.}\hbox{.(}\hbox{.x}
+\hbox{.\vrule height 4pt depth 0pt}}\qquad
+% The periods in this vbox are vertically equidistant
+% because of the struts.
+\vtop{\hbox{.\strut}\hbox{.(\strut}\hbox{.x\strut}
+\hbox{.\vrule height 4pt depth 0pt\strut}}
+\endexample
+\enddesc
+
+\enddescriptions
+\end

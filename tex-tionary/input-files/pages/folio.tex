@@ -1,0 +1,25 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts folio {}
+\explain
+This command produces the current page number, whose value is the number
+$n$ contained in ^|\pageno|.
+If  $n\ge0$,
+\TeX\ produces $n$ as a decimal number,
+while if $n<0$,
+\TeX\ produces $-n$ in lowercase roman numerals.
+\example
+This explanation appears on page \folio\ of the book.
+|
+\produces
+This explanation appears on page \folio\ of the book.
+\endexample
+
+\eix^^{page numbering}
+\enddesc
+
+\enddescriptions
+\end

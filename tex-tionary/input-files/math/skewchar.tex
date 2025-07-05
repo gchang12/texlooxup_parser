@@ -1,0 +1,30 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts skewchar {\<font>\param{number}}
+\explain
+The |\skewchar| of a font
+is the character in the font whose kerns,
+as defined in the font's metrics file, determine the positions
+of math accents. That is, suppose that \TeX\ is applying a math accent
+to the character `|x|'.  \TeX\ checks if the character pair
+`|x\skewchar|' has a kern; if so, it moves the accent by the amount of
+that kern. The complete algorithm that \TeX\ uses to position math
+accents (which involves many more things) is in \knuth{Appendix~G}.
+
+If the value of |\skewchar| is not in the range $0$--$255$,
+\TeX\ takes the kern value to be zero.
+
+Note that \<font> is a control sequence
+that names a font, not a \<font\-name> that names font files.
+Beware:
+an assignment to |\skewchar| is \emph{not} undone at the end
+of a group.
+If you want to change |\skewchar| locally, you'll need to
+save and restore its original value explicitly.
+\enddesc
+
+\enddescriptions
+\end

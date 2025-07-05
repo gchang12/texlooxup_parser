@@ -1,0 +1,29 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts lowercase {\rqbraces{\<token list>}}
+\cts uppercase {\rqbraces{\<token list>}}
+\explain ^^{case conversion}
+These commands convert the letters in \<token list>,
+i.e., those tokens with category code $11$, to their lowercase
+and uppercase forms.
+The conversion of a letter is defined by its |\lccode| (for lowercase)
+or |\uccode| (for uppercase) table value.
+Tokens in the list that are not letters are not affected---even if the
+tokens are \minref{macro} calls or other commands that expand into letters.
+\example
+\def\x{Cd} \lowercase{Ab\x} \uppercase{Ab\x}
+|
+\produces
+\def\x{Cd} \lowercase{Ab\x} \uppercase{Ab\x}
+
+\eix^^{case conversion}
+\eix^^{uppercase//conversion to}
+\eix^^{lowercase//conversion to}
+\endexample
+\enddesc
+
+\enddescriptions
+\end

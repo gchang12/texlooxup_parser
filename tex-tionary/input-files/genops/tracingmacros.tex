@@ -1,0 +1,35 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts tracingmacros {\param{number}}
+\explain
+If this parameter is $1$ or greater,
+\TeX\ will record in the log file the expansion and arguments
+of every macro that it executes.
+^^{macros//tracing}
+If |\tracingmacros| is $2$ or greater,
+\TeX\ will record, in addition,
+every expansion of a \minref{token} list such as
+|\output| or |\everycr|.
+If ^|\tracingonline| is greater than zero, this information will also appear
+at your terminal.
+\example
+\def\a{first \b, then \c}
+\def\b{b} \def\c{c}
+\tracingmacros = 2
+Call \a once.
+|
+\logproduces
+\a ->first \b , then \c
+
+\b ->b
+
+\c ->c
+|
+\endexample
+\enddesc
+
+\enddescriptions
+\end

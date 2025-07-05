@@ -1,0 +1,33 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\bix^^{macros}
+\bix^^{macros//defining}
+\xrdef{mac1}% begin the section on macros
+%
+\cts def {\<control sequence> \<parameter text> \rqbraces{\<replacement text>}}
+\explain
+This command defines \<control sequence> as a \minref{macro} with the
+specified \<parameter text> and \<replacement text>.
+See \xrefpg{macro} for a full explanation of how to write a macro
+definition.
+\example
+\def\add#1+#2=?{#1+#2&=
+\count255=#1 \advance\count255 by #2 \number\count255\cr}
+$$\eqalign{
+\add 27+9=?
+\add -5+-8=?}$$
+|
+\dproduces
+\def\add#1+#2=?{#1+#2&=
+\count255=#1 \advance\count255 by #2 \number\count255\cr}
+$$\eqalign{
+\add 27+9=?
+\add -5+-8=?}$$
+\endexample
+\enddesc
+
+\enddescriptions
+\end

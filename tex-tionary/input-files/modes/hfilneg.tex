@@ -1,0 +1,112 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts hfilneg {}
+\cts vfilneg {}
+\explain
+^^{glue//negative}
+These commands cancel the effect of a preceding |\hfil|
+or |\vfil|. While |\hfil| and |\vfil|
+produce infinitely stretchable positive \minref{glue}, |\hfilneg|
+and |\vfilneg| produce infinitely stretchable negative glue.
+(Thus, $n$ |\hfilneg|s cancel $n$ ^|\hfil|s, and similarly for
+|\vfilneg|.)
+The main use of |\hfilneg| and |\vfilneg|
+is to counteract the effect of an |\hfil| or |\vfil|
+inserted by a \minref{macro}.
+
+|\hfilneg| and |\vfilneg| have
+the curious property that if they are the only infinitely stretchable
+glue in a box, they produce exactly the same effect as |\hfil|
+and |\vfil|.
+
+\example
+\leftline{\hfil on the right\hfilneg}
+% Cancel the \hfil that \leftline produces to the right
+% of its argument.
+|
+\produces
+\leftline{\hfil on the right \hfilneg}
+% Cancel the \hfil that \leftline produces to the right
+% of its argument.
+%
+\nextexample
+\def\a{\hbox to 1pc{\hfil 2}\vfil}
+\vbox to 4pc{\hbox{1} \vfil \a
+\vfilneg \hbox to 2pc{\hfil 3}}
+|
+\produces
+\smallskip
+\def\a{\hbox to 1pc{\hfil 2}\vfil}
+\vbox to 4pc{\hbox{1} \vfil \a
+\vfilneg \hbox to 2pc{\hfil 3}}
+\endexample\enddesc
+
+{\emergencystretch=2em
+\see |\hbadness| and |\vbadness| (\xref \vbadness),
+|\hfuzz| and |\vfuzz| (\xref \vfuzz),
+\conceptcit{leaders}.\par}
+\eix^^{space//producing}
+\eix^^{horizontal space}
+\eix^^{vertical space}
+
+%==========================================================================
+\section {Manipulating boxes}
+
+%==========================================================================
+\subsection {Constructing hboxes and vboxes}
+
+\begindesc
+\bix^^{box commands}
+^^{hboxes//constructing with \b\tt\\hbox\e}
+%
+\cts hbox {\rqbraces{\<horizontal mode material>}}
+\aux\cts hbox {{\bt to} \<dimen> \rqbraces{\<horizontal mode material>}}
+\aux\cts hbox {{\bt spread} \<dimen> \rqbraces{\<horizontal mode material>}}
+\explain
+This command produces an hbox
+(horizontal \minref{box}) containing \<horizontal mode material>.
+The braces around \<horizontal mode material> define a group.
+\TeX\ doesn't break the \<horizontal mode material> into lines,
+since it's in restricted horizontal mode when it's assembling the box.
+\TeX\ won't change the size of the box once it's been produced.
+
+|\hbox| is often useful when you want to keep some text all on one line.
+If your use of |\hbox| prevents \TeX\ from breaking lines in an acceptable
+way, \TeX\ will complain about an overfull hbox.
+
+The width of the hbox depends on the arguments to |\hbox|:
+\ulist\compact
+\li If you specify only \<horizontal mode material>,
+the hbox will have its natural \minref{width}.
+\li If you specify |to| \<dimen>, the width of the hbox will be \<dimen>.
+\li If you specify |spread| \<dimen>, the width of the hbox will be
+its natural width plus \<dimen>, i.e., the hbox will be spread out by
+\<dimen>.
+\endulist
+
+The ^|\hfil| command (\xref\hfil) is useful for filling out an
+hbox with empty space when the material in the box isn't as wide as
+the width of the box.
+\example
+\hbox{ugly suburban sprawl}
+\hbox to 2in{ugly \hfil suburban \hfil sprawl}
+\hbox spread 1in {ugly \hfil suburban \hfil sprawl}
+% Without \hfil in the two preceding lines,
+% you'd get `underfull hbox'es.
+|
+\produces
+\hbox{ugly suburban sprawl}
+\hbox to 2in{ugly \hfil suburban \hfil sprawl}
+\hbox spread 1in {ugly \hfil suburban \hfil sprawl}
+% Without \hfil in the two preceding lines,
+% you'd get `underfull hbox'es.
+
+\doruler{\8\8\8}3{in}
+\endexample
+\enddesc
+
+\enddescriptions
+\end

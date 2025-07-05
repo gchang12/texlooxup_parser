@@ -1,0 +1,26 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts finalhyphendemerits {\param{number}}
+\explain
+\minrefs{line break}
+{\tighten
+This parameter specifies additional \minref{demerits} that \TeX\
+attaches to a breakpoint that causes
+the next to last line of a paragraph to end with a hyphen.
+Such a hyphen is generally considered to be unaesthetic
+because of the possible blank space from a short last line beneath it.
+Increasing the value of this parameter has the effect of discouraging
+\TeX\ from ending the next to the last line with a hyphen.
+Demerits are in units of \minref{badness} squared, so
+you need to assign a rather large value to this parameter (in the
+thousands) for it to have any effect.
+\PlainTeX\ sets |\finalhyphendemerits| to $5000$.
+}
+\eix^^{hyphenation//penalties for}
+\enddesc
+
+\enddescriptions
+\end

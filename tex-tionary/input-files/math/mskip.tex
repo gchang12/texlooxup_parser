@@ -1,0 +1,26 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts mskip {\<mudimen$_1$> {\bt plus} \<mudimen$_2$> {\bt minus}
+\<mudimen$_3$>}
+\explain
+^^{glue}
+This command produces horizontal \minref{glue}
+that has natural width \<mu\-dimen$_1$>, stretch \<mudimen$_2$>,
+and shrink \<mudimen$_3$>.
+The glue is measured in \minref{mathematical unit}s, which vary according
+to the style.  Aside from its units of measurement, this command behaves
+just like |\hskip| (\xref \hskip).
+
+\example
+$0\mskip 13mu 0 \quad {\scriptscriptstyle 0 \mskip 13mu 0}$
+|
+\produces
+$0\mskip 13mu 0 \quad {\scriptscriptstyle 0 \mskip 13mu 0}$
+\endexample
+\enddesc
+
+\enddescriptions
+\end

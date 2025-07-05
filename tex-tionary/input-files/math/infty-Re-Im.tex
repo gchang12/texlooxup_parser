@@ -1,0 +1,87 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\xrdef{specsyms}
+\dothreecolumns 34
+\easy\ctsdisplay infty {}
+\ctsdisplay Re {}
+\ctsdisplay Im {}
+\ctsdisplay angle {}
+\ctsdisplay triangle {}
+\ctsdisplay backslash {}
+\ctsdisplay vert {}
+\ctsydisplay | @bar {}
+\ctsdisplay Vert {}
+\ctsdisplay emptyset {}
+\ctsdisplay bot {}
+\ctsdisplay top {}
+\ctsdisplay exists {}
+\ctsdisplay forall {}
+\ctsdisplay hbar {}
+\ctsdisplay ell {}
+\ctsdisplay aleph {}
+\ctsdisplay imath {}
+\ctsdisplay jmath {}
+\ctsdisplay nabla {}
+\ctsdisplay neg {}
+\ctsdisplay lnot {}
+\actdisplay ' @prime \ (apostrophe)
+\ctsdisplay prime {}
+\ctsdisplay partial {}
+\ctsdisplay surd {}
+\ctsdisplay wp {}
+\ctsdisplay flat {}
+\ctsdisplay sharp {}
+\ctsdisplay natural {}
+\ctsdisplay clubsuit {}
+\ctsdisplay diamondsuit {}
+\ctsdisplay heartsuit {}
+\ctsdisplay spadesuit {}
+\egroup
+\explain
+^^{music symbols} ^^{card suits}
+These commands produce various symbols.  They are called
+``^{ordinary symbol}s'' to distinguish them from other classes of
+symbols such as relations. You can only use
+an ordinary symbol
+within a math formula, so if you need an ordinary symbol within ordinary text
+you must enclose it in dollar signs (|$|).
+
+The commands |\imath| and |\jmath| are useful when you need to put an
+accent on top of an `$i$' or a `$j$'.
+
+An apostrophe (|'|) is a short way of writing a superscript |\prime|.  (The
+|\prime| command by itself generates a big ugly prime.)
+
+The |\!|| and ^|\Vert| commands are synonymous, as
+are the ^|\neg| and ^|\lnot| commands.
+\margin{explanation of {\tt\\vert} added}
+The |\vert| command produces the same result as `|!||'.
+\indexchar |
+
+The symbols produced by |\backslash|, |\vert|, and |\Vert|
+are \minref{delimiter}s.  These symbols can be produced in larger sizes
+by using ^|\bigm| et al.\ (\xref \bigm).
+
+\example
+The Knave of $\heartsuit$s, he stole some tarts.
+|
+\produces
+The Knave of $\heartsuit$s, he stole some tarts.
+\nextexample
+If $\hat\imath < \hat\jmath$ then $i' \leq j^\prime$.
+|
+\produces
+If $\hat\imath < \hat\jmath$ then $i' \leq j^\prime$.
+\nextexample
+$${{x-a}\over{x+a}}\biggm\backslash{{y-b}\over{y+b}}$$
+|
+\dproduces
+$${{x-a}\over{x+a}}\biggm\backslash{{y-b}\over{y+b}}$$
+\endexample
+\enddesc
+
+\enddescriptions
+\end

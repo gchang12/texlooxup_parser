@@ -1,0 +1,34 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts hphantom {\<argument>}
+\cts vphantom {\<argument>}
+\explain
+These commands produce phantom boxes\minrefs{box}\ that
+don't print anything:
+\ulist\compact
+\li |\hphantom| produces a box with the same width as \<argument>
+but zero height and depth.
+\li |\vphantom| produces a box with the same height and depth as \<argu\-ment>
+but zero width.
+\endulist
+\noindent
+Their main purpose is to force a subformula to have a certain minimum
+horizontal or vertical dimension.
+\example
+$$\left[\vphantom{u\over v}t\right] \star
+\left[{u\over v}\right]\quad
+\{\hphantom{xx}\}$$
+|
+\dproduces
+\kern 4pt
+$$\left[\vphantom{u\over v}t\right] \star
+\left[{u\over v}\right]\quad
+\{\hphantom{xx}\}$$
+\endexample
+\enddesc
+
+\enddescriptions
+\end

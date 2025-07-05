@@ -1,0 +1,71 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\bix^^{line breaks//parameters affecting}
+%
+\cts pretolerance {\param{number}}
+\cts tolerance {\param{number}}
+\explain
+These parameters determine the \minref{badness} that \TeX\ will tolerate
+on each line when it is choosing line breaks
+for a paragraph.
+The badness is a measure of how far the interword spacing deviates from
+the ideal.
+|\pretolerance| specifies the  tolerable badness for
+line breaks without hyphenation;
+|\tolerance| specifies the tolerable badness for line breaks with
+hyphenation.
+The tolerable badness can be exceeded in either of two ways:
+a line is too tight (the interword spaces are too
+small) or it is too loose (the interword spaces are too big).
+
+\ulist
+\li If \TeX\ must set a line too loosely, it
+complains about an ``underfull hbox''.
+\li If \TeX\ must set a line too rightly,
+it lets the line run past the right margin and
+complains about an ``overfull \minref{hbox}''.
+\endulist
+
+\noindent \TeX\ chooses line breaks in the following steps:
+\olist
+\li It attempts to choose line breaks without hyphenating.
+If none of the
+resulting lines have a badness exceeding |\pretolerance|, the
+line breaks are acceptable and the paragraph can now be set.
+\li Otherwise, it tries another set of line breaks, this
+time allowing hyphenation.  If none of the resulting lines have a badness
+exceeding |\tolerance|, the new set of line breaks is
+acceptable and the paragraph can now be set.
+\li Otherwise, it adds ^|\emergencystretch| (see below) to the stretch
+of each line and tries again.
+\li If none of these attempts have produced an acceptable
+set of line breaks,
+it sets the paragraph with one or more overfull hboxes
+and complains about them.
+\endolist
+
+\PlainTeX\ sets |\tolerance| to $200$ and |\pretolerance| to $100$.
+If you set |\tolerance| to $10000$, \TeX\
+becomes infinitely tolerant and accepts any spacing, no matter how bad
+(unless it encounters a word that won't fit on a line, even with
+hyphenation).  Thus by changing |\tolerance| you can avoid
+overfull and underfull hboxes, but at the cost of making the spacing worse.
+By making |\pretolerance| larger you can get \TeX\ to avoid hyphenation
+(and also run faster),
+again at the cost of possibly worse spacing.
+If you set |\pretolerance| to $-1$,
+\TeX\ will not even try to set the paragraph without hyphenation.
+
+The  ^|\hbadness| parameter (\xref \hbadness) determines the level of badness
+that \TeX\ will tolerate before it complains, but |\hbadness| does not affect
+the way that \TeX\ typesets your document.
+The ^|\hfuzz| parameter (\xref \hfuzz) determines the amount that
+an hbox can exceed its specified width before \TeX\ considers it to be
+erroneous.
+\enddesc
+
+\enddescriptions
+\end

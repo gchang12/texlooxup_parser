@@ -1,0 +1,36 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\easy\ctspecial proclaim {\<argument>{\tt.}\vs\thinspace
+\<general text>\thinspace{\bt\\par}}
+\ctsxrdef{@proclaim}
+\explain
+^^{theorems}
+^^{lemmas}
+^^{hypotheses}
+This command ``proclaims'' a theorem, lemma, hypothesis, etc.
+It sets \<argument> in boldface type and the following paragraph in
+italics.  \<arg\-u\-ment> must be followed by a period and a space token,
+which serve
+to set off \<argument> from \<general text>.
+\<general text> consists of the text up to the next paragraph
+boundary.  You can include multiple paragraphs by using |\endgraf|
+instead of a blank line or |\par|.
+\example
+\proclaim Theorem 1.
+What I say is not to be believed.
+
+\proclaim Corollary 1. Theorem 1 is false.\par
+|
+\produces
+\proclaim Theorem 1.
+What I say is not to be believed.
+
+\proclaim Corollary 1. Theorem 1 is false.\par
+\endexample
+\enddesc
+
+\enddescriptions
+\end

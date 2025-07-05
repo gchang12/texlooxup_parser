@@ -1,0 +1,63 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\makecolumns 4/2:
+\cts hfil {}
+\cts hfill {}
+\cts vfil {}
+\cts vfill {}
+\explain
+\bix^^{glue//infinitely stretchable}
+These commands produce infinitely stretchable horizontal
+and vertical glue that
+overwhelms any finite stretch that may be present.
+|\hfil| and |\hfill| produce horizontal glue, while
+|\vfil| and |\vfill| produce vertical glue.
+
+|\hfill| is infinitely larger than |\hfil|.
+If both |\hfill| and |\hfil| appear in the same \minref{box},
+the |\hfill| will consume all the available extra space
+and the |\hfil| will be effectively ignored.
+|\hfill| can in turn be overwhelmed by |\hskip 0pt plus 1filll|.
+The glue produced by
+|\hfil| and |\hfill| never shrinks.
+
+The behavior of |\vfil| and |\vfill| is analogous.
+
+\example
+\hbox to 2in{Left\hfil Middle \hfil Right}
+|
+\produces
+\hbox to 2in{Left\hfil Middle \hfil Right}
+
+\doruler{\8\8}2{in}
+\nextexample
+\hbox to 2in{Left\hfil Middle \hfill Right}
+|
+\produces
+\hbox to 2in{Left\hfil Middle \hfill Right}
+
+\doruler{\8\8}2{in}
+\nextexample
+\leftline{%
+\vbox to 4pc{%
+\hbox{Top}\vfil\hbox{Middle}\vfil \hbox{Bottom}}\quad
+\vbox to 4pc{%
+\hbox{Top}\vfil\hbox{Middle}\vfill\hbox{Bottom}}}
+|
+\produces
+\smallskip
+\leftline{%
+\vbox to 4pc{%
+\hbox{Top}\vfil\hbox{Middle}\vfil \hbox{Bottom}}\quad
+\vbox to 4pc{%
+\hbox{Top}\vfil\hbox{Middle}\vfill\hbox{Bottom}}}
+\endexample
+
+\eix^^{glue//infinitely stretchable}
+\enddesc
+
+\enddescriptions
+\end

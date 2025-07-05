@@ -1,0 +1,37 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\ctspecial newhelp \ctsxrdef{@newhelp} {\<control sequence>
+\rqbraces{\<help text>}}
+\explain
+This command assigns the ^{help message} given by \<help text> to
+\<control sequence>.  It provides an efficient way of defining
+the ^{help text} that further explains an error message.
+Before issuing the error message with the |\errmessage| command,
+you should assign \<control sequence> to ^|\errhelp|.  The help text
+will then appear if the user types `|H|'
+or `|h|' in response to the error message.
+\example
+\newhelp\pain{Your input includes a token that I find^^J
+to be offensive. Don't bother me again with this^^J
+document until you've removed it.}
+\errhelp = \pain \newlinechar = `\^^J
+% ^^J will start a new line
+\errmessage{I do not appreciate receiving this token}
+|
+\logproduces
+!! I do not appreciate receiving this token.
+l.8 ...t appreciate receiving this token.}
+
+? H
+\Your input includes a token that I find
+to be offensive. Don't bother me again with this
+document until you've removed it.
+|
+\endexample
+\enddesc
+
+\enddescriptions
+\end

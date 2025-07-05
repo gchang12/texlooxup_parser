@@ -1,0 +1,41 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts write {\<number> \rqbraces{\<token list>}}
+\explain
+^^{output streams//writing}
+^^{writing a file}
+This command tells \TeX\ to write \<token list> to the file
+associated with the \minref{output stream}
+designated by \<number>.
+It generates a whatsit that becomes part of a box.
+The actual writing does not take place until \TeX\ ships out that box
+to the \dvifile,
+unless you've preceded the |\write| with ^|\immediate|.
+
+For a |\write| that is not immediate, \TeX\ does not expand macros in
+\<token list> until the token list is actually written to the file.
+The macro expansions follow the same rules as |\edef| (\xref\edef).
+In particular, any control sequence that is not
+the name of a macro is written as
+^|\escapechar| followed by the control sequence name
+and a space.  Any `|#|' tokens
+in \<token list> are doubled, i.e., written as `|##|'.
+
+If \<number> is not in the range from $0$ to $15$, \TeX\ writes
+\<token list> to the log file.
+^^{log file//written by \b\tt\\write\e}
+If \<number> is greater than $15$ or isn't associated with an output
+stream, \TeX\ also writes \<token list> to the terminal.
+\example
+\def\aa{a a}
+\write\auxfile{\hbox{$x#y$} \aa}
+% Writes the string `\hbox {$x##y$} a a' to \auxfile.
+|
+\endexample
+\enddesc
+
+\enddescriptions
+\end

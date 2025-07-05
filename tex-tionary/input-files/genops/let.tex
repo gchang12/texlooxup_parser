@@ -1,0 +1,18 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts let {\<control sequence> = \<token>}
+\explain
+^^{control sequences//defining with \b\tt\\let\e}
+\minrefs{token}
+This command causes
+\<control sequence> to acquire the current meaning of \<token>.
+Even if you redefine \<token> later, the meaning of \<control sequence>
+will not change.  Although \<token> is most commonly a control sequence,
+it can also be a \minref{character} token.
+\enddesc
+
+\enddescriptions
+\end

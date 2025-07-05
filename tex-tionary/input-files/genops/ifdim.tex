@@ -1,0 +1,27 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\ctspecial ifdim {\<dimen$_1$> \<relation> \<dimen$_2$>}\ctsxrdef{@ifdim}
+\explain
+^^{dimensions//comparing}
+This command tests if \<dimen$_1$> and \<dimen$_2$>
+satisfy \<relation>, which must be either `|<|', `|=|', or `|>|'.
+The dimensions can be constants such as |1in|, dimension registers
+such as |\dimen6|, or dimension parameters such as |\parindent|.
+Before performing the test, \TeX\ expands tokens following the |\ifdim|
+until it obtains a sequence of tokens having
+the form \<dimen$_1$> \<relation> \<dimen$_2$>, followed by a token
+that can't be part of \<dimen$_2$>.
+
+\example
+\dimen0 = 1000pt \ifdim \dimen0 > 3in true\else false\fi
+|
+\produces
+\dimen0 = 1000pt \ifdim \dimen0 > 3in true\else false\fi
+\endexample
+\enddesc
+
+\enddescriptions
+\end

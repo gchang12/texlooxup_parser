@@ -1,0 +1,70 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\bix^^{operations}
+\xrdef{binops}
+\dothreecolumns 34
+\easy\ctsdisplay vee {}
+\ctsdisplay wedge {}
+\ctsdisplay amalg {}
+\ctsdisplay cap {}
+\ctsdisplay cup {}
+\ctsdisplay uplus {}
+\ctsdisplay sqcap {}
+\ctsdisplay sqcup {}
+\ctsdisplay dagger {}
+\ctsdisplay ddagger {}
+\ctsdisplay land {}
+\ctsdisplay lor {}
+\ctsdisplay cdot {}
+\ctsdisplay diamond {}
+\ctsdisplay bullet {}
+\ctsdisplay circ {}
+\ctsdisplay bigcirc {}
+\ctsdisplay odot {}
+\ctsdisplay ominus {}
+\ctsdisplay oplus {}
+\ctsdisplay oslash {}
+\ctsdisplay otimes {}
+\ctsdisplay pm {}
+\ctsdisplay mp {}
+\ctsdisplay triangleleft {}
+\ctsdisplay triangleright {}
+\ctsdisplay bigtriangledown {}
+\ctsdisplay bigtriangleup {}
+\ctsdisplay ast {}
+\ctsdisplay star {}
+\ctsdisplay times {}
+\ctsdisplay div {}
+\ctsdisplay setminus {}
+\ctsdisplay wr {}
+\egroup
+\explain
+These commands produce the symbols for various binary operations.
+Binary operations are one of \TeX's \minref{class}es of math symbols.
+\TeX\ puts different amounts of space around different classes of math
+symbols.  When \TeX\ needs to break a line of text within a math
+formula, \minrefs{line break} it will consider placing the break
+after a binary operation---but only if
+the operation is at the outermost level of
+the formula, i.e., not enclosed in~a~group.
+
+In addition to these commands, \TeX\ also treats `|+|' and `|-|'
+as binary operations. It considers `|/|' to be an ordinary symbol,
+despite the fact that mathematically it is a binary operation,
+because it looks better with less space around it.
+
+\example
+$$z = x \div y \quad \hbox{if and only if} \quad
+z \times y = x \;\hbox{and}\; y \neq 0$$
+|
+\dproduces
+$$z = x \div y \quad \hbox{if and only if} \quad
+z \times y = x \;\hbox{and}\; y \neq 0$$
+\endexample
+\enddesc
+
+\enddescriptions
+\end

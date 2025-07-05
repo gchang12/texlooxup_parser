@@ -1,0 +1,29 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts ignorespaces {}
+\explain
+This command tells \TeX\ to read and expand tokens until it finds one that
+is not a space \minref{token}, ignoring any space tokens
+that it finds on the way.
+|\ignorespaces| is often useful at the end of a \minref{macro} as a way
+of making the macro insensitive to any spaces or ends of line
+that might follow calls on it.
+(An empty line after |\ignorespaces| still produces a |\par| token,
+however.)
+\example
+\def\aa#1{yes #1\ignorespaces}
+\aa{may}
+be
+|
+\produces
+\def\aa#1{yes #1\ignorespaces}
+\aa{may}
+be
+\endexample
+\enddesc
+
+\enddescriptions
+\end

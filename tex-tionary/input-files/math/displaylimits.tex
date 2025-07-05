@@ -1,0 +1,28 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts displaylimits {}
+\explain
+This command tells \TeX\ to place limits above and below all operators
+(including the integrals) if in display style, and after all operators
+if in text style.
+
+If you specify more than one of |\limits|, |\nolimits|,
+and |\display!-limits|, the last command rules.
+
+\example
+$$a(\lambda) = {1 \over {2\pi}} \int\displaylimits
+_{-\infty}^{+\infty} f(x)e^{-i\lambda x}\,dx$$
+|
+\dproduces
+$$a(\lambda) = {1 \over {2\pi}} \int\displaylimits
+_{-\infty}^{+\infty} f(x)e^{-i\lambda x}\,dx$$
+
+\eix^^{operators//large}
+\endexample
+\enddesc
+
+\enddescriptions
+\end

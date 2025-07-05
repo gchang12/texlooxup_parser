@@ -1,0 +1,55 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts looseness {\param{number}}
+\explain
+\minrefs{line break}
+This parameter gives you a way
+to change the total number of lines in a paragraph from what they
+optimally would be.
+|\looseness| is so named because it's a
+measure of how loose the paragraph is, i.e., how much extra space there is in
+it.
+
+Normally, |\looseness| is $0$ and
+\TeX\ chooses line breaks in its usual way.  But if
+|\looseness| is, say, $3$, \TeX\ does the following:
+\olist
+\li It chooses line breaks normally, resulting in a paragraph of $n$ lines.
+\li It discards these line breaks and
+tries to find a new set of line breaks that gives the paragraph $n+3$ lines.
+(Without the previous step, \TeX\ wouldn't know the value of $n$.)
+\li If the previous attempt results in lines whose badness exceeds
+|\tol!-er!-ance|,
+^^|\tolerance|
+it tries to get $n+2$ lines---and if that also fails,
+$n+1$ lines, and finally $n$ lines again.
+\endolist
+\noindent
+Similarly, if looseness is $-n$,
+\TeX\ attempts to set the paragraph with $n$
+fewer lines  than normal.
+The easiest way for \TeX\ to make a paragraph one line longer is to put
+a single word on the excess line.  You can prevent this by
+putting a tie (\xref{@not}) between the last two words of the paragraph.
+
+Setting |\looseness| is the best way to force a paragraph
+to occupy a given number of lines.
+Setting it to a negative value is useful when you're trying to
+increase the amount of text you can fit on a page.
+Similarly, setting it to a positive
+value is useful when you're trying to
+decrease the amount of text on a page.
+
+\TeX\ sets |\looseness| to $0$ when it ends a paragraph, after breaking
+the paragraph into lines.
+If you want to change the looseness of several paragraphs, you must do it
+individually for each one or put the change into |\everypar|
+\ctsref\everypar.
+^^|\everypar//for setting \b\tt\\looseness\e|
+\enddesc
+
+\enddescriptions
+\end

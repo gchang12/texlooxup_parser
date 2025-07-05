@@ -1,0 +1,20 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts dump {}
+\explain
+This command, which must not appear inside a group, dumps the
+contents of \TeX's memory
+to a ^{format file} (\xref{format file}).
+By using ^|virtex|, a special ``virgin'' form of \TeX,
+you can then reload the format file at high speed and
+continue in the same state that \TeX\ was in at the time of the dump.
+|\dump| also ends the run.  Since |\dump| can only be used
+in ^|initex|, not in production forms of \TeX, it is only useful
+to people who are installing \TeX.
+\enddesc
+
+\enddescriptions
+\end

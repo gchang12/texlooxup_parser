@@ -1,0 +1,28 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts special {\rqbraces{\<token list>}}
+\explain
+This command tells \TeX\ to
+write \<token list> directly to the \dvifile\ when it next
+ships out a page.
+A typical use of |\special| would be to tell the device driver to incorporate
+the contents of a named graphics file into the output page.
+^^{device drivers//instructions from \b\tt\\special\e}
+The |\special| command produces a whatsit that associates
+\<token list> with a particular position on the page, namely,
+the position that a zero-size box would have had if such a box
+had appeared instead of the |\special| command.
+Any use you might make of |\special| depends strictly on
+the ^{device drivers} that you have available.
+\example
+\special{graphic expic}
+% Display the graphics file `expic' here.
+|
+\endexample
+\enddesc
+
+\enddescriptions
+\end

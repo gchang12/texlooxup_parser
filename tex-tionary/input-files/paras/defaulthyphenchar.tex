@@ -1,0 +1,31 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts defaulthyphenchar {\param{number}}
+\explain
+When \TeX\ reads the metrics file
+^^{metrics file//default hyphen in}
+for a font in response to a
+^|\font| command, it sets the font's ^|\hyphenchar| to
+|\default!-hyphen!-char|.
+If the value of |\default!-hyphen!-char| is
+not in the range $0$--$255$ when you load a font,
+\TeX\ won't hyphenate any words in that font  unless you
+override the decision by setting the font's |\hyphenchar| later on.
+\PlainTeX\  sets |\default!-hyphen!-char| to $45$, the \ascii\ code
+for `|-|'.
+\example
+\defaulthyphenchar = `-
+% Assume `-' is the hyphen, unless overridden.
+\defaulthyphenchar = -1
+% Don't hyphenate, unless overridden.
+|
+\endexample
+
+\eix^^{fonts//hyphenation characters for}
+\enddesc
+
+\enddescriptions
+\end

@@ -1,0 +1,39 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\bix^^{box registers}
+%
+\cts setbox {\<register>\thinspace{\bt =}\thinspace\<box>}
+\cts box {\<register>}
+\explain
+^^{assignments//of boxes}
+These commands respectively set and retrieve the contents
+of the box register
+whose number is \<register>.
+Note that you set a box register a little differently than
+you set the other kinds of registers: you use
+|\setbox|$\,n$~|=| rather than |\box|$\,n$~|=|.
+
+\emph{Retrieving the contents of a box register
+with these commands has the side effect of emptying it,
+so that the box register become void.}  If you don't want that to happen,
+you can use |\copy| (see below) to retrieve the contents.
+You should use |\box| in preference to |\copy|
+when you don't care about what's in a box register after you've used it,
+so as not to exhaust \TeX's memory by filling it with obsolete boxes.
+\example
+\setbox0 = \hbox{mushroom}
+\setbox1 = \vbox{\copy0\box0\box0}
+\box1
+|
+\produces
+\setbox0 = \hbox{mushroom}
+\setbox1 = \vbox{\copy0\box0\box0}
+\box1
+\endexample
+\enddesc
+
+\enddescriptions
+\end

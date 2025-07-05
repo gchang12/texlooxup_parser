@@ -1,0 +1,28 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts nonscript {}
+\explain
+When \TeX\ is currently typesetting in script or scriptscript
+\minref{style} and encounters this command
+immediately in front of glue or a kern,
+it cancels the glue or kern.
+|\nonscript| has no effect in the other styles.
+
+This command provides a way of ``tightening up'' the spacing in
+script and scriptscript styles, which generally are set in smaller type.
+It is of little use outside of macro definitions.
+\example
+\def\ab{a\nonscript\; b}
+$\ab^{\ab}$
+|
+\produces
+\def\ab{a\nonscript\; b}
+$\ab^{\ab}$
+\endexample
+\enddesc
+
+\enddescriptions
+\end

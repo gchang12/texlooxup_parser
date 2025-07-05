@@ -1,0 +1,27 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts topglue {\<glue>}
+\explain
+\margin{Command added; recent addition to \TeX}
+This command\footnote{|\topglue| was added to \TeX\ in version 3.0,
+later than the other enhancements introduced by ^{\newTeX}
+(\xref{newtex}).  It is first described in the \emph{eighteenth\/}
+edition of \texbook.} causes the space from the top of the page to the
+top of the first box on the page to be \<glue> precisely.
+The top of the page is considered to be at the baseline of an
+imaginary line of text just above the top line of the page.
+More precisely, it's a distance |\topskip| above the origin as given by
+|\hoffset| and |\voffset|.
+
+This command is useful because \TeX\ ordinarily adjusts the glue
+produced by |\topskip| in a complex way.  By using |\topglue| you can
+control the position of the first box on the page without worrying about
+those adjustments.
+
+\enddesc
+
+\enddescriptions
+\end

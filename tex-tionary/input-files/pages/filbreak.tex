@@ -1,0 +1,20 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts filbreak {}
+\explain
+This command provides a kind of conditional page break.
+It tells \TeX\ to
+break the page---but not if the text up to a later |\filbreak| also
+fits on the same page.
+By enclosing a paragraph in a pair of |\filbreak|s,
+you can ensure that \TeX\ will keep a paragraph on a single page if it can.
+You should not use |\filbreak| within a paragraph, since it
+forces \TeX\ into vertical mode and thus ends the paragraph.
+See \xrefpg{filbreak} for more advice on this subject.
+\enddesc
+
+\enddescriptions
+\end

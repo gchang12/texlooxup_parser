@@ -1,0 +1,19 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts displayindent {\param{dimen}}
+\explain
+This parameter specifies the space by which \TeX\ indents a
+math display.
+\TeX\ sets the value of |\displayindent| when it encounters the `|$$|'
+that starts the display.  Usually this initial value is zero,
+but if the paragraph shape indicates that the display should
+be shifted by an amount $s$,
+\TeX\ will set |\displayindent| to $s$.
+See \knuth{pages~188--189} for a more detailed explanation of this parameter.
+\enddesc
+
+\enddescriptions
+\end

@@ -1,0 +1,43 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+^^{fonts}
+%
+\ctsx fivebf {use $5$-point bold font}
+\ctsx fivei {use $5$-point math italic font}
+\ctsx fiverm {use $5$-point roman font}
+\ctsx fivesy {use $5$-point math symbol font}
+\ctsx sevenbf {use $7$-point bold font}
+\ctsx seveni {use $7$-point math italic font}
+\ctsx sevenrm {use $7$-point roman font}
+\ctsx sevensy {use $7$-point math symbol font}
+\ctsx tenbf {use $10$-point bold text font}
+\ctsx tenex {use $10$-point math extension font}
+\ctsx teni {use $10$-point math italic font}
+\ctsx tenrm {use $10$-point roman text font}
+\ctsx tensl {use $10$-point slanted roman font}
+\ctsx tensy {use $10$-point math symbol font}
+\ctsx tenit {use $10$-point italic font}
+\ctsx tentt {use $10$-point typewriter font}
+\explain
+These commands cause \TeX\ to typeset the following text in the
+specified font.  Normally you would enclose
+one of these font-selecting commands in a
+group, together with the text to be set in the selected font.
+Outside of a group a font-selecting command is
+effective until the end of the document
+(unless you override it with another such command).
+\example
+See how I've reduced my weight---from
+120 lbs.\ to {\sevenrm 140 lbs}.
+|
+\produces
+See how I've reduced my weight---from
+120 lbs.\ to {\sevenrm 140 lbs}.
+\endexample
+\enddesc
+
+\enddescriptions
+\end

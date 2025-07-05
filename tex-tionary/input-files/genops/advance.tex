@@ -1,0 +1,38 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\bix^^{arithmetic}
+\bix^^{registers//arithmetic in}
+%
+\cts advance {\<count register> {\bt by} \<number>}
+\aux\cts advance {\<dimen register> {\bt by} \<dimen>}
+\aux\cts advance {\<skip register> {\bt by} \<glue>}
+\aux\cts advance {\<muskip register> {\bt by} \<muglue>}
+\explain
+This command adds a compatible quantity to a register.  For \<glue>
+or \<muglue> all three components (natural value, stretch, and shrink)
+\minrefs{glue} are added.
+Any of the quantities can be negative.  For purposes of these calculations
+(and other assignments as well), \<glue> can be converted to a
+\<dimen> by dropping the stretch and shrink, and a \<dimen> can be converted
+to a \<number> by taking its value in scaled points
+\seeconcept{dimension}.
+You can omit the word |by| in these commands---\TeX\ will understand them
+anyway.
+\example
+\count0 = 18 \advance\count0 by -1 \number\count0\par
+\skip0 = .5in \advance\skip0 by 0in plus 1in % add stretch
+\hbox to 2in{a\hskip\skip0 b}
+|
+\produces
+\count0 = 18 \advance\count0 by -1 \number\count0\par
+\skip0 = .5in \advance\skip0 by 0in plus 1in % add stretch
+\hbox to 2in{a\hskip\skip0 b}
+\doruler{\8\8}2{in}
+\endexample
+\enddesc
+
+\enddescriptions
+\end

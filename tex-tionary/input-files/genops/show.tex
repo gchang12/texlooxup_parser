@@ -1,0 +1,139 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\bix^^{tracing}
+\bix^^{debugging}
+\bix^^{diagnostic aids}
+\cts show {\<token>}
+\cts showthe {\<argument>}
+\cts showbox {\<number>}
+\cts showlists {}
+\explain
+These commands record information in the log of your \TeX\ run:
+\ulist
+\li |\show| records the meaning of \<token>.\minrefs{token}
+^^{tokens//displayed by \b\tt\\show\e}
+\li |\showthe| records
+whatever tokens would be produced by
+|\the| \<arg\-u\-ment> (see \xref \the).
+\li |\showbox| records the contents of the \minref{box}
+\minref{register} numbered \<num\-ber>.
+The number of
+leading dots in the log indicates the number of
+levels of nesting of inner boxes.
+\li |\showlists| records
+the contents of each of the lists that \TeX\ is currently constructing.
+(These lists are nested one within another.)
+See \knuth{pages~88--89} for further information about interpreting
+the output of |\showlists|.
+\endulist
+For |\show| and |\showthe|, \TeX\ also displays the information at your
+^{terminal}.
+For |\showbox| and |\showlists|, \TeX\ displays the information at your
+terminal only
+if ^|\tracingonline| (\xref \tracingonline) is greater than zero;
+if ^|\tracingonline| is zero or less (the default case),
+the information is not displayed.
+
+Whenever \TeX\ encounters a |\show|-type command it
+stops for interaction.  The request for interaction does \emph{not}
+indicate an error, but it does give you an opportunity to ask \TeX\ to
+show you something else.  If you don't want to see anything else, just
+press \asciichar{return}.
+
+You can control the amount of output produced by |\showbox| by setting
+|\show!-box!-breadth| and |\show!-box!-depth| (\xref\showboxbreadth).
+^^|\showboxbreadth| ^^|\showboxdepth|
+These parameters respectively have default values of $5$
+and $3$, which is why
+just five items appear for each box described
+in the log output below.  (The `|..etc.|' indicates additional items
+within the boxes that aren't displayed.)
+\example
+\show a
+\show \hbox
+\show \medskip
+\show &
+|
+\logproduces
+> the letter a.
+> \hbox=\hbox.
+> \medskip=macro:
+->\vskip \medskipamount .
+> alignment tab character &.
+|
+\nextexample
+\showthe\medskipamount
+\toks27={\hbox{Joe's\quad\ Diner}}
+\showthe\toks27
+|
+\logproduces
+> 6.0pt plus 2.0pt minus 2.0pt.
+> \hbox {Joe's\quad \ Diner}.
+|
+\nextexample
+\setbox 3=\vbox{\hbox{A red dog.}\hrule A black cat.}
+\showbox 3
+|
+\logproduces
+> \box3=
+\vbox(16.23332+0.0)x53.05565
+.\hbox(6.94444+1.94444)x46.41675
+..\tenrm A
+..\glue 3.33333 plus 1.66498 minus 1.11221
+..\tenrm r
+..\tenrm e
+..\tenrm d
+..etc.
+.\rule(0.4+0.0)x*
+.\hbox(6.94444+0.0)x53.05565
+..\tenrm A
+..\glue 3.33333 plus 1.66498 minus 1.11221
+..\tenrm b
+..\tenrm l
+..\tenrm a
+..etc.
+|
+\endexample
+\vfil\eject
+\example
+\vbox{A \hbox
+{formula
+$x \over y\showlists$}}
+|
+\logproduces
+### math mode entered at line 3
+\mathord
+.\fam1 y
+this will be denominator of:
+\fraction, thickness = default
+\\mathord
+\.\fam1 x
+### restricted horizontal mode entered at line 2
+\tenrm f
+\tenrm o
+\tenrm r
+\tenrm m
+\kern-0.27779
+\tenrm u
+\tenrm l
+\tenrm a
+\glue 3.33333 plus 1.66666 minus 1.11111
+spacefactor 1000
+### horizontal mode entered at line 1
+\hbox(0.0+0.0)x20.0
+\tenrm A
+\glue 3.33333 plus 1.66498 minus 1.11221
+spacefactor 999
+### internal vertical mode entered at line 1
+prevdepth ignored
+### vertical mode entered at line 0
+prevdepth ignored
+|
+\endexample
+\enddesc
+
+\enddescriptions
+\end

@@ -1,0 +1,44 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts obeylines {}
+\explain
+\TeX\ normally treats an end of line as a space.
+|\obeylines| instructs \TeX\ to treat each end of line as
+an end of paragraph, thus forcing a line break.
+|\obeylines| is often useful when you're typesetting verse or
+computer programs.
+^^{verse, typesetting}^^{poetry, typesetting}^^{computer programs, typesetting}
+If any of your lines are longer than the effective line length
+(|\hsize|\tminus|\parindent|),
+however,
+you may get an extra line break within those lines.
+
+Because \TeX\ inserts the |\parskip| glue (\xref\parskip)
+between lines controlled by |\obeylines| (since it thinks each line is a
+paragraph), you should normally set |\parskip| to zero when you're using
+|\obeylines|.
+
+You can use the ^|\obeyspaces| command (\xref{\obeyspaces}) to get
+\TeX\ to take spaces within a line literally.  |\obeylines| and |\obeyspaces|
+are often used together.
+\example
+\obeylines
+``Beware the Jabberwock, my son!!
+\quad The jaws that bite, the claws that catch!!
+Beware the Jubjub bird, and shun
+\quad The frumious Bandersnatch!!''
+|
+\produces
+\obeylines
+``Beware the Jabberwock, my son!
+\quad The jaws that bite, the claws that catch!
+Beware the Jubjub bird, and shun
+\quad The frumious Bandersnatch!''
+\endexample
+\enddesc
+
+\enddescriptions
+\end

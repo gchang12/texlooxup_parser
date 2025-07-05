@@ -1,0 +1,52 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\bix^^{page numbering}
+\cts pageno {\param{number}}
+\explain
+This parameter contains the current page number as an integer.  The page
+number is normally negative for front-matter pages that are numbered
+with small roman numerals instead of arabic numerals.  If you change the
+page number within a page,
+the changed number will be used in any headers or footers that
+appear on that page.
+The actual
+printing of page numbers is handled by \TeX's \minref{output routine},
+which you can modify.
+
+\PlainTeX\ keeps the page number in the \minref{register} ^|\count0|.
+(|\pageno| is, in fact, a synonym for |\count0|.)
+Whenever it ships out a page to the \dvifile,
+^^|\shipout//{\tt\\count} registers displayed at|
+\TeX\ displays the current value of |\count0| on your
+terminal so that you can tell which page it is working on.
+It's possible to use registers |\count1|--|\count9| for nested
+levels of page numbers (you must program this yourself).
+If any of these registers are nonzero, \TeX\ displays them on your
+terminal also.\footnote{
+More precisely, it displays all registers in sequence from
+|\count0| to |\count9|, but omits trailing zero registers.
+For instance, if the values of |\count0|--|\count3|
+are $(17, 0 , 0, 7)$ and the others are $0$,
+\TeX\ displays the page number as {\tt [17.0.0.7]}.}
+\example
+This explanation appears on page \number\pageno\
+of our book.
+|
+\produces
+This explanation appears on page \number\pageno\
+of our book.
+
+\nextexample
+\pageno = 30 % Number the next page as 30.
+Don't look for this explanation on page \number\pageno.
+|
+\produces
+Don't look for this explanation on page 30.
+\endexample
+\enddesc
+
+\enddescriptions
+\end

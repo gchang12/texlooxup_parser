@@ -1,0 +1,28 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts string {\<control sequence>}
+\explain
+^^{control sequences//converting to strings}
+This command produces
+the characters that form the name of \<control sequence>,
+including the \minref{escape character}.
+The escape character is represented by the current value of
+^|\escapechar|.
+^^{escape character//represented by \b\tt\\escapechar\e}
+\TeX\ gives the characters in the list a category code of $12$ (other).
+
+You can perform the reverse operation with
+the ^|\csname| command (\xref \csname),
+which turns a string into a control sequence.
+\example
+the control sequence {\tt \string\bigbreak}
+|
+\produces
+the control sequence {\tt \string\bigbreak}
+\endexample\enddesc
+
+\enddescriptions
+\end

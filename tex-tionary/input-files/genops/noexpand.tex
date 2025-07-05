@@ -1,0 +1,35 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts noexpand {\<token>}
+\explain
+This command tells \TeX\ to
+suppress expansion of \<token> if \<token> is a
+\minref{control sequence} that can be expanded.
+If \<token> can't be expanded, e.g., it's a letter,
+\TeX\ acts as though the |\noexpand| wasn't there
+and processes \<token> normally.
+In other words the expansion of `|\noexpand|\<token>'
+is simply \<token> no matter what \<token> happens to be.
+\example
+\def\bunny{rabbit}
+\edef\magic{Pull the \noexpand\bunny\ out of the hat!! }
+% Without \noexpand, \bunny would always be replaced
+% by `rabbit'
+\let\oldbunny=\bunny \def\bunny{lagomorph} \magic
+\let\bunny=\oldbunny \magic
+|
+\produces
+\def\bunny{rabbit}
+\edef\magic{Pull the \noexpand\bunny\ out of the hat! }
+% Without \noexpand, \bunny would always be replaced
+% by `rabbit'
+\let\oldbunny=\bunny \def\bunny{lagomorph} \magic
+\let\bunny=\oldbunny \magic
+\endexample
+\enddesc
+
+\enddescriptions
+\end

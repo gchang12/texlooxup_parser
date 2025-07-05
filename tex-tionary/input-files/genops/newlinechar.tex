@@ -1,0 +1,29 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts newlinechar {\param{number}}
+\explain
+This parameter contains a character that indicates a new line on
+output.  When \TeX\ encounters this character
+while reading the argument of
+a |\write|, |\message|, or
+|\errmessage| command, it starts a new line.
+If |\newlinechar| is not in the range $0$--$255$,
+there is no character that indicates
+a new line on output.
+\PlainTeX\ sets |\newlinechar| to $-1$.
+\example
+\newlinechar = `\^^J
+\message{This message appears^^Jon two lines.}
+|
+\logproduces
+This message appears
+on two lines.
+|
+\endexample
+\enddesc
+
+\enddescriptions
+\end

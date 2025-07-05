@@ -1,0 +1,21 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts tracingrestores {\param{number}}
+\explain
+If this parameter is greater than zero,
+\TeX\ will record in the log file
+the values that it restores when it encounters the end of a \minref{group}.
+If ^|\tracingonline| is greater than zero, this information will also appear
+at your terminal.
+
+Some production forms of \TeX\ ignore the value of |\tracing!-restores|
+so that they can run faster.
+If you need to use this parameter, be sure to use a form that
+responds to it.
+\enddesc
+
+\enddescriptions
+\end

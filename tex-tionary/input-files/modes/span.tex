@@ -1,0 +1,35 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\cts span {}
+\explain
+The meaning of this command depends on whether it appears in a preamble
+or in an alignment entry.
+\ulist
+\li Normally, \TeX\ does not expand tokens in the preamble
+when it reads them.
+Putting |\span| in front of a token in the preamble causes
+that token to be expanded immediately according to \TeX's usual rules
+of \minref{macro} expansion.
+\li Putting |\span| instead of `|&|' between two column or row entries
+causes those columns or rows to be combined.
+For a horizontal alignment,
+the width of the combined column is the sum of the
+widths of the component columns.
+For a vertical alignment,
+the height of the combined row is the sum of the
+heights of the component rows.
+The template of the combined column or combined row forms a single group,
+so font-setting commands preceding a |\span| affect everything up to
+the next `|&|'.
+\endulist
+\noindent
+|\span| is rarely useful by itself outside of a template,
+but it provides the basic mechanism
+for defining ^|\multispan|.
+\enddesc
+
+\enddescriptions
+\end

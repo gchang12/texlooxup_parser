@@ -1,0 +1,127 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\bix^^{leaders}
+\easy\cts leaders {\<box or rule> \<skip command>}
+\cts cleaders {\<box or rule> \<skip command>}
+\cts xleaders {\<box or rule> \<skip command>}
+\explain
+These commands produce \minref{leaders}, i.e., they fill a
+horizontal or vertical space with
+copies of a pattern \seeconcept{leaders}.
+The \<box> or \<rule> specifies a leader,
+i.e., a single copy of the pattern,
+while the \<skip command> specifies a
+window to be filled with a
+row or a column of the leaders.
+The pattern is repeated as many times as will fit into the window.
+If \<skip command> is a horizontal skip, the window
+contains a row of leaders and \TeX\ must be in a horizontal mode;
+if \<skip command> is a vertical skip, the window
+contains a column of leaders and \TeX\ must be in a vertical mode.
+
+The commands differ in how they arrange the repeated pattern in the space
+and where they put any leftover space:
+
+\ulist\compact
+\li For |\leaders|, \TeX\ aligns a row of leaders with the left end of
+the innermost \minref{box} $B$ that is to contain the result of the
+|\leaders| command.
+It aligns a column of leaders with the top of $B$.
+Those leaders that fall entirely within the window are retained.
+Any leftover space at the top and bottom of the window is left empty.
+\li For |\cleaders|, the leaders are centered within the window.
+\li For |\xleaders| the pattern is uniformly distributed throughout the window.
+If the leftover space is $l$ and the leader is repeated  $n$ times,
+\TeX\ puts space of width or height $l/(n+1)$ between adjacent leaders and
+at the two ends (left and right or top and bottom) of the leaders.
+\endulist
+
+\example
+\def\pattern{\hbox to 15pt{\hfil.\hfil}}
+\line{Down the Rabbit-Hole {\leaders\pattern\hfil} 1}
+\line{The Pool of Tears {\leaders\pattern\hfil} 9}
+\line{A Caucus-Race and a Long Tale {\cleaders\pattern
+\hfil} 19}
+\line{Pig and Pepper {\xleaders\pattern\hfil} 27}
+|
+\produces
+\def\pattern{\hbox to 15pt{\hfil.\hfil}}\par
+\line{Down the Rabbit-Hole {\leaders\pattern\hfil} 1}
+\line{The Pool of Tears {\leaders\pattern\hfil} 9}
+\line{A Caucus-Race and a Long Tale {\cleaders\pattern
+\hfil} 19}
+\line{Pig and Pepper {\xleaders\pattern\hfil} 27}
+\nextexample
+\def\bulletfill{\vbox to 3ex{\vfil\hbox{$\bullet$}\vfil}}%
+\def\mybox{\vbox to 1in}
+\def\myrule{\hrule width 4pt}\hsize=2in
+\hrule \line{%
+\mybox{\myrule depth 8pt \leaders\bulletfill\vfill}
+\hfil
+\mybox{\myrule depth 15pt \leaders\bulletfill\vfill}
+\hfil
+\mybox{\myrule depth 18pt \cleaders\bulletfill\vfill}
+\hfil
+\mybox{\myrule depth 12pt \xleaders\bulletfill\vfill}%
+}\hrule
+|
+\produces
+\medskip
+\def\bulletfill{\vbox to 3ex{\vfil\hbox{$\bullet$}\vfil}}%
+\def\mybox{\vbox to 1in}\def\myrule{\hrule width 4pt}\hsize=2in
+\hrule \line{%
+\mybox{\myrule depth 8pt \leaders\bulletfill\vfill}
+\hfil
+\mybox{\myrule depth 15pt \leaders\bulletfill\vfill}
+\hfil
+\mybox{\myrule depth 18pt \cleaders\bulletfill\vfill}
+\hfil
+\mybox{\myrule depth 12pt \xleaders\bulletfill\vfill}%
+}\hrule
+\endexample\enddesc
+
+\begindesc
+\cts dotfill {}
+\cts hrulefill {}
+\explain
+^^{fill}
+These commands respectively fill the enclosing horizontal space with
+a row of dots on the baseline and with
+a horizontal line on the baseline.
+It's usually a good idea to leave a space between
+|\dotfill| or |\hrulefill|
+and any text that precedes or follows it (see the example below).
+\example
+\hbox to 3in{Start {\dotfill} Finish}
+\hbox to 3in{Swedish {\hrulefill} Finnish}
+|
+\produces
+\par\hbox to 3in{Start {\dotfill} Finish}
+\hbox to 3in{Swedish {\hrulefill} Finnish}
+\endexample\enddesc
+
+\begindesc
+\cts leftarrowfill {}
+\cts rightarrowfill {}
+\explain
+^^{fill}
+These commands fill the enclosing horizontal space with
+left-pointing or right-pointing ^{arrows}.
+\example
+\hbox to 3in{\vrule \rightarrowfill \ 3 in
+\leftarrowfill\vrule}
+|
+\produces
+\medskip
+\hbox to 3in{\vrule \rightarrowfill \ 3 in
+\leftarrowfill\vrule}
+\endexample
+
+\eix^^{leaders}
+\enddesc
+
+\enddescriptions
+\end

@@ -1,0 +1,17 @@
+\input macros
+
+\begindescriptions
+
+\begindesc
+\ctspecial ifeof {\<number>}\ctsxrdef{@ifeof}
+\explain
+^^{end of file, testing for}
+\minrefs{file}
+This command tests an input stream for end of file.
+It is true if input stream \<number> has not been opened,
+or has been opened and the associated file has been entirely read in
+(or doesn't exist).
+\enddesc
+
+\enddescriptions
+\end
