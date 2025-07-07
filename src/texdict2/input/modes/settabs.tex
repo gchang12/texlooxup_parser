@@ -1,0 +1,63 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts settabs {\<number> {\bt \\columns}}
+\aux\cts settabs {{\bt \\+} \<sample line> {\bt \\cr}}
+\explain
+The first form of
+this command defines a set of tab stops ^^{tabs}
+for a tabbing \minref{alignment}.
+It tells \TeX\ to set the tab stops so as to divide each line into
+\<number> equal parts.  \TeX\ takes the length of a line to be
+|\hsize|, as usual.  You can make the alignment narrower by decreasing
+|\hsize|.
+\margin{paragraph ``The tab settings $\ldots$'' moved to below.}
+\example
+{\hsize = 3in \settabs 3 \columns
+\+$1$&one&first\cr
+\+$2$&two&second\cr
+\+$3$&three&third\cr}
+|
+\produces
+{\hsize = 3in \settabs 3 \columns
+\+$1$ & one & first\cr
+\+$2$ & two & second\cr
+\+$3$ & three & third\cr}
+
+\noindent\doruler{\8\8\8}3{in}
+\smallskip
+\endexample
+
+The second form of this command defines tab stops by setting the tab stops
+at the positions indicated by the `|&|'s in the sample line.
+The sample line itself does not appear in the output.  When you
+use this form you'll usually want to put material into the sample line that is
+somewhat wider than the widest corresponding material in the alignment,
+in order to produce space between the columns.
+That's what we've done in the 
+example below.  The material following the last tab
+stop is irrelevant, since \TeX\ does not need to position
+anything at the place where the |\cr|~appears.
+
+The tab settings established by |\settabs| remain in effect until
+you issue a new |\settabs| command or end a group containing
+the |\settabs| command.
+This is true for both forms of the command.
+
+\example
+% The first line establishes the template.
+\settabs \+$1$\qquad & three\quad & seventh\cr
+\+$1$&one&first\cr
+\+$2$&two&second\cr
+\+$3$&three&third\cr
+|
+\produces
+\settabs \+$1$\qquad & three\quad & seventh\cr % the sample line
+\+$1$&one&first\cr
+\+$2$&two&second\cr
+\+$3$&three&third\cr
+\smallskip
+\endexample
+\enddesc
+\enddescriptions
+\end

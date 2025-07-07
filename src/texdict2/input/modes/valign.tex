@@ -1,0 +1,106 @@
+\input macros
+\begindescriptions
+\begindesc
+{\tighten
+\cts valign {{\bt \rqbraces{\<preamble>\\cr \<column>\\cr $\ldots$
+   \<column>\\cr}}}
+\aux\cts valign {{\bt to \<dimen>%
+   \rqbraces{\<preamble>\\cr \<column>\\cr $\ldots$ \<column>\\cr}}}
+\aux\cts valign {{\bt spread \<dimen>%
+   \rqbraces{\<preamble>\\cr \<column>\\cr $\ldots$ \<column>\\cr}}}
+\par}
+\explain
+This command produces a vertical \minref{alignment}
+consisting of
+a sequence of columns, where each column in turn contains a sequence
+of row entries.
+\TeX\ adjusts the heights of the row entries to accommodate the tallest one
+in each row.
+
+A vertical alignment
+can only appear when \TeX\ is in a horizontal \minref{mode}.
+Because vertical alignments are (a)~conceptually somewhat difficult and
+(b)~not often used, we recommend that you learn about
+alignments in general
+(\xref{alignment}) and the |\halign| command (see above) before
+you attempt to use the |\valign| command.
+
+An alignment consists of a ^{preamble}
+followed by the text to be aligned. The preamble,
+which describes the layout of the columns that follow,
+consists of a
+sequence of row templates, separated by `|&|' and ended
+by |\cr|.
+\bix^^{template}
+Each column consists of a sequence of ^{row}
+entries, also separated by `|&|' and ended by |\cr|. Within
+a template, `|#|' indicates where \TeX\ should insert the
+corresponding text of a row entry. 
+
+\TeX\ typesets each row entry in internal vertical
+mode, i.e., as the contents of a \minref{vbox},
+and implicitly encloses the entry in a group.
+It always gives the vbox zero depth.
+Any text or other horizontal mode material in a row entry then puts \TeX\
+into ordinary horizontal mode.
+(This is just an application of the general rules for \TeX's behavior
+in internal vertical mode.)
+The usual paragraphing parameters apply in this case:
+the row entry has an initial
+indentation of |\parindent| (\xref\parindent) and 
+its lines have the
+|\leftskip| and |\rightskip| (\xref\leftskip) \minref{glue}
+appended to~them.
+
+Note in particular that a row entry containing text has
+a width of |\hsize| (\xref\hsize).  Unless you reset
+|\hsize| to the row width that you want, you're likely to
+encounter overfull \minref{hbox}es, or find that
+the first column takes up the width of the entire page, or both.
+\eix^^{entry (column or row)}
+
+Normally, you need to include a \minref{strut}
+^^{struts//in vertical alignments}
+in each
+template so that the rows don't come out crooked as a result
+of the varying heights of the entries in the alignment.  You
+can produce a strut with the |\strut| command.
+
+The |to| form of this command instructs \TeX\
+to make the vertical extent of the alignment be \<dimen>,
+adjusting the space between rows as necessary.
+The |spread| form of this command instructs \TeX\
+to make the alignment taller by \<dimen> than its natural height.
+These forms are like the corresponding forms of |\vbox| \ctsref\vbox.
+
+\example
+{\hsize=1in \parindent=0pt
+\valign{#\strut&#\strut&#\strut&#\strut\cr
+   bernaise&curry&hoisin&hollandaise\cr
+   ketchup&marinara&mayonnaise&mustard\cr
+   rarebit&tartar\cr}}
+|
+\produces
+{\hsize=1in \parindent=0pt \leftskip=0pt
+\valign{#\strut&#\strut&#\strut&#\strut\cr
+   bernaise&curry&hoisin&hollandaise\cr
+   ketchup&marinara&mayonnaise&mustard\cr
+   rarebit&tartar\cr}}
+\nextexample
+% same thing but without struts (shows why you need them)
+{\hsize=1in \parindent=0pt
+\valign{#&#&#&#\cr
+   bernaise&curry&hoisin&hollandaise\cr
+   ketchup&marinara&mayonnaise&mustard\cr
+   rarebit&tartar\cr}}
+|
+\produces
+{\hsize=1in \parindent=0pt \leftskip=0pt
+\valign{#&#&#&#\cr
+   bernaise&curry&hoisin&hollandaise\cr
+   ketchup&marinara&mayonnaise&mustard\cr
+   rarebit&tartar\cr}}
+\endexample
+\enddesc
+\enddescriptions
+\end

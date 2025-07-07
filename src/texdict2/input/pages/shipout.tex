@@ -1,0 +1,14 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts shipout {\<box>}
+\explain
+This command instructs \TeX\ to send \<box> to the \dvifile.
+^^{\dvifile//receives boxes from \b\tt\\shipout\e}
+\TeX\ expands any |\write| command in \<box> as part of |\shipout|.
+^^|\write//expanded during {\tt\\shipout}|
+The principal use of |\shipout| is in the output routine, but you can
+use it anywhere.
+\enddesc
+\enddescriptions
+\end

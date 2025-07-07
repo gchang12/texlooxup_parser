@@ -1,0 +1,34 @@
+\input macros
+\beginconcepts
+\concept {escape character}
+
+An \defterm{escape character} introduces a control sequence.  The escape
+character in \refterm{\plainTeX} is the backslash (|\|).
+\indexchar \
+You can change the escape character from $c_1$ to $c_2$
+by reassigning the category codes of $c_1$ and $c_2$
+with the ^|\catcode| command \ctsref{\catcode}.
+You can also define additional escape characters similarly.
+If you want to typeset material containing literal escape characters, you must
+either 
+(a) define a control sequence that stands for the printed escape character or
+(b) temporarily
+disable the escape character by changing its category code, using the
+method shown on \xrefpg{verbatim}.  The definition:
+
+\csdisplay
+\def\\{$\backslash$}
+|
+is one way of creating a control sequence that stands for `$\backslash$'
+(a backslash typeset in a math font).
+
+You can use the ^|\escapechar| parameter \ctsref{\escapechar} to specify
+how the escape character is represented in synthesized control sequences,
+e.g., those created by |\string| and |\message|.
+
+
+\endconcept
+
+
+\endconcepts
+\end

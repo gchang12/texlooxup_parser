@@ -1,0 +1,29 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts mathchoice {%
+   \rqbraces{\<math$_1$>}
+   \rqbraces{\<math$_2$>}
+   \rqbraces{\<math$_3$>}
+   \rqbraces{\<math$_4$>}}
+\explain
+This command tells \TeX\ to typeset one of the subformulas
+\<math$_1$>, \<math$_2$>, \<math$_3$>, or \<math$_4$>, making its choice
+according to the current \minref{style}.
+That is, if \TeX\ is in 
+display style it sets the |\mathchoice| as \<math$_1$>; in text style it sets
+it as \<math$_2$>; in script style it sets it as \<math$_3$>;
+and in scriptscript style it sets it as \<math$_4$>.
+\example
+\def\mc{{\mathchoice{D}{T}{S}{SS}}}
+The strange formula $\mc_{\mc_\mc}$ illustrates a 
+mathchoice.
+|
+\produces
+\def\mc{{\mathchoice{D}{T}{S}{SS}}}
+The strange formula $\mc_{\mc_\mc}$ illustrates a 
+mathchoice.
+\endexample
+\enddesc
+\enddescriptions
+\end

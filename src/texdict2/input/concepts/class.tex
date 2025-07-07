@@ -1,0 +1,25 @@
+\input macros
+\beginconcepts
+\concept class
+
+The \defterm{class} of a \refterm{character} specifies that character's
+role in math formulas.  The class of a character is encoded in its
+\refterm{mathcode}.  ^^{mathcodes//class encoded in} For example, the
+equals sign `|=|' has class $3$ (Relation).  \TeX\ uses its knowledge
+of character classes to decide how much space to put between different
+components of a math formula.  \margin{clarifying material added} For
+example, here's a math formula shown first as \TeX\ normally prints it
+and then with the class of each character randomly changed:
+$$\strut a+(b-a)=a \qquad
+   \mathopen{a}\mathord{+}\mathrel{(}\mathclose{b}\mathclose{-}
+   \mathop{a}\mathopen{)}\mathord{=}\mathopen{a}$$
+
+See \xrefpg\mathord\ of this book for a list of the classes and
+\knuth{page~154} for their meanings.
+
+\endconcept
+
+
+
+\endconcepts
+\end

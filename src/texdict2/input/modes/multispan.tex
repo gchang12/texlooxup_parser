@@ -1,0 +1,50 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts multispan {\<number>}
+\explain
+This command tells \TeX\ that the following
+\<number> columns in a row of a horizontal alignment,
+or
+\<number> rows in a column of a vertical alignment,
+should be combined into a single column or row (as with
+|\span|) and that their templates should be omitted (as with |\omit|).
+
+\example
+\tabskip = 13pt\halign{%
+   \hfil\it#\hfil&\hfil#\hfil&#&\hfil\$#\cr
+   United States&Washington&dollar&1.00\cr
+   France&Paris&franc&0.174\cr
+   Israel&Jerusalem &
+      \multispan 2 \hfil\it(no information)\hfil \cr
+   Japan&Tokyo&yen&0.0829\cr}
+|
+\produces
+\tabskip = 13pt\halign{%
+   \hfil\it#\hfil&\hfil#\hfil&#&\hfil\$#\cr
+   United States&Washington&dollar&1.00\cr
+   France&Paris&franc&0.174\cr
+   Israel&Jerusalem &
+      \multispan 2 \hfil\it(no information)\hfil \cr
+   Japan&Tokyo&yen&0.0829\cr}
+\nextexample
+{\hsize=1.2in \parindent=0pt
+\valign{(#)\strut&(#)\strut&(#)\strut&(#)\strut\cr
+   bernaise&curry&hoisin&hollandaise\cr
+   \multispan 3$$\left\{{{\rm ketchup}\atop{\rm marinara}}
+      \right\}$$&mustard\cr
+   rarebit&tartar\cr}}
+|
+\produces
+{\hsize=1.2in \parindent=0pt \leftskip=0pt
+\valign{(#)\strut&(#)\strut&(#)\strut&(#)\strut\cr
+   bernaise&curry&hoisin&hollandaise\cr
+   \multispan 3$$\left\{{{\rm ketchup}\atop{\rm marinara}}
+      \right\}$$&mustard\cr
+   rarebit&tartar\cr}}
+\endexample
+
+\eix^^{template}
+\enddesc
+\enddescriptions
+\end

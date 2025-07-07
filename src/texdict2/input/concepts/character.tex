@@ -1,0 +1,93 @@
+\input macros
+\beginconcepts
+\concept character
+
+{\tighten
+\TeX\ works with \defterm{characters} in two contexts:
+as input characters, which it reads, and as output characters,
+which it typesets.
+\TeX\ transforms most input characters
+into the output characters that depict them.
+For example, it normally
+transforms the input letter `|h|' into the letter `h' typeset in the current
+font.
+That is not the case, however, for an input character such as `|$|' that has a
+special meaning.
+\par}
+
+\TeX\ gets its input characters by reading them from input files (or from your
+terminal) and by expanding \refterm{macros:macro}.  These are the
+\emph{only} ways that \TeX\ can acquire an input character.
+Each input character has a code number corresponding to its position in the
+\refterm{\ascii} code table.  ^^{\ascii}
+For instance, the letter `|T|' has \ascii\ code~$84$.
+
+When \TeX\ reads
+a character, it attaches a \refterm{category code}
+^^{category codes//attached during input}
+to it.  The category code affects how \TeX\ interprets the
+character once it has been read in.  \TeX\ determines
+(and remembers) the category codes of the characters in a macro when it
+reads the macro's definition.  As \TeX\ reads characters with its eyes
+\seeconcept{\anatomy} it does some ``filtering'',
+such as condensing
+sequences of spaces to a single space.  See \knuth{pages~46--48} for the
+details of this filtering.
+
+The \ascii\
+``^{control characters}'' have codes $0$--$31$ and $127$--$255$.
+They either don't
+show up or cause strange behavior on most terminals if you try to
+display them.  Nonetheless they are sometimes needed in \TeX\ input,
+so \TeX\ has a special notation for them.
+\xrdef{twocarets}
+If you type `|^^|$c$', where $c$ is any character, you get the character
+whose \ascii\ code is either $64$ greater or $64$ less than $c$'s
+\ascii\ code.  The largest acceptable code value using this notation
+is $127$, so the notation is unambiguous.
+Three particularly common instances of this
+notation are `|^^M|' (the \ascii\ \asciichar{return} character),
+`|^^J|' (the \ascii\ \asciichar{line\ feed} character) and `|^^I|'
+(the \ascii\ \asciichar{horizontal\ tab} character).
+\ttidxref{^^M}\ttidxref{^^J}\ttidxref{^^I}
+
+{\tighten
+\TeX\ also has another notation for indicating \ascii\ code values
+that works for all character codes from $0$ to $255$.
+\xrdef{hexchars}
+If you type `|^^|$xy$', where $x$
+and $y$ are any of the ^{hexadecimal digit}s `|0123456789abcdef|',
+you get the single character with the specified code.
+(Lowercase letters are required here.)
+\TeX\ opts for the ``hexadecimal digits''
+interpretation whenever it has a choice, so you must not follow a character
+like `|^^a|' with a lowercase hexadecimal digit---if you do, you'll get the
+wrong interpretation.
+If you need to use this
+notation you'll find it handy to have a table of \ascii\ codes.
+\par}
+
+An output character is a character to be typeset.
+A command for producing an output character has the meaning
+``Typeset
+character number $n$ from the current \refterm{font}'',
+where $n$ is determined by the command.
+\TeX\ produces your typeset document by combining such characters
+with
+other typographical \hbox{elements} in boxes, and arranging them 
+on the page.
+
+An input character whose category code is $11$ (^{letter}) or $12$ (other)
+^^{other characters}
+acts as a command to produce the corresponding output character.  In
+addition you can get \TeX\ to produce character $n$ by issuing the
+command `|\char |$n$' \ctsref{\char}, ^^|\char| where $n$ is a
+\refterm{number} between $0$ and $255$.  The commands `|h|',
+|\char`h|, and |\char104| all have the same effect.  ($104$ is the
+\ascii\ code for `h'.)
+
+\endconcept
+
+
+\endconcepts
+\end

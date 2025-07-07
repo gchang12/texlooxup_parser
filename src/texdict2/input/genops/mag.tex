@@ -1,0 +1,49 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts magnification {{\bt =} \<number>}
+\cts mag {\param{number}}
+\explain
+\margin{{\tt\\mag} and {\tt\\magnification} combined.}
+An assignment to |\magnification| establishes 
+the ``^{scale factor}'' $f$ that determines
+the \minref{magnification} ratio of your document \seeconcept{magnification}.
+The assignment to |\magni!-fication| must occur before the first page
+of your document has been shipped out.
+
+The assignment sets $f$ to \<number> and also
+sets |\hsize| and |\vsize|
+^^|\hsize//set by {\tt\\magnification}|
+^^|\vsize//set by {\tt\\magnification}|
+respectively to |6.5true in| and |8.9true in|,
+the values appropriate for an $8 \frac1/2$-%
+by-$11$-inch page.
+$f$ must be between $0$ and $32768$.
+The \minref{magnification} ratio of the
+document is $f/1000$.
+A scale factor
+of $1000$ provides unit magnification, i.e., it leaves the size of your
+document
+unchanged.  It's customary to use powers of $1.2$ as scale factors, and
+most libraries of fonts are based on such factors.  You can use the
+^|\magstep| and ^|\magstephalf| commands to specify magnifications by
+these factors.
+
+|\magnification| is not a parameter. You can't use it
+to \emph{retrieve} the scale factor.  If you write something like
+|\dimen0 = \mag!-nifi!-cation|, \TeX\ will complain about it.
+
+The |\mag| parameter contains the scale factor.
+Changing the value of |\mag| rescales the page dimensions, which is not
+usually what you want.
+Therefore it's usually better to change the magnification by
+assigning to |\magnification| rather than to |\mag|.
+
+\example
+\magnification = \magstep2 
+% magnify fonts by 1.44 (=1.2x1.2)
+|
+\endexample
+\enddesc
+\enddescriptions
+\end

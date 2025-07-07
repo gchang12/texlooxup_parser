@@ -1,0 +1,34 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts mathstrut {}
+\explain
+This command produces a phantom formula whose width is zero
+and whose height and depth are the same as those of a left parenthesis.
+|\mathstrut| is in fact defined as `|\vphantom(|'.
+Its main use is for getting radicals, underbars, and overbars to line
+up with other radicals, underbars, and overbars in a formula.
+It is much like ^|\strut| (\xref \strut),
+except that it adjusts itself to the different \minref{style}s
+that can occur in math formulas.  
+\example
+$$\displaylines{
+\overline{a_1a_2} \land \overline{b_1b_2} 
+\quad{\rm versus}\quad \overline{a_1a_2\mathstrut}
+  \land \overline{b_1b_2\mathstrut}\cr
+\sqrt{\epsilon} + \sqrt{\xi} \quad{\rm versus}\quad
+\sqrt{\epsilon\mathstrut} + \sqrt{\xi\mathstrut}\cr}$$
+|
+\dproduces
+\kern 4pt
+$$\displaylines{
+\overline{a_1a_2} \land \overline{b_1b_2} 
+\quad{\rm versus}\quad \overline{a_1a_2\mathstrut}
+  \land \overline{b_1b_2\mathstrut}\cr
+\sqrt{\epsilon} + \sqrt{\xi} \quad{\rm versus}\quad
+\sqrt{\epsilon\mathstrut} + \sqrt{\xi\mathstrut}\cr}$$
+\endexample
+\eix^^{struts}
+\enddesc
+\enddescriptions
+\end

@@ -1,0 +1,24 @@
+\input macros
+\beginconcepts
+\concept {file name}
+
+A \defterm{file name} names a 
+\refterm{file} that is known to the ^{operating system}
+that in turn
+supervises your \TeX\ run.  The syntax of a file name does \emph{not}
+follow the usual rules of \TeX\ syntax, and in fact it is different
+in different implementations of \TeX.
+In particular, most \TeX\ implementations consider a file name to be
+terminated by a blank or an end of line.  Thus \TeX\ is likely to
+misinterpret `|{\input chapter2}|' 
+by taking the right brace as part of the file name.
+As a general rule, you should follow a file name by a blank or the
+end of the line as in `|{\input chapter2!visiblespace}|'.
+
+\endconcept
+
+
+\eject
+
+\endconcepts
+\end

@@ -1,0 +1,78 @@
+\input macros
+\beginconcepts
+\concept page
+
+\TeX\ processes a document by assembling \defterm{pages} one at a time
+and passing them to the output routine.
+As it proceeds through your document, \TeX\ maintains a list of lines
+and other 
+items to be placed on the page.  (The lines are actually hboxes.)
+This list is called the ``^{main vertical list}''. 
+Periodically \TeX\ goes through a process called ``exercising the
+^{page builder}''.
+The items added to the main vertical list between exercises of the
+page builder are called ``^{recent contributions}''.
+
+The page builder first examines the main vertical list to see if it's
+necessary to ship out a page yet, either because the items on the main
+vertical list won't all fit on the page or because of an explicit item,
+such as |\eject| \ctsref\eject, that tells \TeX\ to end the page.
+If it's not necessary to ship out a page, then the page builder is done
+for the time being.
+
+Otherwise the page builder analyzes the main vertical
+list to find what it considers to be the best possible page break.
+It  associates penalties with various kinds of unattractive page
+breaks---a break that would leave an
+isolated line at the top or bottom of a page, a break just before a
+math display, and so forth.  It then
+chooses the least costly page break,
+where the cost of a break is increased by any penalty associated with that
+break and by the badness of the page that would result
+(see \knuth{page~111} for the cost formula).  If it finds several
+equally costly page breaks, it chooses the last one.
+
+{\tighten
+Once the page builder has chosen a page break,
+it places the items on the list that are before that break
+into ^|\box255| and leaves the remaining ones for the next page.
+It then calls the output routine. |\box255| acts as a mailbox, with the
+page builder as the sender and the output routine as the receiver.
+Ordinarily the output routine processes |\box255|, adds
+other items, such as insertions, headers, and footers, to the page, and
+ships out the page to the \dvifile\
+^^{\dvifile//material from output routine}
+with a |\shipout| command.
+(Specialized output routines may behave differently.)
+From \TeX's standpoint, it doesn't matter whether or not the output
+routine ships out a page;
+the only
+responsibility of the output routine is to process |\box255| one way or
+another.
+\par}
+
+{\tighten
+It's important to realize that the best place to break a page isn't
+necessarily the last possible place to break the page.
+Penalties and other considerations may cause the page break
+to come earlier.
+Furthermore, \TeX\ appends items to the main vertical list in batches,
+not just singly.
+The lines of a paragraph are an example of such a batch.
+For these reasons the page builder usually has items left over when it
+breaks a page.
+These leftover items then form the beginning of the main vertical list
+for the next page (possibly in the middle of a batch).
+Because items are carried over from one page to another,
+you can't assume that as \TeX\ is processing
+input, the current page number accurately reflects the page on which the
+corresponding output will appear.  See \knuth{pages~110--114} for a full
+description of \TeX's page-breaking rules.
+\par}
+
+\endconcept
+
+
+
+\endconcepts
+\end
