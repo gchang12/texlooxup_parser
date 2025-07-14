@@ -54,7 +54,7 @@ MANIFEST
 .python-version
 
 # data files
-*.pdf
+#*.pdf
 
 # NOTE: stuff I'm ignoring
 impatient*
