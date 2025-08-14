@@ -1,0 +1,42 @@
+\input macros
+\begindescriptions
+\begindesc
+\bix^^{centering}
+\bix^^{flush left}
+\bix^^{flush right}
+\bix^^{justification}
+\easy\cts centerline {\<argument>}
+\cts leftline {\<argument>}
+\cts rightline {\<argument>}
+\explain
+The |\centerline| command produces an \minref{hbox} exactly as wide
+as the current line and places \<argument> at the center of the box.
+The |\leftline| and |\rightline| commands are analogous; they
+place \<argument> at the left end or at the right end of the box.
+If you want to apply one of these commands to
+several consecutive lines, you must apply
+it to each one individually.
+See \xrefpg{eplaincenter} for an alternate approach.
+
+Don't use these commands within a paragraph---if you do, 
+\TeX\ probably won't be able to break the paragraph into lines and
+will complain about an overfull hbox.
+\example
+\centerline{Grand Central Station}
+\leftline{left of Karl Marx}
+\rightline{right of Genghis Khan}
+|
+\produces
+\centerline{Grand Central Station}
+\leftline{left of Karl Marx}
+\rightline{right of Genghis Khan}
+
+\eix^^{centering}
+\eix^^{flush left}
+\eix^^{flush right}
+\eix^^{justification}
+
+\endexample
+\enddesc
+\enddescriptions
+\end

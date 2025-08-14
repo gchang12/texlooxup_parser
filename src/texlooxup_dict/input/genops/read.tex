@@ -1,0 +1,33 @@
+\input macros
+\begindescriptions
+\begindesc
+secondprinting{\vglue-.5\baselineskip\vskip0pt}
+\cts read {\<number> {\bt to} \<control sequence>}
+\explain
+^^{input streams//reading with \b\tt\\read\e}
+^^{reading a file}
+This command tells \TeX\ to read a line from the file
+associated with the \minref{input stream}
+designated by \<number> and assign the tokens on that line to
+\<control sequence>.  The \minref{control sequence} then becomes a 
+parameterless \minref{macro}.  No macro expansion takes place
+during the reading operation.  If the line contains any unmatched
+left braces, \TeX\ will read additional lines until the braces are
+all matched.  If \TeX\ reaches the end of the file without matching all the
+braces, it will complain.
+
+If \<number> is greater than $15$ or hasn't been associated with a file
+using ^|\openin|, \TeX\ prompts you with `\<control sequence> |=|'
+on your terminal and waits for you to type a line of input.
+It then assigns the input line to \<control sequence>.
+If \<number> is less than zero, it reads a line of input from your
+terminal but omits the prompt.
+\example
+\read\auxfile to \holder
+% Expanding \holder will produce the line just read.
+|
+\endexample
+\eix^^{input files}
+\enddesc
+\enddescriptions
+\end

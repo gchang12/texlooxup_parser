@@ -1,0 +1,33 @@
+\input macros
+\begindescriptions
+\begindesc
+
+\margin{{\tt\\delcode} was explained in two places.  The
+combined explanation is now in `General operations'.}
+\cts delimiterfactor {\param{number}}
+\cts delimitershortfall {\param{number}}
+\explain
+^^{delimiters//height of}
+These parameters together tell \TeX\ how the height of a \minref{delimiter}
+should be related to the vertical size of the subformula
+with which the delimiter is associated.
+|\delimiterfactor| gives the minimum
+ratio of the delimiter size to the vertical size of the subformula, and
+|\delimitershortfall| gives the maximum by which the height of the
+delimiter will be reduced from that of the vertical size of the subformula.
+
+Suppose that the \minref{box} containing the subformula
+has height $h$ and depth $d$, and let $y=2\,\max(h,d)$.
+Let the value of |\delimiterfactor| be $f$ and the value of
+|\delimitershortfall| be $\delta$.
+Then \TeX\ takes the minimum delimiter size to be at least $y \cdot
+f/1000$ and at least $y-\delta$.  In particular, if |\delimiterfactor|
+is exactly $1000$ then \TeX\ will try to make a delimiter at least as tall
+as the formula to which it is attached.
+See \knuth{page~152 and page~446 (Rule 19)}
+for the exact details of how \TeX\ uses these parameters.
+\PlainTeX\ sets |\delimiter!-factor| to $901$ and 
+|\delimiter!-shortfall| to |5pt|.
+\enddesc
+\enddescriptions
+\end

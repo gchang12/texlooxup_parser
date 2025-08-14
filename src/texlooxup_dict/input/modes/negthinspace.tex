@@ -1,0 +1,21 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts negthinspace {}
+\explain
+This command
+produces a negative kern whose width is one-sixth of an em
+(\xref{dimdefs}),
+i.e., it causes \TeX\ to move its position left by that amount.
+It is useful for bringing together characters that are a little too
+far apart.
+\TeX\ won't break a line at a |\negthinspace|.\minrefs{line break}
+\example
+The horror, the horror\negthinspace, the horror of it all!!
+|
+\produces
+The horror, the horror\negthinspace, the horror of it all!
+\endexample
+\enddesc
+\enddescriptions
+\end

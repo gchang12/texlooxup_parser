@@ -1,0 +1,195 @@
+\input macros
+\beginconcepts
+\concept macro
+
+{% Use a brace here so that definitions of explanatory macros remain local.
+% The closing brace is at the end of the concept.
+A \defterm{macro} is a definition that gives a name to a pattern of
+\TeX\ input text.\footnote{More precisely, the definition gives a name
+to a sequence of tokens.} The name can be either a \refterm{control
+sequence} or an \refterm{active character}.  The pattern is called the
+``replacement text''.  The primary command for defining macros is the
+|\def| control sequence.
+
+\def\arctheta{\cos \theta + i \sin \theta}
+As a simple example, suppose that you have a document in which
+the sequence `$\cos \theta + i \sin \theta$' occurs many times.
+Instead of writing it out each time, you can define a macro for it:
+\csdisplay
+\def\arctheta{\cos \theta + i \sin \theta}
+|
+Now whenever you need this sequence, you can just ``call'' the macro
+by writing `|\arctheta|'
+and you'll get it.  For example, `|$e^{\arctheta}$|' will give you
+`$e^{\arctheta}$'.
+
+\bix^^{macros//parameters of}
+But the real power of macros lies in the fact that a macro can have
+parameters.  When you call a macro that has parameters, you provide 
+arguments that are substituted for those parameters.  For example, suppose
+you write:
+\pix\indexchar #
+\def\arc#1{\cos #1 + i \sin #1}
+\csdisplay
+\def\arc#1{\cos #1 + i \sin #1}
+|
+
+The notation |#1| \xrdef{@msharp} indicates the first parameter
+of the macro, which in this case has only one parameter.  You now can
+produce a similar form, such as `$\arc{2t}$', with the macro call `|\arc
+{2t}|'.
+
+More generally, a macro can have up to nine parameters, which you
+indicate as `|#1|', `|#2|', etc\null. in the macro definition.  \TeX\
+provides two kinds of parameters: delimited parameters and undelimited
+parameters.  Briefly, a delimited parameter has an \refterm{argument}
+that's delimited, or ended, by a
+specified sequence of tokens (the delimiter), while an undelimited
+parameter has an argument that doesn't need a delimiter to end it.
+First we'll explain how macros work when they have only undelimited
+parameters, and then we'll explain how they work when
+they have delimited parameters.
+
+^^{parameters//undelimited}
+If a macro has only undelimited parameters, those parameters must appear
+one after another in the macro definition \emph{with nothing between
+them or between the last parameter and the left brace in front of the 
+replacement text}.
+A call on such a macro consists of the macro name followed by
+the arguments of the call, one for each parameter.  Each argument is
+either:
+
+\ulist \compact
+\li a single \refterm{token} other than a left or right brace, or
+
+\li a sequence of tokens enclosed between a left brace and
+a matching right brace.\footnote{The
+argument can have nested pairs of braces within it, and each of these
+pairs can indicate either a \refterm{group} or a further macro
+argument.}
+\endulist
+
+When \TeX\ encounters a macro, it expands the macro in its gullet
+\seeconcept{\anatomy}
+by substituting each argument for the corresponding
+parameter in the replacement text.  The resulting text may contain other macro
+calls.  When \TeX\ encounters such an embedded macro call, it expands
+that call immediately without looking at what follows the
+call.\footnote{In computer science terminology, the expansion is ``depth
+first'' rather than ``breadth first''.  Note that you can modify the
+order of expansion with commands such as |\expandafter|.} When \TeX's
+gullet gets to a \refterm{primitive} \refterm{command} that
+cannot be further expanded, \TeX\ passes that command to \TeX's stomach.
+The order of expansion is sometimes critical, so in order to help
+you understand it we'll give you an example of \TeX\ at work.
+
+Suppose you provide \TeX\ with the following input:
+\csdisplay
+\def\a#1#2{\b#2#1\kern 2pt #1}
+\def\b{bb}
+\def\c{\char49 cc}
+\def\d{dd}
+\a\c{e\d} % Call on \a.
+|
+Then the argument corresponding to |#1| is |\c|,
+and the argument corresponding to |#2| is |e\d|.
+\TeX\ expands the macro call in the following steps:
+
+{\vskip\abovedisplayskip\obeylines % ugly
+|\b e\d\c\kern 2pt \c|
+|bbe\d\c\kern 2pt \c|
+|\d\c\kern 2pt \c|\quad(`|b|', `|b|', `|e|' sent to stomach)
+|dd\c\kern 2pt \c|
+|\c\kern 2pt \c|\quad(`|d|', `|d|' sent to stomach)
+|\char49 cc\kern 2pt \c|
+|\c|\quad(`|\char|', `|4|', `|9|', `|c|', `|c|', %
+`|\kern|', `|2|', `|p|', `|t|' sent to stomach)
+|\char49 cc|
+(`|\char49|', `|c|', `|c|' sent to stomach)
+\vskip\belowdisplayskip}
+
+\noindent Note that the letters `|b|', `|c|', `|d|', and `|e|' and the
+control sequences `|\kern|' and `|\char|' are all primitive
+commands that cannot be expanded further.
+
+\bix^^{parameters//delimited}
+A macro can also have ``delimited parameters'', which can be mixed with
+the undelimited ones in any combination.  The idea of a delimited
+parameter is that \TeX\ finds the corresponding argument by looking for
+a certain sequence of tokens that marks the end of the argument---the
+delimiter.  That is, when \TeX\ is looking for such an argument, it
+takes the argument to be all the tokens from \TeX's current position up
+to but not including the delimiter.
+
+You indicate a delimited parameter by writing `|#|$n$' ($n$ 
+must be between $0$
+and $9$) followed by one or more tokens that act as the delimiter.  The
+delimiter extends up to the next `|#|' or `|{|'---which makes sense
+since `|#|' starts another parameter and `|{|' starts the replacement text.
+
+The delimiter can't be `|#|' or `|{|', so you can tell a delimited
+parameter from an undelimited one by looking at what comes after it. 
+
+If the character after the parameter is `|#|' or `|{|', you've got an
+undelimited parameter; otherwise you've got a delimited one.  Note
+the difference in arguments for the two kinds of parameters---an
+undelimited parameter is matched either by a single token or by
+a sequence of tokens enclosed in braces, while a
+delimited parameter is matched by any number of tokens, even zero.
+
+An example of a macro that uses two delimited parameters is:
+\def\diet#1 #2.{On #1 we eat #2!}
+\csdisplay
+\def\diet#1 #2.{On #1 we eat #2!!}
+|
+Here the first parameter is delimited by a single space
+and the second parameter is delimited by a period.  If you write:
+\csdisplay
+\diet Tuesday turnips.
+|
+you'll get the text ``\diet Tuesday turnips.''.
+But if the delimiting tokens are enclosed in a group, \TeX\ doesn't consider
+them as delimiting.  So if you write:
+\csdisplay
+\diet {Sunday mornings} pancakes.
+|
+you'll get the text `\diet {Sunday mornings} pancakes.'
+even though there's a space between `|Sunday|' and `|morning|'.
+When you use a space as a delimiter,
+an end-of-line character ordinarily also delimits the argument
+since \TeX\ converts the end-of-line to a space before the macro
+mechanism ever sees it.
+\eix^^{parameters//delimited}
+\eix^^{macros//parameters of}
+
+Once in a while you might need to define a macro that has `|#|' as a
+meaningful character within it.
+You're most likely to need to do this when you're defining a macro
+that in turn defines a second macro.
+What then do you do about
+the parameters of the second macro to avoid getting \TeX\ confused?
+The answer is that you write
+two `|#|'s for every one that you want
+when the first macro is expanded.  For example, suppose you 
+write the macro definition:
+\def\first#1{\def\second##1{#1/##1}}
+\csdisplay
+\def\first#1{\def\second##1{#1/##1}}
+|
+Then the call `|\first{One}|' defines `|\second|' as:
+\csdisplay
+\def\second#1{One/#1}
+|
+and the subsequent call `|\second{Two}|' produces the text
+\def\second#1{One/#1}%
+`\second {Two}'.
+
+A number of commands provide additional ways of defining macros
+(see pp.~\xrefn{mac1}--\xrefn{mac2}).
+For the complete rules pertaining to macros, see \knuth{Chapter~20}.
+}% close brace at the start of the `macro' concept.
+\endconcept
+
+
+\endconcepts
+\end

@@ -1,0 +1,35 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts unhcopy {\<register>}
+\cts unvcopy {\<register>}
+^^{boxes//extracting contents of}
+^^{boxes//copying }\minrefs{box}
+\explain
+These commands produce the list contained in box register \<register> and
+leave the contents of the register undisturbed.
+|\unhcopy| applies to box registers containing hboxes
+and |\unvcopy| applies to box registers containing vboxes.
+\example
+\setbox0=\hbox{The Mock Turtle sighed deeply, and
+drew the back of one flapper across his eyes. }
+\setbox1=\hbox{He tried to speak, but sobs choked his 
+          voice. }
+\unhcopy0 \unhcopy1\par\noindent
+% \box0 \box1 would set two hboxes side by side
+% (and produce a badly overfull line).
+\box1 % Produces an hbox (which can't be broken).
+|
+\produces
+\setbox0=\hbox{The Mock Turtle sighed deeply, and
+drew the back of one flapper across his eyes. }
+\setbox1=\hbox{He tried to speak, but sobs choked his 
+          voice. }
+\unhcopy0 \unhcopy1\par\noindent
+% \hbox0 \hbox1 would set two hboxes side by side
+% (and produce a badly overfull line).
+\box1 % produces an hbox (which can't be broken)
+\endexample
+\enddesc
+\enddescriptions
+\end

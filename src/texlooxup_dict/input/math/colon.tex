@@ -1,0 +1,21 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts colon {}
+\explain
+This command produces a colon punctation symbol.
+It is valid only in math mode.
+The difference between |\colon| and the colon character (|:|) is that
+`|:|' is an operator, so \TeX\ puts extra space to the left of it whereas
+it doesn't put extra space to the left of |\colon|.
+\example
+$f \colon t \quad f : t$
+|
+\produces
+$f \colon t \quad f : t$
+
+\eix^^{punctuation in math formulas}
+\endexample
+\enddesc
+\enddescriptions
+\end

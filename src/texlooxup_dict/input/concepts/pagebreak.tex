@@ -1,0 +1,58 @@
+\input macros
+\beginconcepts
+\concept {page break}
+
+A \defterm{page break} is a place in your document where \TeX\ ends a
+page and (except at the end of the document) starts a new one.  
+See \conceptcit{page} for the process that \TeX\ goes through in choosing
+a page break.
+
+You can control \TeX's choice of page breaks in several ways:
+\ulist
+\li You can insert a penalty (\xref{vpenalty}) 
+^^{penalties//in vertical lists}
+between two items in the main vertical list.  A positive
+penalty discourages \TeX\ from breaking the page 
+there, while a negative penalty---a bonus, in other words---%
+encourages \TeX\ to break the page there.  A penalty of $10000$
+or more prevents a
+page break, while a penalty of $-10000$ or less forces a page break.
+You can get the same effects with the |\break| and
+|\nobreak| commands \ctsref{vbreak}.
+
+\li You can adjust the penalties associated with page breaking
+by assigning different values to \TeX's page-breaking
+\refterm{parameters:parameter}.
+
+\li You can enclose a sequence of paragraphs 
+or other items in the main vertical list within a \refterm{vbox}, 
+thus preventing \TeX\ from breaking the page anywhere within the sequence.
+\endulist
+
+Once \TeX\ has chosen a page break, it places the portion of the main vertical
+list that precedes the break into |\box255|.
+It then calls the current \refterm{output routine}
+to process |\box255| and eventually ships its contents to the \dvifile.
+^^{\dvifile//material from output routine}
+The output routine must
+also handle \refterm{insertions}, such as footnotes, that \TeX\ has accumulated
+while processing the page.
+
+It's useful to know the places where \TeX\ can break a page:
+\ulist
+\li At glue, provided that the item preceding the glue is
+a box, a whatsit, a mark, or an insertion.
+When \TeX\ breaks a page at glue, it makes the break at the top
+of the glue space and forgets about the rest of the glue.
+\li At a kern that's immediately followed by glue.
+\li At a penalty, possibly between the lines of a paragraph.
+\endulist
+When \TeX\ breaks a page, it discards any 
+sequence of glue, kerns, and penalty items that follows the break point.
+
+
+\endconcept
+
+
+\endconcepts
+\end

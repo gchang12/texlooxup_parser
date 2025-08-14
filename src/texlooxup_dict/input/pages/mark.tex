@@ -1,0 +1,21 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts mark {\rqbraces{\<text>}}
+\explain
+\bix^^{marks}
+This command causes \TeX\ to append a mark
+containing \<mark text>
+to whatever list it is currently constructing.
+Generally you shouldn't use |\mark| within an
+``inner'' construct such as a math formula or a \minref{box}
+you've built with an |\hbox|, |\vbox|, or |\vtop| command, because
+\TeX\ won't see the mark when it's constructing the main box of the page.  But
+if you use |\mark| in ordinary horizontal \minref{mode}
+or directly in an hbox that's part of the main vertical list,
+the mark migrates out
+to the main \minref{vertical list}.
+See \knuth{pages~259--260} for examples showing how |\mark| can be used.
+\enddesc
+\enddescriptions
+\end

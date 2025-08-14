@@ -1,0 +1,92 @@
+\input macros
+\begindescriptions
+\begindesc
+\bix^^{rules}
+\bix^^{horizontal rules}
+\bix^^{vertical rules}
+%
+\cts hrule {}
+\aux\cts hrule {\bt height \<dimen> width \<dimen> depth \<dimen>}
+\cts vrule {}
+\aux\cts vrule {{\bt width \<dimen> height \<dimen> depth \<dimen>}}
+\explain
+The |\hrule| command produces a horizontal rule; the |\vrule| command
+produces a vertical rule.  You can specify any or all of the width,
+height, and depth of the rule---\TeX\ supplies default values for those
+that you omit.  You can give the dimensions of the rule in any order;
+the forms listed above show just two of the possible combinations.  You
+can even give a dimension of a given kind more than once---if you do,
+the last one is the one that counts.
+
+If you don't specify the width of a horizontal rule, the rule is
+extended horizontally to the boundaries of the innermost \minref{box} or
+\minref{alignment} that contains the rule.  If you don't specify the
+height of a horizontal rule, it defaults to |0.4pt|; if you don't
+specify the depth of a horizontal rule, it defaults to |0pt|.
+
+If you don't specify the width of a vertical rule, it defaults to
+|0.4pt|.  If you don't specify the height or the depth of a vertical
+rule, the rule is extended to the boundary of the innermost \minref{box}
+or \minref{alignment} that contains the rule.
+
+\TeX\ treats a horizontal rule as an inherently vertical item
+and a vertical rule as an inherently horizontal item.
+Thus a horizontal rule is legal only in a \minref{vertical mode},
+while a vertical rule is legal only in a \minref{horizontal mode}.
+^^{horizontal mode//rules in}
+^^{vertical mode//rules in}
+If this seems surprising, visualize it---a horizontal rule runs
+from left to right and separates vertical items in a sequence, while
+a vertical rule runs up and down and
+separates horizontal items in a sequence.
+
+\example
+\hrule\smallskip
+\hrule width 2in \smallskip
+\hrule width 3in height 2pt \smallskip
+\hrule width 3in depth 2pt
+|
+\produces
+\medskip
+\hrule\smallskip
+\hrule width 2in \smallskip
+\hrule width 3in height 2pt \smallskip
+\hrule width 3in depth 2pt
+\nextexample
+% Here you can see how the baseline relates to the
+% height and depth of an \hrule.
+\leftline{
+   \vbox{\hrule width .6in height 5pt depth 0pt}
+   \vbox{\hrule width .6in height 0pt depth 8pt}
+   \vbox{\hrule width .6in height 5pt depth 8pt}
+   \vbox{\hbox{ baseline}\kern 3pt \hrule width .6in}
+}
+|
+\produces
+\medskip
+\leftline{
+   \vbox{\hrule width .6in height 5pt depth 0pt}
+   \vbox{\hrule width .6in height 0pt depth 8pt}
+   \vbox{\hrule width .6in height 5pt depth 8pt}
+   \vbox{\hbox{ baseline}\kern 3pt \hrule width .6in}
+}
+\nextexample
+\hbox{( {\vrule} {\vrule width 8pt} )}
+\hbox {( {\vrule height 13pt depth 0pt}
+   {\vrule height 13pt depth 7pt} x)}
+% the parentheses define the height and depth of each of the 
+% two preceding boxes; the `x' sits on the baseline
+|
+\produces
+\medskip
+\hbox{( {\vrule} {\vrule width 8pt} )}
+\hbox {( {\vrule height 13pt depth 0pt}
+   {\vrule height 13pt depth 7pt} x)}
+\endexample
+
+\eix^^{rules}
+\eix^^{horizontal rules}
+\eix^^{vertical rules}
+\enddesc
+\enddescriptions
+\end

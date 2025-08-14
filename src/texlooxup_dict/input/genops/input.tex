@@ -1,0 +1,34 @@
+\input macros
+\begindescriptions
+\begindesc
+\bix^^{files}
+\bix^^{input files}
+\easy\cts input {\<filename>}
+\explain
+\minrefs{file}\minrefs{file name}
+This command tells \TeX\ to read its input from file \<filename>.
+When that file is exhausted, \TeX\ returns to reading from its previous
+input source.  You can nest input files to any level you like
+(within reason).
+
+When you're typesetting a large document, it's usually a good idea to
+structure your main file as a sequence of |\input| commands that refer
+to the subsidiary parts of the document.  That way you can process the
+individual parts easily as you're working on drafts.  It's also a good
+practice to put all of your \minref{macro} definitions into a separate file and
+summon that file with an |\input| command as the first action in your
+main file.
+
+\TeX\ uses different rules for scanning file names than it does for scanning
+\minref{token}s in general (see \xref{file name}).
+If your implementation expects file names to have extensions (usually
+indicated by a preceding dot), then \TeX\ provides a default extension
+of |.tex|.
+\example
+\input macros.tex
+\input chap1 % equivalent to chap1.tex
+|
+\endexample
+\enddesc
+\enddescriptions
+\end

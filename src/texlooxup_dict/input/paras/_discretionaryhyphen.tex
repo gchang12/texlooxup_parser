@@ -1,0 +1,29 @@
+\input macros
+\begindescriptions
+\begindesc
+\bix^^{hyphenation}
+%
+\easy\ctspecial - \ctsxrdef{@minus}
+\explain
+The |\-| command inserts a ``discretionary hyphen''
+^^{discretionary hyphens}
+into a word.
+The discretionary hyphen allows \TeX\ to hyphenate the word at that
+place.  \TeX\ isn't obliged to hyphenate there---it does so
+only if it needs to.  This command is useful when a word 
+that occurs in one or two places in your document
+needs to be hyphenated,
+but \TeX\ can't find an appropriate hyphenation point on its own.
+\example
+Alice was exceedingly reluctant to shake hands first
+with either Twee\-dle\-dum or Twee\-dle\-dee, for
+fear of hurting the other one's feelings.
+|
+\produces
+Alice was exceedingly reluctant to shake hands first
+with either Twee\-dle\-dum or Twee\-dle\-dee, for
+fear of hurting the other one's feelings.
+\endexample
+\enddesc
+\enddescriptions
+\end

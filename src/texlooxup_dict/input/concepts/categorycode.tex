@@ -1,0 +1,172 @@
+\input macros
+\beginconcepts
+\concept {category code}
+
+The \defterm{category code} of a \refterm{character} determines that
+character's role in \TeX.
+^^{characters//category code of}
+For instance, \TeX\ assigns a certain role to
+letters, another to space characters, and so forth.  \TeX\ attaches a
+code to each character that it reads.  When \TeX\ reads the
+letter `|r|', for example, it ordinarily
+attaches the category code $11$ (letter)
+to it. For simple \TeX\ applications you won't need to worry about
+category codes, but they become important when you are trying to achieve
+special effects.
+
+Category codes apply only to characters that \TeX\ reads from input
+files.  Once a character has gotten past \TeX's ^{gullet} 
+\seeconcept{\anatomy} and been interpreted, its category code no
+longer matters.  A character that you produce with the ^|\char| command
+\ctsref{\char} does not have a category code because |\char|
+is an instruction to \TeX\ to produce a certain character in a certain
+\refterm{font}.  For instance, the ^{\ascii} code for `|\|' 
+(the usual escape character) is $92$.  If
+you type `|\char92 grok|', it is \emph{not} equivalent to |\grok|.
+Instead it tells \TeX\ to
+typeset `$c$\kern.075em grok', where $c$ is the character in position $92$
+of the code table for the current font.
+
+You can use the ^|\catcode| command \ctsref{\catcode} to reassign the
+category code of any character.  By changing category codes you can
+change the roles of various characters.  For instance, if you type
+`|\catcode`\@ = 11|', the category code of the at sign (|@|) will be set
+to ``letter''.  You then can use `|@|' in the name of a control
+sequence.
+
+Here is a list of the category codes defined by \TeX,
+(see \xref{twocarets} for an explanation of
+the |^^| notation),
+together with the characters in each category (as assigned
+by \TeX\ and \refterm{\plainTeX}):
+
+\xrdef{catcodes}
+\vskip\abovedisplayskip
+%k \vskip 0pt plus 2pt % to fix bad page break
+{%k \interlinepenalty = 10000
+\halign{\indent\hfil\strut#&\qquad#\hfil\cr
+\it Code&\it Meaning\cr
+\noalign{\vskip\tinyskipamount}
+0&Escape character \quad |\| ^^{escape character//category code of}
+   {\recat!ttidxref[\//category code of]]
+   \cr
+1&Beginning of group \quad |{| ^^{groups}
+   {\recat!ttidxref[{//category code of]]
+   \cr
+2&End of group   \quad |}|
+   {\recat!ttidxref[}//category code of]]
+   \cr
+3&Math shift   \quad |$| ^^{math shift}
+   {\recat!ttidxref[$//category code of]]
+   \cr
+4&Alignment tab   \quad |&| ^^{tabs} ^^{alignments//tab character for}
+   \ttidxref{&//category code of} \cr
+5&End of line   \quad |^^M| \tequiv \ascii\ \asciichar{return}
+   ^^{end of line} \ttidxref{^^M//category code of}\cr
+6&Macro parameter   \quad |#|
+   ^^{macros//parameters of}
+   ^^{parameters//indicated by \b\tt\#\e}
+   \ttidxref{#//category code of} \cr
+7&Superscript   \quad |^| and |^^K| ^^{superscripts}
+   \ttidxref{^^K}
+   \ttidxref{^//category code of} \cr
+8&Subscript   \quad |_| and |^^A| ^^{subscripts}
+   \ttidxref{^^A}
+   \ttidxref{_//category code of} \cr
+9&Ignored character  \quad |^^@| \tequiv \ascii\ \asciichar{null}
+  ^^{ignored characters} \indexchar ^^@ \cr
+10&Space  \quad \visiblespace\ and |^^I| \tequiv \ascii\ 
+  \asciichar{horizontal\ tab}
+  ^^{horizontal tab}
+  ^^{space characters//category code of} \indexchar ^^I
+  {\recat!ttidxref[ ]]
+  \cr
+11&Letter  \quad |A| \dots |Z| and |a| \dots |z| ^^{letter}\cr
+12&Other character \quad (everything not listed above or below) 
+  ^^{other characters}\cr
+13&Active character  \quad |~| and |^^L| \tequiv\ascii\ \asciichar{form\ feed} 
+   ^^{active characters} ^^{form feed} \indexchar ~ \indexchar ^^L \cr
+14&Comment character  \quad |%| ^^{comments}
+   {\recat!ttidxref[%//category code of]]
+   \cr
+15&Invalid character  \quad |^^?| \tequiv \ascii\ \asciichar{delete}
+  ^^{invalid character} \indexchar ^^? \cr
+}}
+\vskip\belowdisplayskip
+%k \vskip 0pt plus 2pt % to fix bad page break
+
+\noindent Except for categories $11$--$13$,
+all the characters in a particular category produce the same effect.
+\margin{Misleading material removed.}
+For instance, suppose
+that you type:
+\csdisplay
+\catcode`\[ = 1 \catcode`\] = 2
+|
+Then the left and right bracket characters become
+beginning-of-group and end-of-group characters equivalent to
+the left and right brace characters.  With these definitions `|[a b]|'
+is a valid group, and so are \hbox{`|[a b}|'} and~\hbox{`|{a b]|'}.
+
+The characters in categories $11$ (letter) and $12$ 
+(other character) act as \refterm{commands:command}
+that mean
+``typeset the character with this code from the current font''.
+The only distinction between letters and ``other'' characters is
+that letters can appear in \refterm{control word}s but
+``other'' characters~can't.
+
+A character in category $13$ (active) acts like a control sequence
+all by itself.  \TeX\ complains if it encounters an active character that
+doesn't have a definition associated with it.
+^^{active characters}
+
+If \TeX\ encounters an ^{invalid character} (category $15$) 
+in your input, it will complain about it. 
+
+The `|^^K|' and `|^^A|' characters have been included in categories 
+$8$ (subscript) and $9$ (superscript), even though these meanings
+don't follow the standard \refterm{\ascii} interpretation.
+That's because some keyboards, notably some at Stanford
+University where \TeX\ originated,
+have down arrow and up arrow keys that generate these characters.
+\ttidxref{^^A}
+\ttidxref{^^K}
+
+There's a subtle point about the way \TeX\ assigns category codes that
+can trip you up if you're not aware of it.  \TeX\ sometimes needs to
+look at a character twice as it does its initial scan: first to find the
+end of some preceding construct, e.g., a control sequence, and later to
+turn that character into a token.  \TeX\ doesn't assign the category
+code until its \emph{second} look at the character.  For example:
+
+\csdisplay
+\def\foo{\catcode`\$ = 11 }% Make $ be a letter.
+\foo$ % Produces a `$'.
+\foo$ % Undefined control sequence `\foo$'.
+|
+\noindent
+This bit of \TeX\ code produces `\$' in the typeset output.  When
+\TeX\ first sees the `|$|' on the second line,
+it's looking for the end of a control sequence name.  Since
+the `|$|' isn't yet a letter, it marks the end of `|\foo|'.  Next,
+\TeX\ expands the `|\foo|' macro and changes the category code of `|$|'
+to $11$ (letter).  Then \TeX\ reads the `|$|' ``for real''.  Since 
+`|$|' is now a letter, \TeX\ produces a box
+containing the `|$|' character in the current font.
+When \TeX\ sees the third line, it treats `|$|' as a letter and thus
+considers it to be part of the control sequence name.
+As a result it complains about an undefined control sequence |\foo$|.
+ 
+\TeX\ behaves this way even when the terminating character is an
+end of line.  For example, suppose that the macro |\fum| activates the
+end-of-line character.  Then if |\fum| appears on a line $\ell$ by
+itself, \TeX\ will first interpret the end of line of $\ell$ as 
+the end of the |\fum| control sequence and then will \emph{reinterpret}
+the end of line of $\ell$ as an active character.
+\endconcept
+
+
+
+\endconcepts
+\end

@@ -1,0 +1,68 @@
+\input macros
+\beginconcepts
+\concept paragraph
+
+Intuitively, a \defterm{paragraph} is a sequence of input lines that's
+ended by a blank line, by a ^|\par| command \ctsref{\@par},
+^^|\par//ending a paragraph with|
+or by an intrinsically vertical command, such as |\vskip|.
+More precisely, a paragraph is a sequence of commands that \TeX\ processes
+in ordinary horizontal mode.
+When \TeX\ has collected an entire paragraph, it forms it into a sequence of
+lines by choosing line breaks \seeconcept{line break}.
+The result is a list of hboxes with glue, interline penalties,
+and interspersed vertical material between them.
+Each hbox is a single line, and the glue is the interline glue.
+
+\eject
+\TeX\ starts a paragraph when it's in a vertical mode
+and encounters an inherently horizontal command.
+In particular, it's in a vertical mode when it's just finished a paragraph,
+so the horizontal material on the line after a blank input line starts the
+next paragraph in a natural way.
+There are many kinds of inherently horizontal commands, but the most common
+kind is an ordinary character, e.g., a letter.
+
+\looseness = -1
+The ^|\indent| and ^|\noindent| commands
+(\pp\xrefn{\indent},~\xrefn{\noindent})
+are also inherently horizontal commands that tell
+\TeX\ either to indent or not to indent the beginning of a paragraph.
+Any other horizontal command in vertical
+mode causes \TeX\ to do an implicit |\indent|.
+Once \TeX\ has started a paragraph, it's in ordinary horizontal mode.
+It first obeys any commands that are in ^|\everypar|.
+It then proceeds to collect items for the paragraph until it gets a signal
+that the paragraph is ended.
+At the end of the paragraph it
+resets the paragraph shape parameters ^|\parshape|, |\hang!-indent|,
+^^|\hangindent| 
+and ^|\looseness|.
+
+\TeX\ ordinarily translates a blank line into |\par|.  
+It also
+inserts a |\par| into the input whenever it's in horizontal mode and
+sees an intrinsically vertical command.
+So ultimately the thing that ends a paragraph is always a |\par| command.
+
+When \TeX\ receives a |\par| command, it first
+fills out\footnote{%
+More precisely, it executes the commands:
+\csdisplay
+\unskip \penalty10000 \hskip\parfillskip
+|
+thus appending items for these commands
+to the end of the current horizontal list.}
+the paragraph it's working on.
+It then breaks the paragraph into lines,
+adds the resulting list of items to the enclosing vertical list,
+and exercises the page builder 
+(in the case where the enclosing vertical list is the main vertical list).
+If the paragraph was ended by an intrinsically vertical command,
+\TeX\ then executes that command.
+
+\endconcept
+
+
+\endconcepts
+\end

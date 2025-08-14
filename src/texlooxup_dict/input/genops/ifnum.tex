@@ -1,0 +1,23 @@
+\input macros
+\begindescriptions
+\begindesc
+\ctspecial ifnum {\<number$_1$> \<relation> \<number$_2$>}\ctsxrdef{@ifnum}
+\explain
+^^{numbers//comparing}
+This command tests if \<number$_1$> and \<number$_2$>
+satisfy \<relation>, which must be either `|<|', `|=|', or `|>|'.
+The numbers can be constants such as |127|, count registers such as
+|\pageno| or |\count22|, or numerical parameters such as |\hbadness|.
+Before performing the test, \TeX\ expands tokens following the |\ifnum|
+until it obtains a sequence of tokens having
+the form \<number$_1$> \<relation> \<number$_2$>, followed by a token
+that can't be part of \<number$_2$>.
+\example
+\count255 = 19 \ifnum \count255 > 12 true\else false\fi
+|
+\produces
+\count255 = 19 \ifnum \count255 > 12 true\else false\fi
+\endexample
+\enddesc
+\enddescriptions
+\end

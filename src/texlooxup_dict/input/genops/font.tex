@@ -1,0 +1,74 @@
+\input macros
+\begindescriptions
+\begindesc
+\bix^^{fonts//naming and modifying}
+\cts font {}
+\aux\cts font {\<control sequence> = \<fontname>}
+\aux\cts font {\<control sequence> = \<fontname> {\bt scaled} \<number>}
+\aux\cts font {\<control sequence> = \<fontname> {\bt at} \<dimen>}
+\explain
+Used alone, the |\font| control sequence designates the current font.
+|\font| isn't a true command when it's used alone, 
+since it then can appear only as an argument to another command.
+
+For the other three forms of |\font|,
+\<font\-name> names a set of files that define a font.
+These forms of |\font|  are commands.  Each of these forms has two effects:
+{\tighten
+\olist
+\li It defines \<control sequence> as a name that selects
+the font \<font\-name>, possibly magnified (see below).
+\li It causes \TeX\ to load the font ^{metrics file}
+(^{\tfmfile}) for \<fontname>.
+\endolist
+}% end tighten
+
+\noindent
+The name of a font file usually indicates its design size.
+For example, |cmr10| indicates Computer Modern roman with a
+design size of $10$ points.
+The design size of a font is recorded in its metrics file.
+
+If neither |scaled| \<number> nor |at| \<dimen>
+is present, the font is used 
+at its design size---the size at which it usually looks best.
+Otherwise, a magnified version of the font is loaded:
+\ulist
+\li If |scaled| \<number>
+is present, the font is magnified by a factor of $\hbox{\<number>}/1000$.
+\li If |at| \<dimen> is present, the font is scaled to \<dimen> by magnifying
+it by $\hbox{\<dimen>}/ds$, where $ds$ is the design size of
+\<fontname>.
+\<dimen> and $ds$ are nearly always given in points.
+\endulist
+\noindent
+Magnifications of less than $1$ are possible; they reduce the size.
+
+You usually need to provide a shape file (\xref{shape}) for each
+magnification of a font that you load.
+However, some ^{device drivers} can utilize fonts that are resident
+in a printer. ^^{resident fonts}
+Such fonts don't need shape files.
+
+See \conceptcit{font} and
+\conceptcit{magnification} for further information.
+
+\example
+\font\tentt = cmtt10
+\font\bigttfont = cmtt10 scaled \magstep2
+\font\eleventtfont = cmtt10 at 11pt
+First we use {\tentt regular CM typewriter}.
+Then we use {\eleventtfont eleven-point CM typewriter}.
+Finally we use {\bigttfont big CM typewriter}.
+|
+\produces
+\font\regttfont = cmtt10
+\font\bigttfont = cmtt10 scaled \magstep 2
+\font\eleventtfont = cmtt10 at 11pt
+First we use {\regttfont regular CM typewriter}.
+Then we use {\eleventtfont eleven-point CM typewriter}.
+Finally we use {\bigttfont big CM typewriter}.
+\endexample
+\enddesc
+\enddescriptions
+\end

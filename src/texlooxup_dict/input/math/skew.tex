@@ -1,0 +1,23 @@
+\input macros
+\begindescriptions
+\begindesc
+\bix^^{accents//aligning}
+\cts skew {\<number> \<argument$_1$> \<argument$_2$>}
+\explain
+This command shifts the accent \<argument$_1$> by
+\<number> \minref{mathematical unit}s to the right of its normal position
+with respect to \<argu\-ment$_2$>.
+The most common use of this command is for 
+modifying the position of an accent that's over
+another accent.
+\example
+$$\skew 2\bar{\bar z}\quad\skew 3\tilde{\tilde y}\quad
+  \skew 4\tilde{\hat x}$$   
+|
+\dproduces
+$$\skew 2\bar{\bar z}\quad\skew 3\tilde{\tilde y}\quad
+  \skew 4\tilde{\hat x}$$   
+\endexample
+\enddesc
+\enddescriptions
+\end

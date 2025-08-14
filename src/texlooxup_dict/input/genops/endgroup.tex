@@ -1,0 +1,35 @@
+\input macros
+\begindescriptions
+\begindesc
+\bix^^{groups}
+%
+\cts begingroup {}
+\cts endgroup {}
+\explain
+These two commands begin and end a \minref{group}.
+A |\begingroup| does not match up with a right brace,
+nor an |\endgroup| with a left brace.
+
+\TeX\ treats |\begingroup| and |\endgroup| like any other
+\minref{control sequence} when it's scanning its input.  In particular,
+you can define a \minref{macro} that contains a |\begingroup|
+but not an |\endgroup|, and conversely.
+^^{macros//using \b\tt\\begingroup\e\ and \b\tt\\endgroup\e\ in}
+This technique is often useful
+when you're defining paired macros, one of which establishes
+an environment and the other of which terminates that environment.
+You can't, however, use |\begingroup| and |\endgroup| as substitutes for
+braces other than the ones that surround a group.
+\example
+\def\a{One \begingroup \it two }
+\def\enda{\endgroup four}
+\a three \enda
+|
+\produces
+\def\a{One \begingroup \it two }
+\def\enda{\endgroup four}
+\a three \enda
+\endexample
+\enddesc
+\enddescriptions
+\end

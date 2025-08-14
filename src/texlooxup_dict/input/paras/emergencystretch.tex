@@ -1,0 +1,21 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts emergencystretch {\param{dimen}}
+\explain
+By setting this parameter to be greater than zero,
+you can make it easier for \TeX\
+to typeset your document without generating overfull hboxes.
+^^{overfull boxes}
+This is a better alternative than setting |\tolerance=10000|,
+since that tends to produce really ugly lines.
+If \TeX\ can't typeset a paragraph without exceeding ^|\tolerance|,
+it will try again, adding |\emergencystretch| to the stretch of each
+line.
+The effect of the change is to scale down the badness of each
+line, enabling \TeX\ to make spaces wider than they would otherwise be
+and thus choose line breaks that are as
+good as possible under the circumstances.
+\enddesc
+\enddescriptions
+\end

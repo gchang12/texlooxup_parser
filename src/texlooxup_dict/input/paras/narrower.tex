@@ -1,0 +1,36 @@
+\input macros
+\begindescriptions
+\begindesc
+\easy\cts narrower {}
+\explain
+^^{paragraphs//narrow}
+This command makes paragraphs narrower, increasing the left and right
+margins by |\parindent|, the
+current paragraph ^{indentation}.
+It achieves this by increasing
+both |\leftskip| and |\rightskip| by |\parindent|.
+Normally you place |\narrower| at the
+beginning of a \minref{group} containing the paragraphs that you want to
+make narrower.  If you forget to enclose |\narrower| within a group,
+you'll find that all the rest of your document will have narrow
+paragraphs.
+
+|\narrower| affects just those paragraphs that end after you invoke it.
+If you end a |\narrower| group before you've ended
+a paragraph, \TeX\ won't make that paragraph narrower.
+
+\example
+{\parindent = 12pt \narrower\narrower\narrower
+This is a short paragraph. Its margins are indented
+three times as much as they would be
+had we used just one ``narrower'' command.\par}
+|
+\produces
+{\parindent = 12pt \narrower\narrower\narrower
+This is a short paragraph. Its margins are indented
+three times as much as they would be
+had we used just one ``narrower'' command.\par}
+\endexample
+\enddesc
+\enddescriptions
+\end

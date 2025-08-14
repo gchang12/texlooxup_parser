@@ -1,0 +1,16 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts maxdepth {\param{dimen}}
+\explain
+This parameter specifies the maximum depth of the bottom \minref{box} on
+a page.  It is related to |\boxmaxdepth| (\xref \boxmaxdepth).  If the
+depth of the bottom box on a page exceeds |\maxdepth|, \TeX\ moves the
+box's reference point down so that it's
+|\maxdepth| from the bottom of that box.
+Without this adjustment, the bottom box on
+a page could extend well into the bottom margin or even off
+the page entirely.  \PlainTeX\ sets |\maxdepth| to |4pt|.
+\enddesc
+\enddescriptions
+\end

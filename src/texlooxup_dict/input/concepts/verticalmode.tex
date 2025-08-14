@@ -1,0 +1,51 @@
+\input macros
+\beginconcepts
+\concept {vertical mode}
+
+^^{vboxes//vertical mode for} When \TeX\ is assembling either a
+\refterm{vbox} or the main vertical list from which pages are derived,
+it is in one of two \defterm{vertical modes}: ^{ordinary
+vertical mode} for assembling the main vertical list, and ^{internal
+vertical mode} for assembling vboxes.  Whenever \TeX\ is in a vertical mode
+its stomach \seeconcept{\anatomy} is constructing a \refterm{vertical
+list} of items (boxes, glue, penalties, etc.).
+\TeX\ typesets the items in the list
+one below another, top to bottom.
+
+A vertical list can't contain any items produced by 
+inherently horizontal commands, e.g.,
+^^{vertical lists//can't contain horizontal commands}
+|\hskip| or an ordinary (nonspace) character.
+\footnote{\TeX\ \emph{ignores} any space characters
+that it encounters while it's in a vertical mode.}
+
+\ulist
+\li If \TeX\ is  assembling a vertical list in ordinary vertical mode and
+encounters an inherently horizontal command, it switches to ordinary
+\refterm{horizontal mode}. 
+\li If \TeX\ is  assembling a vertical list in internal vertical mode and
+encounters an inherently horizontal command, it complains.
+\endulist
+
+Two commands that you might at first think are inherently vertical are
+in fact inherently horizontal: |\valign| \ctsref{\valign} and |\vrule|
+\ctsref{\vrule}.
+^^|\valign//inherently horizontal|
+^^|\vrule//inherently horizontal|
+See \knuth{page~283} for a list of the
+inherently horizontal commands.
+
+It's particularly important to be aware that \TeX\ considers an ordinary
+character other than a space character to be inherently horizontal.  If
+\TeX\ suddenly starts a new paragraph when you weren't expecting it,
+a likely cause is a
+character that \TeX\ encountered while in vertical mode.
+You can convince \TeX\
+not to treat that character as inherently horizontal by enclosing it in
+an \refterm{hbox} since the |\hbox| command, despite its name, is
+neither inherently horizontal nor inherently vertical.
+\endconcept
+
+
+\endconcepts
+\end

@@ -1,0 +1,61 @@
+\input macros
+\begindescriptions
+\begindesc
+\ctspecial ifx {\<token$_1$> \<token$_2$>}\ctsxrdef{@ifx}
+\explain
+This command tests if \<token$_1$> and \<token$_2$> agree.
+Unlike |\if| and |\ifcat|, |\ifx| does \emph{not} expand the tokens
+following |\ifx|, so \<token$_1$> and \<token$_2$> are the two
+tokens immediately after |\ifx|.
+There are three cases:
+\olist
+\li If one token is a \minref{macro} and the other one isn't,
+the tokens don't agree.
+\li If neither token is a macro, the tokens agree if:
+\olist
+\li both tokens are characters (or control sequences denoting characters) and
+their \minref{character} codes and \minref{category code}s agree, or
+\li both tokens refer to the same \TeX\ command,
+font, etc.
+\endolist
+\li If both tokens are macros, the tokens agree if:
+\olist\compact
+\li their ``first level'' expansions, i.e.,
+their replacement texts, are identical, and
+\li they have the same status with respect to ^|\long| (\xref\long)
+and ^|\outer| (\xref\outer).
+\endolist
+Note in particular that \emph{any two undefined control
+sequences agree}.
+\endolist
+\noindent
+This test is generally more useful than |\if|.
+\example
+\ifx\alice\rabbit true\else false\fi;
+% true since neither \rabbit nor \alice is defined
+\def\a{a}%
+\ifx a\a true\else false\fi;
+% false since one token is a macro and the other isn't
+\def\first{\a}\def\second{\aa}\def\aa{a}%
+\ifx \first\second true\else false\fi;
+% false since top level expansions aren't the same
+\def\third#1:{(#1)}\def\fourth#1?{(#1)}%
+\ifx\third\fourth true\else false\fi
+% false since parameter texts differ
+|
+\produces
+\ifx\alice\rabbit true\else false\fi;
+% true since neither \rabbit nor \alice is defined
+\def\a{a}%
+\ifx a\a true\else false\fi;
+% false since one token is a macro and the other isn't
+\def\first{\a}\def\second{\aa}\def\aa{a}%
+\ifx \first\second true\else false\fi;
+% false since top level expansions aren't the same
+\def\third#1:{(#1)}\def\fourth#1?{(#1)}%
+\ifx\third\fourth true\else false\fi
+% false since parameter texts differ
+\endexample
+\enddesc
+\enddescriptions
+\end

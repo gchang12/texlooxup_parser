@@ -1,0 +1,17 @@
+\input macros
+\begindescriptions
+\begindesc
+^^{time of day}
+\cts time {\param{number}}
+\explain
+\TeX\ sets this parameter to the 
+number of minutes that have elapsed since midnight (of the current day).
+At noon, for instance, |\time| is $720$.
+This command and the next three make use of the time and date as
+recorded in your computer.
+\TeX\ retrieves them just once, at the beginning of your run, so |\time|
+at the end of the run always has the same value as |\time| at the
+beginning of the run (unless you've explicitly changed it).
+\enddesc
+\enddescriptions
+\end

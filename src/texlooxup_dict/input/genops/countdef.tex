@@ -1,0 +1,23 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts countdef {\<control sequence> {\bt =} \<register>}
+\cts dimendef {\<control sequence> {\bt =} \<register>}
+\cts skipdef {\<control sequence> {\bt =} \<register>}
+\cts muskipdef {\<control sequence> {\bt =} \<register>}
+\cts toksdef {\<control sequence> {\bt =} \<register>}
+\explain
+These commands define \<control sequence> to refer to the
+\minref{register} of the indicated category whose number is \<register>.
+Normally you should use the commands in the previous group
+(|\newcount|, etc.) in preference to these commands in order to avoid
+numbering conflicts.  The commands in the previous group are
+defined in terms of the commands \hbox{in this group}.
+\example
+\countdef\hatters = 19 % \hatters now refers to \count19
+\toksdef\hares = 200 % \hares now refers to \toks200
+|
+\endexample
+\enddesc
+\enddescriptions
+\end

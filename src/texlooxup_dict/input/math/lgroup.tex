@@ -1,0 +1,21 @@
+\input macros
+\begindescriptions
+\begindesc
+\bix^^{delimiters}
+%
+\cts lgroup {}
+\cts rgroup {}
+\explain
+These commands produce large left and right ^{parentheses}
+that are defined as opening and closing \minref{delimiter}s.
+The smallest available size for these delimiters is |\Big|.
+If you use smaller sizes, you'll get weird characters.
+\example
+$$\lgroup\dots\rgroup\qquad\bigg\lgroup\dots\bigg\rgroup$$
+|
+\dproduces
+$$\lgroup\dots\rgroup\qquad\bigg\lgroup\dots\bigg\rgroup$$
+\endexample
+\enddesc
+\enddescriptions
+\end

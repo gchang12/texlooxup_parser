@@ -1,0 +1,18 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts raggedbottom {}
+\cts normalbottom {}
+\explain
+Normally \TeX\ tries hard to ensure that all pages have the same depth,
+i.e., that their bottom margins are equal.
+The |\raggedbottom| command tells \TeX\ to
+allow some variability among the bottom margins on different pages.
+It's often appropriate to use |\raggedbottom| when you have material that
+contains large blocks of material that should not be split across pages.
+The |\normalbottom| command cancels the effect of |\raggedbottom|.
+
+\eix^^{page breaks//encouraging or discouraging}
+\enddesc
+\enddescriptions
+\end

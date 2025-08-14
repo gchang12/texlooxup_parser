@@ -1,0 +1,46 @@
+\input macros
+\begindescriptions
+\begindesc
+secondprinting{\vglue-.75\baselineskip\vskip0pt}
+\cts headline {\param{token list}}
+\cts footline {\param{token list}}
+\explain
+These parameters
+contain, respectively, the current headline (header) and the current
+footline (footer).
+The \plainTeX\ output routine
+places the headline at the top of each page and the footline
+at the bottom of each page.
+The default headline is empty and the default footline is a centered
+page number.
+
+The headline and footline should both
+be as wide as |\hsize| (use |\hfil|, \xref{\hfil}, for this
+if necessary).
+You should always include a font-setting command in these lines, since
+the current font is unpredictable when \TeX\ is calling the
+output routine.  If you don't set the font explicitly,
+you'll get whatever font \TeX\ was using when it broke the page.
+
+You shouldn't try to use |\headline| or |\footline|
+to produce multiline headers or footers.
+Although \TeX\ won't complain, it will give you something that's very ugly.
+See \xrefpg{bighead} for a method of creating multiline headers or
+footers.
+\example
+\headline = {\tenrm My First Reader\hfil Page \folio}
+|
+\produces
+\pageno = 10
+\line{\tenrm \noindent My First Reader\hfil Page \folio}
+\par ({\it at the top of page \folio}\/)
+\nextexample
+\footline = {\tenit\ifodd\pageno\hfil\folio
+           \else\folio\hfil\fi}
+% Produce the page number in ten-point italic at 
+% the outside bottom corner of each page.
+|
+\endexample
+\enddesc
+\enddescriptions
+\end

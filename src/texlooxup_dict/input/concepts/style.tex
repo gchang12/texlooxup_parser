@@ -1,0 +1,56 @@
+\input macros
+\beginconcepts
+\concept {style} 
+
+Material in a math formula is set in one of eight \defterm{styles},
+depending on the context.  Knowing about styles can be useful if you want to
+set part of a formula in a different size of type than the one
+that \TeX\ has chosen according to its usual rules.
+
+\eject
+The four primary styles are:
+
+\vdisplay{%
+\halign{\refterm{# style}\hfil&\hskip .25in(for #)\hfil\cr
+display&formulas displayed on a line by themselves\cr
+text&formulas embedded in ordinary text\cr
+script&superscripts and subscripts\cr
+scriptscript&superscripts on superscripts, etc.\cr
+}}
+
+The other four styles are so-called ^{cramped variants}.  In these
+variants superscripts aren't raised as high as usual, and so the formula
+needs less vertical space than it otherwise would.  See
+\knuth{pages~140--141} for the details of how \TeX\ selects the style.
+
+\TeX\ chooses a size of type according to the style:
+
+\ulist\compact
+^^{display style}^^{text style}
+\li Display style and text style are set in \refterm{text size}, like
+`$\rm this$'.
+
+^^{script style}
+\li Script style is set in \refterm{script size}, like `$\scriptstyle
+\rm this$'.
+
+^^{scriptscript style}
+\li Scriptscript style is set in \refterm{scriptscript size}, like
+`$\scriptscriptstyle \rm this$'.
+\endulist
+
+See \conceptcit{family} for more information about these three sizes.
+
+\TeX\ doesn't have a ``scriptscriptscript'' style because such a style
+would usually have to be set in a size of type too small to read.  \TeX\
+therefore sets third-order subscripts, superscripts, etc., using the
+scriptscript style.
+
+Once in a while you may find that \TeX\ has set a formula in a different style
+than the one you'd prefer.  You can override \TeX's choice with the
+^|\textstyle|, ^|\displaystyle|, ^|\scriptstyle|, and ^|\scriptscriptstyle|
+commands \ctsref{\textstyle}.
+\endconcept
+
+\endconcepts
+\end

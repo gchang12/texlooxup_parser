@@ -1,0 +1,24 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts delimiter {\<number>}
+\explain
+This command produces a delimiter whose characteristics are given by
+\<number>.  \<number> is normally written in hexadecimal notation.
+You can use the |\delimiter| command instead of a character in any context
+where \TeX\ expects a delimiter (although the command is rarely used
+outside of a macro definition).
+Suppose that \<number> is the hexadecimal number $cs_1s_2s_3
+l_1l_2l_3$.  Then \TeX\ takes the delimiter to have 
+\minref{class} $c$, small variant
+$s_1s_2s_3$, and large variant $l_1l_2l_3$.  Here $s_1s_2s_3$ indicates
+the math character found in position $s_2s_3$ of family $s_1$, and
+similarly for $l_1l_2l_3$.  This is the same convention as the one
+used for ^|\mathcode| (\xref\mathcode).
+\example
+\def\vert{\delimiter "026A30C} % As in plain TeX.
+|
+\endexample
+\enddesc
+\enddescriptions
+\end

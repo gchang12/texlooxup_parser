@@ -1,0 +1,43 @@
+\input macros
+\begindescriptions
+\begindesc
+\easy\cts indent {}
+\explain
+If \TeX\ is in vertical mode, as it is after ending a paragraph,
+this command inserts the ^|\parskip| interparagraph glue,
+puts \TeX\ into horizontal mode, starts a paragraph, and
+indents that paragraph by |\parindent|.
+If \TeX\ is already in horizontal mode, this command merely produces
+a blank space of width |\parindent|.
+Two |\indent|s in a row 
+produce two indentations.
+^^{indentation}
+
+As the example below shows, an |\indent| at a point where \TeX\
+would start a paragraph anyway is redundant.
+When \TeX\ is in vertical mode and sees a letter or some other
+inherently horizontal command, it starts a paragraph by
+switching to horizontal mode,
+doing an |\indent|, and processing the horizontal command.
+
+\example
+\parindent = 2em  This is the first in a series of three 
+paragraphs that show how you can control indentation. Note
+that it has the same indentation as the next paragraph.\par
+\indent This is the second in a series of three paragraphs.
+It has \indent an embedded indentation.\par
+\indent\indent This doubly indented paragraph
+is the third in the series.
+|
+\produces
+\parindent = 2em  This is the first in a series of three 
+paragraphs that show how you can control indentation. Note
+that it has the same indentation as the next paragraph.\par
+\indent This is the second in a series of three paragraphs.
+It has \indent an embedded indentation.\par
+\indent\indent This doubly indented paragraph
+is the third in the series.
+\endexample
+\enddesc
+\enddescriptions
+\end

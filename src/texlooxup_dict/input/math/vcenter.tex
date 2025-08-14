@@ -1,0 +1,34 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts vcenter {\rqbraces{\<vertical mode material>}}
+\ctsbasic {\\vcenter to \<dimen> \rqbraces{\<vertical mode material>}}{}
+\ctsbasic {\\vcenter spread \<dimen> \rqbraces{\<vertical mode material>}}{}
+\explain
+Every math formula has an invisible
+``^{axis}'' that \TeX\ treats as a kind of
+horizontal centering line for that formula.
+For instance, the axis of a formula consisting of a
+fraction is at the center of the fraction bar.
+The |\vcenter| command tells \TeX\ to place the \<vertical mode material>
+in a \minref{vbox} and to center the vbox
+with respect to the axis of the formula it is currently constructing.
+
+The first form of the command
+centers the material as given.  The second and third
+forms expand or shrink the material vertically as in the |\vbox| command
+(\xref \vbox).
+
+\example
+$${n \choose k} \buildrel \rm def \over \equiv \>
+\vcenter{\hsize 1.5 in \noindent the number of 
+combinations of $n$ things taken $k$ at a time}$$
+|
+\dproduces
+$${n \choose k} \buildrel \rm def \over \equiv \>
+\vcenter{\hsize 1.5 in \noindent the number of 
+combinations of $n$ things taken $k$ at a time}$$
+\endexample
+\enddesc
+\enddescriptions
+\end

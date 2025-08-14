@@ -1,0 +1,49 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts the {\<token>}
+\explain
+This command generally expands to a list of \minref{character} tokens
+that represents \<token>.  \<token> can be any of the following:
+
+\ulist\compact
+\li a \TeX\ \minref{parameter}, e.g., |\parindent| or |\deadcycles|
+^^{parameters//using \b\tt\\the\e\ with}
+\li a \minref{register}, e.g., |\count0|
+^^{registers//with \b\tt\\the\e}
+\margin{Item for special registers removed}
+\li a code associated with an input character, e.g., |\catcode`(|
+\li a font parameter, e.g., |\fontdimen3\sevenbf|
+\li the ^|\hyphenchar| or ^|\skewchar| of a font, e.g., 
+|\skewchar\teni|
+\li ^|\lastpenalty|, ^|\lastskip|, or ^|\lastkern| (values derived from
+the last item on the current horizontal \minrefs{horizontal list}
+or \minref{vertical list})
+\li a control sequence defined by ^|\chardef| or
+^|\mathchardef|
+\endulist
+
+\noindent
+In addition, |\the| can expand to noncharacter tokens in the following two
+cases: 
+\ulist\compact
+\li |\the| \<font>, which expands to the most recently defined
+control sequence that selects
+the same font as the control sequence \<font>
+\li |\the| \<token variable>, which expands to a copy of the value of the
+variable, e.g., |\the\everypar|
+\endulist
+
+See \knuth{pages~214--215} for a more detailed description of what
+|\the| does in various cases.
+\example
+The vertical size is currently \the\vsize.
+The category code of `(' is \the\catcode `(.
+|
+\produces
+The vertical size is currently \the\vsize.
+The category code of `(' is \the\catcode `(.
+\endexample
+\enddesc
+\enddescriptions
+\end

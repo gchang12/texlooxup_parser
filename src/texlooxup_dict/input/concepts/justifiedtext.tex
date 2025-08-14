@@ -1,0 +1,31 @@
+\input macros
+\beginconcepts
+\concept {justified text} 
+
+\defterm{Justified text} is text that has been typeset so that both
+margins are even.  Unjustified text, on the other hand, has been typeset
+with ``ragged'' margins on one or both sides.
+Documents typed on old-fashioned typewriters almost always have 
+ragged right margins.
+Although documents produced by \TeX\ are
+justified by default, you can if you wish produce documents (or
+sequences of lines) that have ^{ragged right}---or ^{ragged left}---margins.
+You can also get \TeX\ to center a sequence of lines, thus making both
+margins ragged.
+^^{centered text}
+You can use the 
+^|\leftskip|, ^|\rightskip|, and  ^|\raggedright| commands
+(\pp \xrefn{\leftskip},~\xrefn{\raggedright}) for these purposes.
+
+When \TeX\ is producing justified text, it usually
+needs to stretch or shrink the glue within each line to make the margins
+come out even.  When \TeX\ is producing unjustified text, on the other
+hand, it usually leaves the glue within each line at its natural width.
+Many typographers prefer unjustified text because its interword
+spacing is more uniform.
+\endconcept
+
+
+
+\endconcepts
+\end

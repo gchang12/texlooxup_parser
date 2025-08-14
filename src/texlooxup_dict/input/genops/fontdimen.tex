@@ -1,0 +1,55 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts fontdimen {\<number> \<font>\param{dimen}}
+\explain
+^^{fonts//parameters of}
+These parameters specify various dimensions associated with
+the font named by the control sequence \<font>
+(as distinguished from the \<font\-name> that names the font files).
+Values of these parameters are specified in the metrics
+file for \<font>, but you can
+retrieve or change their values during a \TeX\ run.
+The numbers and meanings of the parameters are:
+\display{\halign{\hfil#\hfil\quad&#\hfil\cr
+\it Number&\it Meaning\cr
+\noalign{\vskip 1\jot}%
+1&slant per point\cr
+2&interword space\cr
+3&interword stretch\cr
+4&interword shrink\cr
+5&x-height (size of |1ex|)\cr
+6&quad width (size of |1em|)\cr
+7&extra space\cr}}
+\noindent
+\TeX\ uses the slant per point for positioning accents.
+It uses the interword parameters for producing interword spaces
+(see |\spaceskip|, \xref\spaceskip) and the extra space parameter
+for the additional space after a period (see |\xspaceskip|,
+\xref\xspaceskip).
+The values of these parameters for the
+\plainTeX\ fonts are enumerated on \knuth{page~433}.
+Math symbol fonts have $15$ additional parameters, which we won't discuss here.
+
+Beware: 
+assignments to these parameters are \emph{not} undone at the end
+of a group.
+If you want to change these parameters locally, you'll need to
+save and restore their original settings explicitly.
+\example
+Here's a line printed normally.\par
+\dimen0=\fontdimen2\font
+\fontdimen2\font=3\fontdimen2\font % triple word spacing
+\noindent Here's a really spaced-out line.
+\fontdimen2\font=\dimen0
+|
+\produces
+Here's a line printed normally.\par
+\dimen0=\fontdimen2\font
+\fontdimen2\font=3\fontdimen2\font % triple word spacing
+\noindent Here's a really spaced-out line.
+\fontdimen2\font=\dimen0
+\endexample
+\enddesc
+\enddescriptions
+\end

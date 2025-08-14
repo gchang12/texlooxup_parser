@@ -1,0 +1,32 @@
+\input macros
+\begindescriptions
+\begindesc
+\ctspecial ifcase
+{\<number>\<case$_0$ text> {\bt \\or }\<case$_1$ text> {\bt \\or}
+   $\ldots$ {\bt \\or} \<case$_n$ text>\hfil\break
+\hglue 3pc{\bt \\else} \<otherwise text> {\bt \\fi}}
+\ctsxrdef{@ifcase}
+\ctsxrdef{@or}
+\explain
+^^{case testing}
+This command introduces a test with numbered multiple cases.
+If \<num\-ber> has the value $k$, \TeX\ will expand \<case$_k$ text> if
+it exists, and \<other\-wise text> if it doesn't.  You can omit the |\else|---%
+in this case, \TeX\ won't expand anything if none of the cases are satisfied.
+\example
+\def\whichday#1{\ifcase #1<day 0>\or Sunday\or Monday%
+   \or Tuesday\or Wednesday\or Thursday\or Friday%
+   \or Saturday\else Nonday\fi
+   \ is day \##1. }
+\whichday2 \whichday3 \whichday9
+|
+\produces
+\def\whichday#1{\ifcase #1<day 0>\or Sunday\or Monday%
+   \or Tuesday\or Wednesday\or Thursday\or Friday%
+   \or Saturday\else Nonday\fi
+   \ is day \##1. }
+\whichday2 \whichday3 \whichday9
+\endexample
+\enddesc
+\enddescriptions
+\end

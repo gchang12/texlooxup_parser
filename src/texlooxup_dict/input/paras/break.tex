@@ -1,0 +1,27 @@
+\input macros
+\begindescriptions
+\begindesc
+\bix^^{line breaks}
+\bix^^{line breaks//encouraging or discouraging}
+\ctspecial break {} \xrdef{hbreak}
+\explain
+This command forces a line break.
+Unless you do something to fill out the line, you're likely to
+get an ``underfull hbox'' complaint.
+|\break| can also be used in vertical mode.
+\example
+Fill out this line\hfil\break and start another one.\par
+% Use \hfil here to fill out the line.
+This line is underfull---we ended it\break prematurely.
+% This line causes an `underfull hbox' complaint.
+|
+\produces
+\hbadness = 10000 % avoid hbadness message
+Fill out this line\hfil\break and start another one.\par
+% Use \hfil here to fill out the line.
+This line is underfull---we ended it\break prematurely.
+% This line causes an `underfull hbox' complaint.
+\endexample
+\enddesc
+\enddescriptions
+\end

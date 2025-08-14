@@ -1,0 +1,54 @@
+\input macros
+\beginconcepts
+\concept mark
+
+A \defterm{mark} is an item that you can insert into a
+horizontal, vertical, or math list and later recover from within your
+output routine.  Marks are useful for purposes such as
+keeping track of topics to appear in page headers.
+Each mark has a list of tokens---the ``^{mark text}''---associated with it.
+The ^|\mark| command \ctsref{\mark} expects such a token list as its argument,
+and appends an item containing that token list (after
+expansion) to whatever list \TeX\ is
+currently building.  The ^|\topmark|, ^|\firstmark|, and ^|\botmark| commands
+\ctsref{\topmark} can be used to retrieve various marks on a page.
+These commands are most often used in page headers and footers.
+^^{footers//marks used in}
+^^{headers//marks used in}
+
+\margin{This example of {\tt\\mark} replaces the previous explanatory
+paragraph.}
+Here is a simplified example.
+Suppose you define a section heading macro as follows:
+\csdisplay
+\def\section#1{\medskip{\bf#1}\smallskip\mark{#1}}
+% #1 is the name of the section
+|
+^^|\mark|
+This macro, when called, will produce a section heading in boldface and
+will also record the name of the section as a mark.
+You can now define the header for each printed page
+as follows:
+\csdisplay
+\headline = {\ifodd\pageno \hfil\botmark\quad\folio
+   \else \folio\quad\firstmark\hfil \fi}
+|
+Each even (left-hand) page will now have the page number followed by the
+name of the first section on that page, while each odd (right-hand) page
+will have the page number followed by the name of the last section on
+that page.  Special cases, e.g., no sections starting on a page, will
+generally come out correctly because of how ^|\firstmark|
+and ^|\botmark| work.
+
+When you split a page using the |\vsplit| command \ctsref{\vsplit} you can
+retrieve the mark texts of the first and last marks of the split-off
+portion with the ^|\splitfirstmark| and ^|\splitbotmark| commands
+\ctsref{\splitfirstmark}.
+
+See \knuth{pages~258--260} for a more precise explanation of how
+to create and retrieve marks.
+\endconcept
+
+
+\endconcepts
+\end

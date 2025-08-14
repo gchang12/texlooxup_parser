@@ -1,0 +1,19 @@
+\input macros
+\begindescriptions
+\begindesc
+\easy\cts line {\<argument>}
+\explain
+This command produces an \minref{hbox} containing \<argument>.
+The hbox is exactly as wide as the current line, i.e., it
+extends from the right margin to the left margin.
+\example
+\line{ugly \hfil suburban \hfil sprawl}
+% Without \hfil you'd get an `underfull box' from this.
+|
+\produces
+\line{ugly \hfil suburban \hfil sprawl}%
+\endexample
+
+\enddesc
+\enddescriptions
+\end

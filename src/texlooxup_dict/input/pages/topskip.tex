@@ -1,0 +1,30 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts topskip {\param{glue}}
+\explain
+\TeX\ inserts glue at the top of each
+page in order to ensure that the baseline of the first box on the page
+always is the same distance $d$ from the top of the page.
+|\topskip| determines the amount of that glue,
+called the ``|\topskip| glue'', by specifying
+what $d$ should be (provided that the first box
+on the page isn't too tall).
+$d$ is given by the natural size of the |\topskip| glue.
+If the height of the first box on the page exceeds $d$,
+so that the glue would be negative, \TeX\ simply inserts no 
+|\topskip| glue at all on that page.
+
+To understand better the effect of these rules, assume that |\topskip|
+has no stretch or shrink and that the first item on the page is indeed a box.
+Then if the height of that box is no greater than |\topskip|,
+its baseline will be |\topskip|
+from the top of the page independently of its height.  On the other hand,
+if the height of the box is $e$ greater than |\topskip|, its baseline will be
+|\topskip|\tplus$e$ from the top of the page.
+See \knuth{pages~113--114} for the remaining details of how
+|\topskip| works.
+\PlainTeX\ sets |\topskip| to |10pt|.
+\enddesc
+\enddescriptions
+\end

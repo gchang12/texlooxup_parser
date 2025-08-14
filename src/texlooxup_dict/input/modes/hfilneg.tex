@@ -1,0 +1,46 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts hfilneg {}
+\cts vfilneg {}
+\explain
+^^{glue//negative}
+These commands cancel the effect of a preceding |\hfil|
+or |\vfil|. While |\hfil| and |\vfil|
+produce infinitely stretchable positive \minref{glue}, |\hfilneg| 
+and |\vfilneg| produce infinitely stretchable negative glue.
+(Thus, $n$ |\hfilneg|s cancel $n$ ^|\hfil|s, and similarly for
+|\vfilneg|.)
+The main use of |\hfilneg| and |\vfilneg|
+is to counteract the effect of an |\hfil| or |\vfil|
+inserted by a \minref{macro}.
+
+|\hfilneg| and |\vfilneg| have
+the curious property that if they are the only infinitely stretchable
+glue in a box, they produce exactly the same effect as |\hfil|
+and |\vfil|.
+
+\example
+\leftline{\hfil on the right\hfilneg}
+% Cancel the \hfil that \leftline produces to the right
+% of its argument.
+|
+\produces
+\leftline{\hfil on the right \hfilneg}
+% Cancel the \hfil that \leftline produces to the right
+% of its argument.
+%
+\nextexample
+\def\a{\hbox to 1pc{\hfil 2}\vfil}
+\vbox to 4pc{\hbox{1} \vfil \a
+   \vfilneg \hbox to 2pc{\hfil 3}}
+|
+\produces
+\smallskip
+\def\a{\hbox to 1pc{\hfil 2}\vfil}
+\vbox to 4pc{\hbox{1} \vfil \a
+   \vfilneg \hbox to 2pc{\hfil 3}}
+\endexample
+\enddesc
+\enddescriptions
+\end
