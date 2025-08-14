@@ -3,14 +3,12 @@
 Provides command-line interface to accessing the `TeX for the Impatient' PDF files.
 """
 
+import sys
 import argparse
 from pathlib import Path
 import re
 import logging
 import webbrowser
-
-# not really needed
-# import textwrap
 
 
 SECTION_LIST = (
@@ -30,8 +28,9 @@ def texdict(parser: argparse.ArgumentParser):
     """
     parsed_args = parser.parse_args()
     pattern, sections = (parsed_args.pattern, parsed_args.sections)
-    if (pattern, sections) == (None, None):
-        print("Please provide input.")
+    if (pattern, sections) == (None, None) or (pattern, sections) == ("", None):
+        # return help message
+        parser.parse_args(["-h"])
         return None
     if pattern is None:
         pattern = ".*"
@@ -46,7 +45,7 @@ def texdict(parser: argparse.ArgumentParser):
             continue
         logging.info("'%s' is in 'sections' parameter. Searching.", outdir.name)
         for outfile in outdir.iterdir():
-            if re.search(pattern, outfile.name.replace('.pdf', '')) is None:
+            if re.search(pattern, outfile.name) is None:
                 #logging.info("'%s' is not matched by specified 'pattern': '%s'. Skipping.", outfile.name, pattern)
                 continue
             logging.info("'%s' is matched by specified 'pattern': '%s'. Appending.", outfile.name, pattern)
@@ -89,7 +88,7 @@ def get_parser():
     parser = argparse.ArgumentParser(
             prog="texdict",
             description="Search for a command to look up by pattern, by section, or by both.",
-            epilog="Have a question?\nhttps://github.com/gchang12/texdict2",
+            epilog="Have a question?\nhttps://github.com/gchang12",
         )
     parser.add_argument("-sections",
             metavar="sections",

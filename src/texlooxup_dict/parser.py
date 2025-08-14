@@ -16,16 +16,6 @@ ii.     Generate input files.
 iii.    Create output directory.
 iv.     Typeset.
 v.      Clean up output directory.
-
-FUNCTIONS DEFINED
-=================
-- get_definition_list
-- create_input_dir
-- create_input_files_from_deftext
-- typeset_input_files
-- cleanup_output
-
-- main__{sections,miscellany,concepts}
 """
 
 from typing import List
@@ -45,7 +35,9 @@ def get_definition_list(section: str) -> List[str]:
     logging.info("parser.get_definition_list('%s')", section)
     filetext = Path("impatient").joinpath(section + ".tex").read_text()
     deflist = []
-    for rawtext in re.split("\\\\begindesc[^r]", filetext)[1:]:
+    for index, rawtext in enumerate(re.split("\\\\begindesc[^r]", filetext)):
+        if not index:
+            continue
         deftext = re.split("\\\\enddesc[^r]", rawtext)
         deflist.append(deftext[0])
     logging.info("%d definitions were found in '%s' section.", len(deflist), section)
@@ -72,8 +64,7 @@ def create_input_files_from_deftext(deftext: str, section: str):
     """
     ifile_head = ["\\input macros", "\\begindescriptions", "\\begindesc"]
     ifile_tail = ["\\enddesc", "\\enddescriptions", "\\end"]
-    renamed_command_list = []
-    safeword = "???"
+    added_command_list = []
     for line in deftext.splitlines():
         search_result = re.search("\\\\cts\w* (\S+)", line)
         if search_result is None:
@@ -82,25 +73,24 @@ def create_input_files_from_deftext(deftext: str, section: str):
             filename = search_result.group(1)
         except IndexError:
             continue
-        print("Found entry: '%s/%s'" % (section, filename))
+        logging.info("Found '%s/%s' control sequence.", section, filename)
         if re.fullmatch("[a-zA-Z]+", filename) is None:
             old_filename = filename
-            #print(deftext)
-            print("! These filenames have been taken:", renamed_command_list)
-            while (re.fullmatch("[a-zA-Z]+", filename) is None) or ("_" + filename in renamed_command_list):
-                filename = input(f"! '{section}/{filename}.tex' is an invalid filename.\n! Please either input '{safeword}' to skip, or rename file to: _")
-            if filename == safeword:
-                print("! Discarding.")
+            print(deftext)
+            print("list of added commands:", added_command_list)
+            while re.fullmatch("[a-zA-Z]+", filename) is None:
+                filename = input(f"'{section}/{filename}.tex' is not a valid filename. Please either input 'SKIP' to skip this file, or input a filename of the form: [a-zA-Z]+\n\n")
+            if filename == "SKIP":
+                logging.warning("Discarding '%s/%s'.", section, old_filename)
                 continue
             # to denote that this was a filename that needed amending
             filename = "_" + filename
-            print("! Renamed '%s/%s' to '%s/%s'.\n" % (section, old_filename, section, filename))
-            #renamed_command_list.append(filename)
+            logging.info("Renamed '%s/%s' to '%s/%s'.", section, old_filename, section, filename)
         ifile_text = "\n".join( ifile_head + deftext.splitlines() + ifile_tail)
-        print("Attempting to write '%s/%s'." % (section, filename))
+        logging.info("Attempting to write '%s/%s'.", section, filename)
         Path("input", section, filename + ".tex").write_text(ifile_text)
-        print("Success.")
-        renamed_command_list.append(filename.replace('.tex', ''))
+        logging.info("Successfully written '%s/%s'.", section, filename)
+        added_command_list.append(filename)
 
 def typeset_input_files(section: str):
     """
@@ -120,7 +110,7 @@ def typeset_input_files(section: str):
             logging.info("Skipping auxiliary file: '%s'.", filename.name)
             continue
         logging.info("Processing file #%d of %d: '%s/%s'", filenum, num_files, section, filename.name)
-        os.system(f"pdftex -jobname {jobname} -output-directory {str(output_dir)} -interaction batchmode {str(filename)} &>/dev/null")
+        os.system(f"pdftex -jobname {jobname} -output-directory {str(output_dir)} -interaction batchmode {str(filename)} > /dev/null")
     os.chdir("../..")
 
 def cleanup_output(section: str):
@@ -143,7 +133,7 @@ def main__sections():
     4. Typesets the files.
     5. Cleans up non-PDF files.
     """
-    logging.info("main__sections()")
+    logging.info("Running: main__sections()")
     section_list = ("genops", "math", "modes", "pages", "paras")
     logging.info("Now creating filesystem for sections: %s", section_list)
     for section in section_list:
@@ -159,7 +149,7 @@ def main__miscellany():
 
     Stored in 'miscellany' output directory.
     """
-    logging.info("main__miscellany()")
+    logging.info("Running: main__miscellany()")
     miscellany_list = ("usebook", "usingtex", "examples", "tips", "errors", "usermacs", "capsule")
     output_dir = "miscellany"
     create_input_dir(output_dir)
@@ -183,7 +173,7 @@ def main__concepts():
 
     Stored in 'concepts' output directory.
     """
-    logging.info("main__concepts()")
+    logging.info("Running: main__concepts()")
     logging.info("reading 'impatient/concepts.tex' to memory.")
     itext = Path("impatient", "concepts.tex").read_text()
     concept_defs = re.split(r"\\concept\W+", itext)[1:]
@@ -213,28 +203,11 @@ def main__concepts():
     cleanup_output(output_dir)
 
 if __name__ == '__main__':
-    def build1():
-        logging.basicConfig(level=logging.INFO, format="%(levelname)s:texdict2:%(message)s", filename="log_texdict2.log")
-        logging.info("Running: main__sections()")
-        section_list = ("genops", "math", "modes", "pages", "paras")
-        logging.info("Now creating filesystem for sections: %s", section_list)
-        for section in section_list:
-            logging.info("Processing files for '%s'.", section)
-            create_input_dir(section)
-            for deftext in get_definition_list(section):
-                create_input_files_from_deftext(deftext, section)
-            #typeset_input_files(section)
-            #cleanup_output(section)
-    def build2():
-        output_dirlist = ("paras", "miscellany", "concepts")
-        #output_dirlist = ["miscellany"]
-        output_factories = (main__sections, main__miscellany, main__concepts)
-        for outdir, outfunc in zip(output_dirlist, output_factories):
-            if Path("output", outdir).exists():
-                logging.info("'output/%s' exists. Assuming that '%s' has already been run. Skipping.", outdir, outfunc.__name__)
-                continue
-            outfunc()
-        print("Build done. Run `python3 query.py par -section paras` to test.")
-    #build1()
-    build2()
-
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s:texdict2:%(message)s", filename="log_texdict2.log")
+    output_dirlist = ("paras", "miscellany", "concepts")
+    output_factories = (main__sections, main__miscellany, main__concepts)
+    for outdir, outfunc in zip(output_dirlist, output_factories):
+        if Path("output", outdir).exists():
+            logging.info("'output/%s' exists. Assuming that '%s' has already been run. Skipping.", outdir, outfunc.__name__)
+            continue
+        outfunc()
