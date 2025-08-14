@@ -1,0 +1,20 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts wlog {\rqbraces{\<token list>}}
+\explain
+This command writes \<token list> on the log file.
+^^{log file//written by \b\tt\\wlog\e}
+\minrefs{log file}
+\TeX\ expands \<token list> according to the same rules that it uses
+for |\edef| (\xref\edef).
+\example
+\wlog{Take two aspirins and call me in the morning.}
+|
+\logproduces
+Take two aspirins and call me in the morning.
+|
+\endexample
+\enddesc
+\enddescriptions
+\end

@@ -1,0 +1,39 @@
+\input macros
+\beginconcepts
+\concept {ASCII}
+
+\defterm{\ascii} is the abbreviation of ``American Standard Code for
+Information Interchange''.  There are $256$ \ascii\
+^{characters}, each with its own code number, but
+the meanings of only the first~$128$ have been standardized.  You can
+find these meanings in an \ascii\ ``code table'' such as the one on
+\knuth{page~367}.  Characters $32$--$126$ are ``printable characters'',
+^^{printable characters} such as letters, numbers, and punctuation
+marks. The remaining characters are ``^{control characters}'' that are
+typically used (in the computer industry, not in \TeX) to control
+input\slash output and data communications devices.  For instance,
+\ascii\ code $84$ corresponds to the letter `T', while \ascii\
+code~$12$ corresponds to the ``form feed'' function (interpreted by most
+printers as ``start a new page'').  Although the \ascii\ standard
+specifies meanings for the control characters, many manufacturers of
+equipment such as modems and printers have used the control characters
+for purposes other than the standard ones.
+
+The meaning of a
+character in \TeX\ is usually consistent with its meaning in standard \ascii,
+and \refterm{fonts:font} that contain \ascii\
+printable characters usually have those characters in the same positions as
+their \ascii\ counterparts.
+But some fonts, notably those used for math, replace the \ascii\
+printable characters by other characters unrelated to the \ascii\ characters.
+For instance, the Computer Modern math font
+^^{Computer Modern fonts}
+|cmsy10| has the math symbol
+`{$\forall$}' in place of the \ascii\ digit `8'.
+
+
+\endconcept
+
+
+\endconcepts
+\end

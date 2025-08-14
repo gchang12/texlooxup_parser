@@ -1,0 +1,28 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts tracingpages {\param{number}}
+\explain
+If this parameter is greater than zero,
+\TeX\ will record in the log file its calculations of the cost of
+various page breaks that it tries.
+^^{page breaks//tracing}
+If |\tracing!-online| ^^|\tracingonline|
+is greater than zero, this information will also appear
+at your terminal.
+\TeX\ produces a line of this output
+whenever it first places a box or \minref{insertion}
+on the current page list, and also whenever it processes a potential
+break point for the page.
+Examining this output can be helpful when you're trying to determine
+the cause of a bad page break.
+See \knuth{pages~112--114} for an illustration and explanation of
+this output.
+
+Some production forms of \TeX\ ignore the value of |\tracingpages|
+so that they can run faster.
+If you need to use this parameter, be sure to use a form that
+responds to it.
+\enddesc
+\enddescriptions
+\end

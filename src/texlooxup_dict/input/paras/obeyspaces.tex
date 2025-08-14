@@ -1,0 +1,33 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts obeyspaces {}
+\explain
+\TeX\ normally condenses a sequence of several spaces to a single space.
+|\obeyspaces| instructs \TeX\ to produce a space in the output
+for each space in the input.
+|\obeyspaces| does not cause spaces at the beginning of a line
+to show up, however; for that we recommend the |\obey!-white!-space|
+command defined in |eplain.tex| 
+(\xref{ewhitesp}).
+^^|\obeywhitespace|
+|\obeyspaces| is often useful when you're typesetting something,
+computer input for example,
+in a monospaced font (one in which each character takes up the
+same amount of space)
+and you want to show exactly what each line of input looks like.
+
+You can use the |\obeylines| command (\xref{\obeylines}) to get \TeX\
+to follow the line boundaries of your input.  |\obeylines| is often
+used in combination with |\obeyspaces|.
+\example 
+These     spaces    are    closed   up
+{\obeyspaces but   these  are     not   }.
+|
+\produces
+These     spaces    are    closed   up
+{\obeyspaces but   these  are     not   }.
+\endexample
+\enddesc
+\enddescriptions
+\end

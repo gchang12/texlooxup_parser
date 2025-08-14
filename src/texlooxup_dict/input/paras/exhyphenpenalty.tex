@@ -1,0 +1,15 @@
+\input macros
+\begindescriptions
+\begindesc
+\bix^^{hyphenation//penalties for}
+\cts exhyphenpenalty {\param{number}}
+\explain
+\minrefs{line break}
+This parameter specifies the \minref{penalty} that \TeX\ attaches to a 
+breakpoint at an explicit hyphen such as the one in
+``helter-skelter''.  Increasing this parameter has the effect of discouraging
+\TeX\ from ending a line at an explicit hyphen.
+\PlainTeX\ sets |\exhyphenpenalty| to $50$.
+\enddesc
+\enddescriptions
+\end

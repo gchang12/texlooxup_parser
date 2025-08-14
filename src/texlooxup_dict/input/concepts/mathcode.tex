@@ -1,0 +1,82 @@
+\input macros
+\beginconcepts
+\concept mathcode
+
+A \defterm{mathcode} is a number that \TeX\ uses to identify and
+describe a math character,
+^^{math characters//described by mathcodes}
+i.e., a character that has a
+particular role in a math formula.  A mathcode conveys three pieces of
+information about a character: its \refterm{font} position, its
+\refterm{family}, and its \refterm{class}.
+Each of the $256$ possible
+input characters has a mathcode, which is defined by the \TeX\ program
+but can be changed.
+
+^^{family//as part of mathcode}
+\TeX\ has sixteen families of fonts, numbered $0$--$15$.  Each
+family contains three fonts: one for \refterm{text size}, one for
+\refterm{script size}, and one for \refterm{scriptscript size}.  \TeX\
+chooses the size of a particular character, and therefore its font,
+according to the context.  The class of a character specifies its role
+in a formula (see \knuth{page~154}).  For example, the equals sign `|=|'
+is in class $3$ (Relation).  \TeX\ uses its knowledge of character
+classes when it is deciding how much space to put between different
+components of a math formula.
+
+The best way to understand what mathcodes are all about is to see how
+\TeX\ uses them. So we'll show you what \TeX\ does with a
+character token $t$ of \refterm{category code}~11 or~12 in a math
+formula:
+
+\olist\compact
+\li It looks up the character's mathcode.
+\li It determines a family $f$ from the mathcode.
+\li It determines the size $s$ from the context.
+\li It selects a font $F$ by picking the font for size $s$ in family $f$.
+\li It determines a character number $n$ from the mathcode.
+\li It selects as the character $c$ to be typeset the character
+at position $n$ of font $F$.
+\li It adjusts the spacing around $c$ according to the class of $t$ and
+the surrounding context.
+\li It typesets the character $c$.
+\endolist
+
+The context dependence in
+items (3) and (7) implies that \TeX\ cannot typeset a math character
+until it has seen the entire formula containing the
+math character.  For example, in the formula
+`|$a\over b$|', \TeX\ doesn't know what size the `|a|' should be until it
+has seen the |\over|.
+
+{\tighten
+The mathcode of a character is encoded according to the formula $4096c
++ 256f + n$, where $c$ is the class of the character, $f$ is its
+\refterm{family}, and $n$ is its \refterm{\ascii\ character} code within
+the family.  You can change \TeX's interpretation of an input character
+in math mode by assigning a value to the ^|\mathcode|
+table entry \ctsref{\mathcode}
+for that character.  The character must have a
+\refterm{category code} of $11$ (letter) or $12$ (other) for \TeX\ to
+look at its |\mathcode|.
+}\par
+
+^^{family//variable}
+You can define a mathematical character to have a ``variable'' family by
+giving it a class of $7$.  Whenever \TeX\ encounters that character in a
+math formula, it takes the family of the character to be the current
+value of the |\fam| parameter \ctsref{\fam}.  A variable family enables
+you to specify the font of ordinary text in a math formula.  For
+instance, if the roman characters are in family $0$, the assignment
+|\fam = 0|
+will cause ordinary text in a math formula to be set in roman type
+rather than in something else like math italic type. If the value of
+|\fam| is not in the range from $0$ to $15$, \TeX\ takes the value to be
+$0$, thus making classes $0$ and $7$ equivalent.
+\TeX\ sets |\fam| to $-1$ whenever it enters math mode.
+\endconcept
+
+
+
+\endconcepts
+\end

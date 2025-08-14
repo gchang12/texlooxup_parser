@@ -1,0 +1,154 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts vtop {\<vertical mode material>}
+\aux\cts vtop {{\bt to} \<dimen> \rqbraces{\<vertical mode material>}}
+\aux\cts vtop {{\bt spread} \<dimen> \rqbraces{\<vertical mode material>}}
+\cts vbox {\rqbraces{\<vertical mode material>}}
+\aux\cts vbox {{\bt to} \<dimen> \rqbraces{\<vertical mode material>}}
+\aux\cts vbox {{\bt spread} \<dimen> \rqbraces{\<vertical mode material>}}
+\explain
+^^{hbox//constructing with \b\tt\\hbox\e}
+These commands
+produce a \minref{vbox} (vertical \minref{box})
+containing \<vertical mode material>.
+The braces around \<vertical mode material> define a group.
+\TeX\ is in internal vertical mode when it's assembling the box.
+\TeX\ won't change the size of the box once it's been produced.
+
+The difference between |\vtop| and |\vbox| lies in where \TeX\ puts
+the reference point of the constructed vbox.
+Ordinarily, the reference point gotten from |\vtop| tends to be at or near
+the top of the constructed vbox,
+while
+the reference point gotten from |\vbox| tends to be at or near
+the bottom of the constructed vbox.
+Thus a row of vboxes all constructed with |\vtop|
+will tend to have their tops nearly in a line,
+while a row of vboxes all constructed with |\vbox|
+will tend to have their bottoms nearly in a line.
+
+|\vtop| and |\vbox| are often useful
+when you want to keep some text together on a single page.
+(For this purpose, it usually doesn't matter which command you use.)
+If your use of these commands
+prevents \TeX\ from breaking pages in an acceptable
+way, \TeX\ will complain that it's found an overfull or underfull vbox while
+|\output| is active.
+
+The height of a vbox depends on 
+the arguments to |\vtop| or |\vbox|.
+For |\vbox|, \TeX\ determines the height as follows:
+\ulist\compact
+\li If you specify only \<vertical mode material>,
+the vbox will have its natural height.
+\li If you specify |to| \<dimen>,
+the height of the vbox will be \<dimen>.
+\li If you specify |spread| \<dimen>, the height of the vbox will be
+its natural height plus \<dimen>, i.e.,
+the height of the vbox will be stretched vertically by \<dimen>.
+\endulist
+\noindent
+For |\vtop|,
+\TeX\ constructs the box using its rules for |\vbox| and then
+apportions the vertical extent between the height and the depth as
+described below.
+
+Ordinarily, the width of a constructed vbox is the width of the widest
+item inside it.\footnote
+{More precisely, it's the distance from the reference point to the rightmost
+edge of the constructed vbox.  Therefore,
+if you move any of the items right using ^|\moveright| or
+^|\moveleft| (with a negative distance),
+the constructed vbox might be wider.}
+The rules for apportioning the vertical extent between the
+height and the depth are more complicated:
+\ulist
+\li For |\vtop|,
+the height is the height of its first item, if that item is a box or rule.
+Otherwise the height is zero. The depth is whatever vertical
+extent remains after the height is subtracted.
+\li For |\vbox|,
+the depth is the depth of its last item, if that item is a box or rule.
+Otherwise the depth is zero. The height is whatever vertical
+extent remains after the depth is subtracted.%
+\footnote{In fact, there's a further complication.
+Suppose that after the depth has been determined
+using the two rules just given, the depth turns out to be greater than
+^|\boxmaxdepth|.
+Then the depth is reduced to |\boxmaxdepth| and the height is adjusted
+accordingly.} 
+\endulist
+
+The |\vfil| command (\xref\vfil) is useful for filling out a vbox
+^^|\vfil//filling a vbox|
+with empty space when the material in the box isn't as tall as
+the vertical extent of the box.
+\example
+\hbox{\hsize = 10pc \raggedright\parindent = 1em
+\vtop{In this example, we see how to use vboxes to
+produce the effect of double columns.  Each vbox
+contains two paragraphs, typeset according to \TeX's
+usual rules except that it's ragged right.\par
+This isn't really the best way to get true double
+columns because the columns}
+\hskip 2pc
+\vtop{\noindent
+aren't balanced and we haven't done anything to choose
+the column break automatically or even to fix up the
+last line of the first column.\par
+However, the technique of putting running text into a
+vbox is very useful for placing that text where you
+want it on the page.}}
+|
+\produces
+\hbox{\hsize = 10pc \raggedright\parindent = 1em
+\vtop{In this example, we see how to use vboxes to
+produce the effect of double columns.  Each vbox
+contains two paragraphs, typeset according to \TeX's
+usual rules except that it's ragged right.\par
+This isn't really the best way to get true double
+columns because the columns}
+\hskip 2pc
+\vtop{\noindent
+aren't balanced and we haven't done anything to choose
+the column break automatically or even to fix up the
+last line of the first column.\par
+However, the technique of putting running text into a
+vbox is very useful for placing that text where you
+want it on the page.}}
+\nextexample
+\hbox{\hsize = 1in \raggedright\parindent = 0pt
+\vtop to .75in{\hrule This box is .75in deep. \vfil\hrule}
+\qquad
+\vtop{\hrule This box is at its natural depth. \vfil\hrule}
+\qquad
+\vtop spread .2in{\hrule This box is .2in deeper than
+                  its natural depth.\vfil\hrule}}
+|
+\produces
+\hbox{\hsize = 1in \raggedright\parindent=0pt
+\vtop to .75in{\hrule This box is .75in deep. \vfil\hrule}
+\qquad
+\vtop{\hrule This box is at its natural depth. \vfil\hrule}
+\qquad
+\vtop spread .2in{\hrule This box is .2in deeper than
+                  its natural depth.\vfil\hrule}}
+\nextexample
+% See how \vbox lines up boxes at their bottoms
+% instead of at their tops.
+\hbox{\hsize = 1in \raggedright
+\vbox to .5in{\hrule This box is .5in deep.\vfil\hrule}
+\qquad
+\vbox to .75in{\hrule This box is .75in deep.\vfil\hrule}}
+|
+\produces
+\hbox{\hsize = 1in \raggedright
+\vbox to .5in{\hrule This box is .5in deep.\vfil\hrule}
+\qquad
+\vbox to .75in{\hrule This box is .75in deep.\vfil\hrule}}
+\vskip 16pt % to avoid running into the next command description
+\endexample
+\enddesc
+\enddescriptions
+\end

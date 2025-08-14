@@ -1,0 +1,55 @@
+\input macros
+\begindescriptions
+\begindesc
+\makecolumns 16/4:
+\easy\cts big {}
+\cts bigl {}
+\cts bigm {}
+\cts bigr {}
+\cts Big {}
+\cts Bigl {}
+\cts Bigm {}
+\cts Bigr {}
+\cts bigg {}
+\cts biggl {}
+\cts biggm {}
+\cts biggr {}
+\cts Bigg {}
+\cts Biggl {}
+\cts Biggm {}
+\cts Biggr {}
+\explain
+^^{delimiters//enlarging}
+These commands make \minref{delimiter}s bigger than their normal size.
+The commands in the four columns
+produce successively larger sizes.  The difference between |\big|,
+|\bigl|, |\bigr|, and |bigm| has to do with the \minref{class} of the
+enlarged delimiter:
+\ulist\compact
+\li |\big| produces an ordinary symbol.
+\li |\bigl| produces an opening symbol.
+\li |\bigr| produces a closing symbol.
+\li |\bigm| produces a relation symbol.
+\endulist
+\noindent
+\TeX\ uses the class of a symbol in order to decide how much space to put 
+around that symbol.
+
+These commands, unlike |\left| and |\right|,
+do \emph{not} define a group.
+
+\example
+$$(x) \quad \bigl(x\bigr) \quad \Bigl(x\Bigr) \quad
+   \biggl(x\biggr) \quad \Biggl(x\Biggr)\qquad
+[x] \quad \bigl[x\bigr] \quad \Bigl[x\Bigr] \quad
+   \biggl[x\biggr] \quad \Biggl[x\Biggr]$$
+|
+\dproduces
+$$(x) \quad \bigl(x\bigr) \quad \Bigl(x\Bigr) \quad
+\biggl(x\biggr) \quad \Biggl(x\Biggr)\qquad
+[x] \quad \bigl[x\bigr] \quad \Bigl[x\Bigr] \quad
+\biggl[x\biggr] \quad \Biggl[x\Biggr]$$
+\endexample
+\enddesc
+\enddescriptions
+\end

@@ -1,0 +1,44 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts underbrace {\<argument>}
+\cts overbrace {\<argument>}
+\cts underline {\<argument>}
+\cts overline {\<argument>}
+\cts overleftarrow {\<argument>}
+\cts overrightarrow {\<argument>}
+\explain
+These commands place extensible ^{braces}, lines, or ^{arrows}
+over or under the subformula given by \<argument>.
+\TeX\ will make these constructs as wide as they need to be for
+the context.
+When \TeX\ produces the extended braces, lines, or arrows, it considers
+only the dimensions of the \minref{box} containing \<argument>.
+If you use more than one of these commands in a single formula, the
+braces, lines, or arrows they produce
+may not line up properly with each other.
+You can use the |\mathstrut| command (\xref \mathstrut)
+to overcome this difficulty.
+\example
+$$\displaylines{
+\underbrace{x \circ y}\qquad \overbrace{x \circ y}\qquad
+\underline{x \circ y}\qquad \overline{x \circ y}\qquad
+\overleftarrow{x \circ y}\qquad
+\overrightarrow{x \circ y}\cr
+{\overline r + \overline t}\qquad
+{\overline {r \mathstrut} + \overline {t \mathstrut}}\cr
+}$$
+|
+\dproduces
+$$\displaylines{
+\underbrace{x \circ y}\qquad \overbrace{x \circ y}\qquad
+\underline{x \circ y}\qquad \overline{x \circ y}\qquad
+\overleftarrow{x \circ y}\qquad
+\overrightarrow{x \circ y}\cr
+{\overline r + \overline t}\qquad
+{\overline {r \mathstrut} + \overline {t \mathstrut}}\cr
+}$$
+\endexample
+\enddesc
+\enddescriptions
+\end

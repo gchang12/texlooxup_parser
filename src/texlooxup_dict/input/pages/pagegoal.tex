@@ -1,0 +1,19 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts pagegoal {\param{dimen}}
+\explain
+This parameter specifies the
+desired height for the current page.
+\TeX\  sets
+|\pagegoal| to the current value of |\vsize|
+when it first puts a box or an insertion on the current page.
+You can shorten a page while \TeX\ is working on it by
+changing the value of |\pagegoal|---even if the new value is
+less than the height of the material already on that page.
+\TeX\ will just put the extra material on the next page.
+But remember---|\pagegoal| is reset to |\vsize| again when \TeX\
+starts the next page.
+\enddesc
+\enddescriptions
+\end

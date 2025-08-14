@@ -1,0 +1,18 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts hglue {\<glue>}
+\cts vglue {\<glue>}
+^^{vertical glue}
+^^{horizontal glue}
+\explain
+The |\hglue| command produces horizontal \minref{glue} that won't disappear at
+a line break; the |\vglue| command
+produces vertical \minref{glue} that won't disappear at a page break. 
+In other respects these commands are just like |\hskip| and |\vskip|.
+You can use |\vglue| to produce blank space at the top of a page,
+e.g., above a title on the first page of a document, but
+^|\topglue| (next) is usually better for this purpose.
+\enddesc
+\enddescriptions
+\end

@@ -1,0 +1,55 @@
+\input macros
+\beginconcepts
+\concept magnification
+
+When \TeX\ typesets your document, it multiplies all dimensions 
+by a 
+\refterm{magnification} factor $f/1000$,
+where $f$ is the value of the ^|\mag| parameter \ctsref\mag.
+Since the default value of |\mag| is $1000$, the normal case is that
+your document is typeset just as specified.
+Increasing the magnification is often useful when you're typesetting a document
+that will later be photoreduced.
+
+You can also apply magnification to a single \refterm{font} so as to get
+a smaller or larger version of that font than its ``^{design size}''.  You
+need to provide the device driver with a ^{shape file}
+\seeconcept{font} for 
+each magnification of a font that you're using---%
+unless the fonts are built into your printer and your device driver
+knows about them.
+When you're defining a font with
+the |\font| command \ctsref{\font}, you can specify a magnification with
+the word `|scaled|'.  For example:
+
+\csdisplay
+\font\largerbold = cmbx10 scaled 2000
+|
+defines `|\largerbold|' as a font that is
+twice as big as |cmbx10| (Computer Modern
+Bold Extended $10$-point) and has the character shapes
+uniformly enlarged by a factor of~$2$.
+
+Many computer centers find it convenient to provide fonts scaled by a ratio
+of $1.2$, corresponding to magnification values of $1200$, $1440$, etc.  
+\TeX\ has special names for these values:
+^^|\magstep|
+`|\magstep1|' for $1200$,
+`|\magstep2|' for $1440$, and so forth up to `|\magstep5|'.  The special
+value `^|\magstephalf|' corresponds to magnification by $\sqrt{1.2}$, which
+is visually halfway between `|\magstep0|' (no magnification) and
+`|\magstep1|'.  For example:
+
+\csdisplay
+\font\bigbold = cmbx10 scaled \magstephalf
+|
+
+You can specify a \refterm{dimension} as it will be
+measured in the final document independent of magnification by putting
+`^|true|' in front of the unit.  For instance, `|\kern 8 true pt|' 
+produces a kern of $8$ points whatever the magnification. 
+
+\endconcept
+
+\endconcepts
+\end

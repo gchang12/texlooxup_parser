@@ -1,0 +1,15 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts errhelp {\param{token list}}
+\explain
+This parameter contains the token list that \TeX\ displays
+when you ask for help in response to an |\errmessage| command.
+We recommend that when
+you're generating an error message with |\errmessage|, you
+set |\errhelp| to a string that describes the nature of the
+error and use |\newhelp| to produce that string.
+You can use the ^|\newlinechar| character to produce multiline messages.
+\enddesc
+\enddescriptions
+\end

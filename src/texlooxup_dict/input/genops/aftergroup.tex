@@ -1,0 +1,44 @@
+\input macros
+\begindescriptions
+\begindesc
+\margin{Order of {\tt\\aftergroup} and {\tt\\afterassignment} changed.}
+\cts aftergroup {\<token>}
+\explain
+When \TeX\ encounters this command during input,
+it saves \<token>.
+After the end of the current \minref{group},
+it inserts \<token> back into the input and expands it.
+If a group contains several |\aftergroup|s, the corresponding tokens
+are \emph{all} inserted following the end of the group, in the order
+in which they originally appeared.
+
+The example that follows shows how you can use |\aftergroup| to postpone
+processing a token that you generate within a \minref{conditional test}.
+\example
+\def\neg{negative} \def\pos{positive}
+% These definitions are needed because \aftergroup applies 
+% to a single token, not to a sequence of tokens or even 
+% to a brace-delimited text.
+\def\arith#1{Is $#1>0$? \begingroup
+   \ifnum #1>-1 Yes\aftergroup\pos
+   \else No\aftergroup\neg\fi
+   , it's \endgroup. }
+\arith 2
+\arith {-1}
+|
+\produces
+\def\neg{negative} \def\pos{positive}
+% These definitions are needed because \aftergroup applies 
+% to a single token, not a sequence of tokens or even 
+% a group.
+\def\arith#1{Is $#1>0$? \begingroup
+   \ifnum #1>-1 Yes\aftergroup\pos
+   \else No\aftergroup\neg\fi
+   , it's \endgroup. }
+\arith 2
+\arith {-1}
+\endexample
+\eix^^{groups}
+\enddesc
+\enddescriptions
+\end

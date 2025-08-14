@@ -1,0 +1,53 @@
+\input macros
+\begindescriptions
+\begindesc
+\cts tracingcommands {\param{number}}
+\explain
+If this parameter is $1$ or greater,
+\TeX\ will record in the log file most commands that it executes.
+If ^|\tracingonline| is greater than zero, this information will also appear
+at your terminal.
+Typesetting the first character of a word counts as a command,
+but (for the purposes of the trace only) 
+the actions of typesetting the subsequent characters
+and any punctuation following them
+do not count as commands.
+If |\tracingcommands| is $2$ or greater,
+\TeX\ will also record commands that are expanded
+rather than executed, e.g., conditional tests and their outcomes.
+\example
+\tracingcommands = 1 If $x+y>0$ we quit.\par
+On the other hand, \tracingcommands = 0
+|
+\logproduces
+{vertical mode: the letter I}
+{horizontal mode: the letter I}
+{blank space  }
+{math shift character $}
+{math mode: the letter x}
+{the character +}
+{the letter y}
+{the character >}
+{the character 0}
+{math shift character $}
+{horizontal mode: blank space  }
+{the letter w}
+{blank space  }
+{the letter q}
+{blank space  }
+{\par}
+{vertical mode: the letter O}
+{horizontal mode: the letter O}
+{blank space  }
+{the letter t}
+{blank space  }
+{the letter o}
+{blank space  }
+{the letter h}
+{blank space  }
+{\tracingcommands}
+|
+\endexample
+\enddesc
+\enddescriptions
+\end
