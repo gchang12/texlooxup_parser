@@ -16,7 +16,7 @@ body {
 
 main {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 select {
@@ -36,9 +36,41 @@ input[type='search'] {
 menu {
   background-color: white;
   color: darkblue;
+  overflow-y: scroll;
+  height: 30rem;
 }
 
 button {
   border: 1px solid green;
+  width: 100%;
+  display: flex;
+  /* justify-content: space-between; */
 }
+
+.excerpt-dir::after {
+  /* content: ": "; */
+}
+
+.excerpt-dir {
+  font-weight: bold;
+  width: 12rem;
+  text-align: left;
+}
+
+.category-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 8rem;
+}
+
+form {
+  width: 30em;
+}
+
+footer {
+  display: flex;
+  justify-content: space-around;
+}
+
+
 

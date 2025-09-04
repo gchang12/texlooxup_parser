@@ -46,7 +46,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             Contribute
           </a>
           <a href="https://ctan.org/pkg/impatient" rel="external">
-            TeX for the Impatient
+            Official Source
           </a>
         </footer>
       </body>

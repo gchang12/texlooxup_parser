@@ -16,24 +16,7 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-{/*TODO: Implement pagination*/}
-{/*TODO: Search in content and title*/}
-{/*Default: Show all.*/}
-
 export default function Home() {
-  const [sectionsToSearchIn, setSectionsToSearchIn] = useState([]);
-  const [resultSet, setResultSet] = useState(
-    {
-      excerptList: [],
-      searchQuery: '',
-    }
-  );
-  const [currentExcerpt, setCurrentExcerpt] = useState(
-    {
-      dir: null,
-      file: null,
-    }
-  );
   const sectionList = {
     "concepts": "Concepts",
     "genops": "General Operations",
@@ -43,42 +26,41 @@ export default function Home() {
     "pages": "Pages",
     "paras": "Paragraphs",
   };
+  const [searchParams, setSearchParams] = useState(
+    {
+      categories: Object.keys(sectionList),
+      queryStr: '',
+    }
+  );
+  const [currentExcerpt, setCurrentExcerpt] = useState(
+    {
+      dir: "_internal",
+      file: "how-to-use.html",
+    }
+  );
+  {/*const [showCategories, setShowCategories] = useState(false);*/}
+  function getCategoriesToInclude() {
+    const categoriesToInclude = [...document.querySelectorAll("input[name='tex-section']")]
+      .filter(someInput => someInput.checked === true)
+      .map(checkedInput => checkedInput.value);
+    return categoriesToInclude;
+  };
   function populateSearchResultsByQuery(e) {
     const texSearchInput = document.getElementById("tex-search");
-    if (texSearchInput.value === '') {
-      alert("Please populate the search input box.");
-    };
-    const searchQuery = texSearchInput.value;
-    const excerptList = getExcerptList()
-      .filter(dirFile => {
-        const [_, file] = dirFile;
-        return file.startsWith(searchQuery);
-      });
-    setResultSet(
+    const queryStr = texSearchInput.value;
+    setSearchParams(
       {
-        excerptList,
-        searchQuery,
+        ...searchParams,
+        queryStr,
       }
     );
   };
   function populateSearchResultsByCategory(e) {
-    const categoriesToInclude = [...document.querySelectorAll("input[name='tex-section']")]
-      .filter(someInput => someInput.checked === true)
-      .map(checkedInput => checkedInput.value);
-    {/*for all checkbox input forms:
-        check if checked
-      if yes, add to running queue
-      else ignore
-        set filter by category*/}
-    const excerptList = getExcerptList()
-      .filter(dirFile => {
-        const [dir, _] = dirFile;
-        return categoriesToInclude.includes(dir);
-      });
-    setResultSet(
+    const categories = getCategoriesToInclude();
+    setSearchParams(
       {
-        excerptList,
-        searchQuery: "",
+        ...searchParams,
+        categories,
       }
     );
   };
@@ -87,38 +69,56 @@ export default function Home() {
     const impatientExcerptOutput = document.getElementById("impatient-excerpt");
     impatientExcerptOutput.src = "/entries/" + excerptPath;
   };
+  function searchForCommand(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      populateSearchResultsByQuery(e);
+    };
+  };
+  const excerptList = getExcerptList()
+    .filter(filepath => {
+      const [excerptDir, excerptFile] = filepath;
+      return (
+        searchParams.categories.includes(excerptDir) && excerptFile.toLowerCase().includes(searchParams.queryStr.toLowerCase())
+      );
+    });
   return (
     <>
       <section>
         <h1>TeXLooXup</h1>
         <form action="">
         {/*TODO: Disable <Enter>-action*/}
-          <input id="tex-search" type="search" required />
-          <button onClick={populateSearchResultsByQuery} type="button">
-            To be replaced by search-as-type
-          </button>
+          {/*<button onClick={populateSearchResultsByQuery} type="button"> To be replaced by search-as-type </button>*/}
           <fieldset>
             <legend>
-              Sections to Search In
+              Search in Categories:
             </legend>
+            {/*<div className="category-list-toggle"> <label htmlFor="show-categories">Show</label> <input type="checkbox" name="show-categories" onClick={e => setShowCategories(e.currentTarget.checked)} /> </div>*/}
+            <div className="category-list">
             {Object.entries(sectionList).map(nameTitle => {
               const [excerptDir, sectionTitle] = nameTitle;
               const name = "tex-section"
               return (
-                <Fragment key={excerptDir}>
+                <div className="category-toggle" key={excerptDir}>
                   <label htmlFor={name}>{sectionTitle}</label>
                   <input
-                    type="radio"
+                    type="checkbox"
                     name={name}
-                    onClick={populateSearchResultsByCategory}
+                    onChange={populateSearchResultsByCategory}
+                    defaultChecked={true}
                     value={excerptDir} />
-                </Fragment>
+                </div>
               );
             })
             }
+            </div>
           </fieldset>
+          <div className="searchbar">
+            <label htmlFor="tex-search">Command Search</label>
+            <input spellcheck={false} name="tex-search" onKeyDown={searchForCommand} id="tex-search" type="search" required />
+          </div>
           <menu>
-            {resultSet.excerptList.length > 0 ? resultSet.excerptList.map(filepath => {
+            {excerptList.length > 0 ? excerptList.map(filepath => {
               const [excerptDir, excerptFile] = filepath;
               const sectionTitle = sectionList[excerptDir];
               let excerptTitle;
@@ -135,22 +135,25 @@ export default function Home() {
                     className={sectionTitle}
                     data-excerptpath={`${excerptDir}/${excerptFile}`}
                     onClick={changeExcerptSource}>
-                    {sectionTitle}: {excerptTitle}
+                    <span className="excerpt-dir">{sectionTitle}</span>
+                    <span className="excerpt-file">{excerptTitle}</span>
                   </button>
                 </li>
               );
-            }) : resultSet.searchQuery !== '' && <p>No results found for '{resultSet.searchQuery}'.</p>}
+            }) : <p id="empty-resultset-notification">No results found for '{searchParams.queryStr}'.</p>}
           </menu>
         </form>
       </section>
       <iframe
         id="impatient-excerpt"
         width="1000px"
-        height="900px"
+        height="800px"
         src={`/entries/${currentExcerpt.dir}/${currentExcerpt.file}`}>
         Instructions on how to use this thing go here.
       </iframe>
     </>
   );
 }
+
+
 
