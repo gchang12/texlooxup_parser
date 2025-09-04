@@ -1,3 +1,6 @@
+.venv-texlooxup_dict/:
+	python3 -m venv .venv-texlooxup_dict/
+
 output/: clean
 	python3 src/texdict2/parser.py;
 	rm output/*/*.{aux,idx};
