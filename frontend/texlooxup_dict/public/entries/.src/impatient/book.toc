@@ -1,0 +1,201 @@
+\tocchapterentry {Using this book}{1}{1}
+\tocsectionentry {Syntactic conventions}{}{2}
+\tocsectionentry {Descriptions of the commands}{}{3}
+\tocchapterentry {Using \TeX }{2}{7}
+\tocsectionentry {Turning input into ink}{}{7}
+\tocsubsectionentry {Programs and files you need}{}{7}
+\tocsubsectionentry {Running {\TeX }}{}{9}
+\tocsectionentry {Preparing an input file}{}{10}
+\tocsubsectionentry {Commands and control sequences}{}{10}
+\tocsubsectionentry {Arguments}{}{11}
+\tocsubsectionentry {Parameters}{}{12}
+\tocsubsectionentry {Spaces}{}{12}
+\tocsubsectionentry {Comments}{}{13}
+\tocsubsectionentry {Punctuation}{}{13}
+\tocsubsectionentry {Special characters}{}{15}
+\tocsubsectionentry {Groups}{}{15}
+\tocsubsectionentry {Math formulas}{}{16}
+\tocsectionentry {How \TeX \ works}{}{16}
+\tocsectionentry {New \TeX \ versus old {\TeX }}{}{18}
+\tocsectionentry {Resources}{}{18}
+\tocchapterentry {Examples}{3}{21}
+\tocsectionentry{Entering simple text}{}{22}
+\tocsectionentry{Indentation}{}{24}
+\tocsectionentry{Fonts and special characters}{}{26}
+\tocsectionentry{Interline spacing}{}{28}
+\tocsectionentry{Spacing, rules, and boxes}{}{30}
+\tocsectionentry{Odds and ends}{}{32}
+\tocsectionentry{Using fonts from other sources}{}{34}
+\tocsectionentry{A ruled table}{}{36}
+\tocsectionentry{Typesetting mathematics}{}{38}
+\tocsectionentry{More mathematics}{}{40}
+\tocchapterentry {Concepts}{4}{43}
+\tocchapterentry {Commands \linebreak for composing \linebreak paragraphs}{5}{97}
+\tocsectionentry {Characters and accents}{}{97}
+\tocsubsectionentry {Letters and ligatures for European alphabets}{}{97}
+\tocsubsectionentry {Special symbols}{}{98}
+\tocsubsectionentry {Arbitrary characters}{}{99}
+\tocsubsectionentry {Accents}{}{100}
+\tocsubsectionentry {Defeating boundary ligatures}{}{101}
+\tocsectionentry {Selecting fonts}{}{102}
+\tocsubsectionentry {Particular fonts}{}{102}
+\tocsubsectionentry {Type styles}{}{103}
+\tocsectionentry {Uppercase and lowercase}{}{103}
+\tocsectionentry {Interword spacing}{}{104}
+\tocsectionentry {Centering and justifying lines}{}{108}
+\tocsectionentry {Shaping paragraphs}{}{110}
+\tocsubsectionentry {Starting, ending, and indenting paragraphs}{}{110}
+\tocsubsectionentry {Shaping entire paragraphs}{}{114}
+\tocsectionentry {Line breaks}{}{120}
+\tocsubsectionentry {Encouraging or discouraging line breaks}{}{120}
+\tocsubsectionentry {Line breaking parameters}{}{123}
+\tocsubsectionentry {Hyphenation}{}{126}
+\tocsectionentry {Section headings, lists, and theorems}{}{129}
+\tocchapterentry {Commands for \linebreak composing pages}{6}{133}
+\tocsectionentry {Interline and interparagraph spaces}{}{133}
+\tocsectionentry {Page breaks}{}{136}
+\tocsubsectionentry {Encouraging or discouraging page breaks}{}{136}
+\tocsubsectionentry {Page breaking parameters}{}{138}
+\tocsectionentry {Page layout}{}{140}
+\tocsubsectionentry {Page description parameters}{}{140}
+\tocsubsectionentry {Page numbers}{}{142}
+\tocsubsectionentry {Header and footer lines}{}{143}
+\tocsubsectionentry {Marks}{}{144}
+\tocsectionentry {Insertions}{}{145}
+\tocsubsectionentry {Footnotes}{}{145}
+\tocsubsectionentry {General insertions}{}{146}
+\tocsectionentry {Modifying the output routine}{}{148}
+\tocsectionentry {Splitting vertical lists}{}{149}
+\tocchapterentry {Commands for \linebreak horizontal and \linebreak vertical modes}{7}{153}
+\tocsectionentry {Producing space}{}{153}
+\tocsubsectionentry {Fixed-width horizontal space}{}{153}
+\tocsubsectionentry {Fixed-length vertical space}{}{154}
+\tocsubsectionentry {Variable-size space}{}{155}
+\tocsectionentry {Manipulating boxes}{}{160}
+\tocsubsectionentry {Constructing hboxes and vboxes}{}{160}
+\tocsubsectionentry {Setting and retrieving the contents of boxes}{}{164}
+\tocsubsectionentry {Shifting boxes}{}{166}
+\tocsubsectionentry {Dimensions of box registers}{}{167}
+\tocsubsectionentry {Struts, phantoms, and empty boxes}{}{167}
+\tocsubsectionentry {Parameters pertaining to malformed boxes}{}{170}
+\tocsectionentry {Retrieving the last item from a list}{}{171}
+\tocsectionentry {Rules and leaders}{}{172}
+\tocsectionentry {Alignments}{}{176}
+\tocsubsectionentry {Tabbing alignments}{}{176}
+\tocsubsectionentry {General alignments}{}{178}
+\tocchapterentry {Commands \linebreak for composing \linebreak math formulas}{8}{187}
+\tocsectionentry {Simple parts of formulas}{}{187}
+\tocsubsectionentry {Greek letters}{}{187}
+\tocsubsectionentry {Miscellaneous ordinary math symbols}{}{188}
+\tocsubsectionentry {Binary operations}{}{189}
+\tocsubsectionentry {Relations}{}{190}
+\tocsubsectionentry {Left and right delimiters}{}{191}
+\tocsubsectionentry {Arrows}{}{192}
+\tocsubsectionentry {Named mathematical functions}{}{193}
+\tocsubsectionentry {Large operators}{}{194}
+\tocsubsectionentry {Punctuation}{}{196}
+\tocsectionentry {Superscripts and subscripts}{}{197}
+\tocsubsectionentry {Selecting and using styles}{}{198}
+\tocsectionentry {Compound symbols}{}{199}
+\tocsubsectionentry {Math accents}{}{199}
+\tocsubsectionentry {Fractions and other stacking operations}{}{200}
+\tocsubsectionentry {Dots}{}{203}
+\tocsubsectionentry {Delimiters}{}{204}
+\tocsubsectionentry {Matrices}{}{205}
+\tocsubsectionentry {Roots and radicals}{}{206}
+\tocsectionentry {Equation numbers}{}{207}
+\tocsectionentry {Multiline displays}{}{208}
+\tocsectionentry {Fonts in math formulas}{}{209}
+\tocsectionentry {Constructing math symbols}{}{211}
+\tocsubsectionentry {Making delimiters bigger}{}{211}
+\tocsubsectionentry {Parts of large symbols}{}{211}
+\tocsectionentry {Aligning parts of a formula}{}{212}
+\tocsubsectionentry {Aligning accents}{}{212}
+\tocsubsectionentry {Aligning material vertically}{}{213}
+\tocsectionentry {Producing spaces}{}{214}
+\tocsubsectionentry {Fixed-width math spaces}{}{214}
+\tocsubsectionentry {Variable-width math spaces}{}{215}
+\tocsubsectionentry {Spacing parameters for displays}{}{216}
+\tocsubsectionentry {Other spacing parameters for math}{}{217}
+\tocsectionentry {Categorizing math constructs}{}{218}
+\tocsectionentry {Special actions for math formulas}{}{218}
+\tocchapterentry {Commands for \linebreak general operations}{9}{221}
+\tocsectionentry {Naming and modifying fonts}{}{221}
+\tocsectionentry {Converting information to tokens}{}{224}
+\tocsubsectionentry {Numbers}{}{224}
+\tocsubsectionentry {Environmental information}{}{224}
+\tocsubsectionentry {Values of variables}{}{226}
+\tocsectionentry {Grouping}{}{227}
+\tocsectionentry {Macros}{}{230}
+\tocsubsectionentry {Defining macros}{}{230}
+\tocsubsectionentry {Other definitions}{}{232}
+\tocsubsectionentry {Controlling expansion}{}{233}
+\tocsubsectionentry {Conditional tests}{}{235}
+\tocsubsectionentry {Repeated actions}{}{240}
+\tocsubsectionentry {Doing nothing}{}{241}
+\tocsectionentry {Registers}{}{242}
+\tocsubsectionentry {Using registers}{}{242}
+\tocsubsectionentry {Naming and reserving registers, etc.}{}{244}
+\tocsubsectionentry {Doing arithmetic in registers}{}{245}
+\tocsectionentry {Ending the job}{}{246}
+\tocsectionentry {Input and output}{}{247}
+\tocsubsectionentry {Operations on input files}{}{247}
+\tocsubsectionentry {Operations on output files}{}{249}
+\tocsubsectionentry {Interpreting input characters}{}{251}
+\tocsectionentry {Controlling interaction with \TeX }{}{252}
+\tocsectionentry {Diagnostic aids}{}{253}
+\tocsubsectionentry {Displaying internal data}{}{253}
+\tocsubsectionentry {Specifying what is traced}{}{256}
+\tocsubsectionentry {Sending messages}{}{261}
+\tocsectionentry {Initializing \TeX }{}{263}
+\tocchapterentry {Tips and techniques}{10}{265}
+\tocsectionentry {Correcting bad page breaks}{}{265}
+\tocsectionentry {Preserving the end of a page}{}{267}
+\tocsectionentry {Leaving space at the top of a page}{}{267}
+\tocsectionentry {Correcting bad line breaks}{}{268}
+\tocsectionentry {Correcting overfull or underfull boxes}{}{268}
+\tocsectionentry {Recovering lost interword spaces}{}{270}
+\tocsectionentry {Avoiding unwanted interword spaces}{}{270}
+\tocsectionentry {Avoiding excess space around a display}{}{271}
+\tocsectionentry {Avoiding excess space after a paragraph}{}{271}
+\tocsectionentry {Changing the paragraph shape}{}{272}
+\tocsectionentry {Putting paragraphs into a box}{}{272}
+\tocsectionentry {Drawing lines}{}{273}
+\tocsectionentry {Creating multiline headers or footers}{}{274}
+\tocsectionentry {Finding mismatched braces}{}{275}
+\tocsectionentry {Setting dimensions}{}{276}
+\tocsectionentry {Creating composite fonts}{}{276}
+\tocsectionentry {Reproducing text verbatim}{}{277}
+\tocsectionentry {Using outer macros}{}{279}
+\tocsectionentry {Changing category codes}{}{280}
+\tocsectionentry {Making macro files more readable}{}{281}
+\tocchapterentry {Making sense \linebreak of error messages}{11}{283}
+\tocchapterentry {A compendium \linebreak of useful macros}{12}{291}
+\tocsectionentry {Preliminaries}{}{291}
+\tocsectionentry {Displays}{}{295}
+\tocsectionentry {Time of day}{}{297}
+\tocsectionentry {Lists}{}{298}
+\tocsectionentry {Verbatim listing}{}{300}
+\tocsectionentry {Tables of contents}{}{301}
+\tocsectionentry {Cross-references}{}{302}
+\tocsectionentry {Environments}{}{304}
+\tocsectionentry {Justification}{}{306}
+\tocsectionentry {Tables}{}{307}
+\tocsectionentry {Footnotes}{}{309}
+\tocsectionentry {Double columns}{}{309}
+\tocsectionentry {Finishing up}{}{311}
+\tocchapterentry {Capsule summary \linebreak of commands}{13}{313}
+\setback 
+\tocchapterentry {GNU Free Documentation \linebreak License}{14}{341}
+\tocsectionentry {PREAMBLE}{}{341}
+\tocsectionentry {APPLICABILITY AND DEFINITIONS}{}{342}
+\tocsectionentry {VERBATIM COPYING}{}{343}
+\tocsectionentry {COPYING IN QUANTITY}{}{344}
+\tocsectionentry {MODIFICATIONS}{}{345}
+\tocsectionentry {COMBINING DOCUMENTS}{}{346}
+\tocsectionentry {COLLECTIONS OF DOCUMENTS}{}{347}
+\tocsectionentry {AGGREGATION WITH INDEPENDENT WORKS}{}{347}
+\tocsectionentry {TRANSLATION}{}{348}
+\tocsectionentry {TERMINATION}{}{348}
+\tocsectionentry {FUTURE REVISIONS OF THIS LICENSE}{}{349}
+\tocchapterentry {Index}{15}{353}
