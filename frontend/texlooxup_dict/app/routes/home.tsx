@@ -38,42 +38,46 @@ export default function Home() {
       file: "how-to-use.html",
     }
   );
-  {/*const [showCategories, setShowCategories] = useState(false);*/}
-  function getCategoriesToInclude() {
-    const categoriesToInclude = [...document.querySelectorAll("input[name='tex-section']")]
-      .filter(someInput => someInput.checked === true)
-      .map(checkedInput => checkedInput.value);
-    return categoriesToInclude;
+  function suppressSubmit(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      {/* populateSearchResultsByQuery(e); */}
+    };
   };
-  function populateSearchResultsByQuery(e) {
+  function prettifyExcerptTitle({excerptDir, excerptFile}) {
+    const sectionTitle = sectionList[excerptDir];
+    let excerptTitle;
+    if (["miscellany", "concepts"].includes(excerptDir)) {
+      excerptTitle = excerptFile.replace('.pdf', '');
+    } else {
+      const excerptName = (excerptFile.startsWith("_") ? excerptFile.slice(1) : "\\" + excerptFile).replace('.pdf', '');
+      excerptTitle = excerptName.startsWith("\\") ? <code>{excerptName}</code> : excerptName;
+    };
+    return [sectionTitle, excerptTitle];
+  };
+  function populateSearchResults(e) {
     const texSearchInput = document.getElementById("tex-search");
     const queryStr = texSearchInput.value;
+    const categories = [...document.querySelectorAll("input[name='tex-section']")]
+      .filter(someInput => someInput.checked === true)
+      .map(checkedInput => checkedInput.value);
     setSearchParams(
       {
-        ...searchParams,
-        queryStr,
-      }
-    );
-  };
-  function populateSearchResultsByCategory(e) {
-    const categories = getCategoriesToInclude();
-    setSearchParams(
-      {
-        ...searchParams,
         categories,
+        queryStr,
       }
     );
   };
   function changeExcerptSource(e) {
     const excerptPath = e.currentTarget.dataset.excerptpath;
-    const impatientExcerptOutput = document.getElementById("impatient-excerpt");
+    const impatientExcerpt = document.getElementById("impatient-excerpt");
+    const excerptIframe = impatientExcerpt.querySelector("iframe");
     impatientExcerptOutput.src = "/entries/" + excerptPath;
-  };
-  function searchForCommand(e) {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      populateSearchResultsByQuery(e);
-    };
+    // Set h1 and h2
+    const [excerptDir, excerptFile] = excerptPath.split('/');
+    const [sectionTitle, excerptTitle] = prettifyExcerptTitle({excerptDir, excerptFile});
+    impatientExcerpt.querySelector("h1").textContent = sectionTitle;
+    impatientExcerpt.querySelector("h2").textContent = excerptTitle;
   };
   const excerptList = getExcerptList()
     .filter(filepath => {
@@ -85,7 +89,6 @@ export default function Home() {
   return (
     <>
       <section>
-        <h1>TeXLooXup</h1>
         <form action="">
         {/*TODO: Disable <Enter>-action*/}
           {/*<button onClick={populateSearchResultsByQuery} type="button"> To be replaced by search-as-type </button>*/}
@@ -104,7 +107,6 @@ export default function Home() {
                   <input
                     type="checkbox"
                     name={name}
-                    onChange={populateSearchResultsByCategory}
                     defaultChecked={true}
                     value={excerptDir} />
                 </div>
@@ -115,19 +117,15 @@ export default function Home() {
           </fieldset>
           <div className="searchbar">
             <label htmlFor="tex-search">Command Search</label>
-            <input spellcheck={false} name="tex-search" onKeyDown={searchForCommand} id="tex-search" type="search" required />
+            <input spellcheck={false} name="tex-search" onKeyDown={suppressSubmit} id="tex-search" type="search" required />
           </div>
+          <button type="button" onClick={populateSearchResults}>Search!</button>
+        </form>
+        <form>
           <menu>
             {excerptList.length > 0 ? excerptList.map(filepath => {
               const [excerptDir, excerptFile] = filepath;
-              const sectionTitle = sectionList[excerptDir];
-              let excerptTitle;
-              if (["miscellany", "concepts"].includes(excerptDir)) {
-                excerptTitle = excerptFile.replace('.pdf', '');
-              } else {
-                const excerptName = (excerptFile.startsWith("_") ? excerptFile.slice(1) : "\\" + excerptFile).replace('.pdf', '');
-                excerptTitle = excerptName.startsWith("\\") ? <code>{excerptName}</code> : excerptName;
-              };
+              const [sectionTitle, excerptTitle] = prettifyExcerptTitle({excerptDir, excerptFile});
               return (
                 <li key={`${excerptDir}/${excerptFile}`}>
                   <button
@@ -144,13 +142,15 @@ export default function Home() {
           </menu>
         </form>
       </section>
-      <iframe
-        id="impatient-excerpt"
-        width="1000px"
-        height="800px"
-        src={`/entries/${currentExcerpt.dir}/${currentExcerpt.file}`}>
-        Instructions on how to use this thing go here.
-      </iframe>
+      <section id="impatient-excerpt">
+        <h1></h1>
+        <h2></h2>
+        <iframe
+          width="1000px"
+          height="800px"
+          src={`/entries/${currentExcerpt.dir}/${currentExcerpt.file}`}>
+        </iframe>
+      </section>
     </>
   );
 }
