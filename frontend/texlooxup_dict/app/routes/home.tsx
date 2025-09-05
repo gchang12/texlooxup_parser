@@ -69,15 +69,21 @@ export default function Home() {
     );
   };
   function changeExcerptSource(e) {
-    const excerptPath = e.currentTarget.dataset.excerptpath;
+    const excerptButton = e.currentTarget;
+    // Change source
+    const excerptPath = excerptButton.dataset.excerptpath;
     const impatientExcerpt = document.getElementById("impatient-excerpt");
     const excerptIframe = impatientExcerpt.querySelector("iframe");
-    impatientExcerptOutput.src = "/entries/" + excerptPath;
+    excerptIframe.src = "/entries/" + excerptPath;
     // Set h1 and h2
     const [excerptDir, excerptFile] = excerptPath.split('/');
     const [sectionTitle, excerptTitle] = prettifyExcerptTitle({excerptDir, excerptFile});
     impatientExcerpt.querySelector("h1").textContent = sectionTitle;
     impatientExcerpt.querySelector("h2").textContent = excerptTitle;
+    // add class.
+    const activeExcerptLabel = "active-excerpt";
+    document.querySelectorAll("." + activeExcerptLabel).forEach(node => node.classList.remove(activeExcerptLabel));
+    excerptButton.classList.add(activeExcerptLabel);
   };
   const excerptList = getExcerptList()
     .filter(filepath => {
@@ -117,7 +123,7 @@ export default function Home() {
           </fieldset>
           <div className="searchbar">
             <label htmlFor="tex-search">Command Search</label>
-            <input spellcheck={false} name="tex-search" onKeyDown={suppressSubmit} id="tex-search" type="search" required />
+            <input spellCheck={false} name="tex-search" onKeyDown={suppressSubmit} id="tex-search" type="search" required />
           </div>
           <button type="button" onClick={populateSearchResults}>Search!</button>
         </form>

@@ -72,5 +72,6 @@ footer {
   justify-content: space-around;
 }
 
-
-
+.active-excerpt {
+  background-color: yellow;
+};
