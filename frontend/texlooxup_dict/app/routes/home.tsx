@@ -32,16 +32,10 @@ export default function Home() {
       queryStr: '',
     }
   );
-  const [currentExcerpt, setCurrentExcerpt] = useState(
-    {
-      dir: "_internal",
-      file: "how-to-use.html",
-    }
-  );
   function suppressSubmit(e) {
     if (e.key === "Enter") {
       e.preventDefault();
-      {/* populateSearchResultsByQuery(e); */}
+      populateSearchResults(e);
     };
   };
   function prettifyExcerptTitle({excerptDir, excerptFile}) {
@@ -51,7 +45,8 @@ export default function Home() {
       excerptTitle = excerptFile.replace('.pdf', '');
     } else {
       const excerptName = (excerptFile.startsWith("_") ? excerptFile.slice(1) : "\\" + excerptFile).replace('.pdf', '');
-      excerptTitle = excerptName.startsWith("\\") ? <code>{excerptName}</code> : excerptName;
+      {/* excerptTitle = excerptName.startsWith("\\") ? <code>{excerptName}</code> : excerptName; */}
+      excerptTitle = excerptName;
     };
     return [sectionTitle, excerptTitle];
   };
@@ -154,7 +149,7 @@ export default function Home() {
         <iframe
           width="1000px"
           height="800px"
-          src={`/entries/${currentExcerpt.dir}/${currentExcerpt.file}`}>
+          src={`/entries/_internal/how-to-use.html`}>
         </iframe>
       </section>
     </>
