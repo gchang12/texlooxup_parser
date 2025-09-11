@@ -28,7 +28,7 @@ export default function Home() {
   };
   const [searchParams, setSearchParams] = useState(
     {
-      categories: Object.keys(sectionList),
+      categories: [],
       queryStr: '',
     }
   );
@@ -108,7 +108,7 @@ export default function Home() {
                   <input
                     type="checkbox"
                     name={name}
-                    defaultChecked={true}
+                    defaultChecked={false}
                     value={excerptDir} />
                 </div>
               );
