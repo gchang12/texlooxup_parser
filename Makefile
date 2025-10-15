@@ -1,3 +1,4 @@
+#
 .venv-texlooxup_dict/:
 	python3 -m venv .venv-texlooxup_dict/
 
