@@ -52,14 +52,3 @@ MANIFEST
 .venv*/
 .conda*/
 .python-version
-
-# frontend
-.react-router/
-node_modules/
-
-#*.pdf
-#static/
-impatient/
-impatient.zip
-#*.ccs
-#*.tex
