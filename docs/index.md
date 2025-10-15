@@ -1,4 +1,4 @@
-# texlooxup_dict
+# texdict_generator
 
 Add a short description here!
 
