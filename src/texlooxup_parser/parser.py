@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+#
 """
 Defines functions to extract, parse, and process data from `TeX for the Impatient' source.
 
