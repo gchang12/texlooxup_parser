@@ -13,3 +13,4 @@ texlooxup-dict
 -show latex commands
 texlooxup-dict
 -bookmarker: fix, integrate into site
+{section, line-number, page-number, id, command-name, control-sequence, control-word, word-or-sequence}
