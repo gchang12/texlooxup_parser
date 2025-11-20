@@ -34,7 +34,7 @@ except ImportError:
     from sphinx import apidoc
 
 output_dir = os.path.join(__location__, "api")
-module_dir = os.path.join(__location__, "../src/texdict_generator")
+module_dir = os.path.join(__location__, "../src/texlooxup_parser")
 try:
     shutil.rmtree(output_dir)
 except FileNotFoundError:
@@ -105,7 +105,7 @@ source_suffix = [".rst", ".md"]
 master_doc = "index"
 
 # General information about the project.
-project = "texdict_generator"
+project = "texlooxup_parser"
 copyright = "2025, gchang12"
 
 # The version info for the project you're documenting, acts as replacement for
@@ -117,7 +117,7 @@ copyright = "2025, gchang12"
 # If you don’t need the separation provided between version and release,
 # just set them both to the same value.
 try:
-    from texdict_generator import __version__ as version
+    from texlooxup_parser import __version__ as version
 except ImportError:
     version = ""
 
@@ -247,7 +247,7 @@ html_static_path = ["_static"]
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "texdict_generator-doc"
+htmlhelp_basename = "texlooxup_parser-doc"
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -264,7 +264,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-    ("index", "user_guide.tex", "texdict_generator Documentation", "gchang12", "manual")
+    ("index", "user_guide.tex", "texlooxup_parser Documentation", "gchang12", "manual")
 ]
 
 # The name of an image file (relative to this directory) to place at the top of

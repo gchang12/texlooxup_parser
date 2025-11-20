@@ -1,5 +1,5 @@
 """
-    Setup file for texdict_generator.
+    Setup file for texlooxup_parser.
     Use setup.cfg to configure your project.
 
     This file was generated with PyScaffold 4.6.

@@ -1,18 +1,18 @@
 <!-- These are examples of badges you might want to add to your README:
      please update the URLs accordingly
 
-[![Built Status](https://api.cirrus-ci.com/github/<USER>/texdict_generator.svg?branch=main)](https://cirrus-ci.com/github/<USER>/texdict_generator)
-[![ReadTheDocs](https://readthedocs.org/projects/texdict_generator/badge/?version=latest)](https://texdict_generator.readthedocs.io/en/stable/)
-[![Coveralls](https://img.shields.io/coveralls/github/<USER>/texdict_generator/main.svg)](https://coveralls.io/r/<USER>/texdict_generator)
-[![PyPI-Server](https://img.shields.io/pypi/v/texdict_generator.svg)](https://pypi.org/project/texdict_generator/)
-[![Conda-Forge](https://img.shields.io/conda/vn/conda-forge/texdict_generator.svg)](https://anaconda.org/conda-forge/texdict_generator)
-[![Monthly Downloads](https://pepy.tech/badge/texdict_generator/month)](https://pepy.tech/project/texdict_generator)
-[![Twitter](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&label=Twitter)](https://twitter.com/texdict_generator)
+[![Built Status](https://api.cirrus-ci.com/github/gchang12/texlooxup_parser.svg?branch=main)](https://cirrus-ci.com/github/gchang12/texlooxup_parser)
+[![ReadTheDocs](https://readthedocs.org/projects/texlooxup_parser/badge/?version=latest)](https://texlooxup_parser.readthedocs.io/en/stable/)
+[![Coveralls](https://img.shields.io/coveralls/github/gchang12/texlooxup_parser/main.svg)](https://coveralls.io/r/gchang12/texlooxup_parser)
+[![PyPI-Server](https://img.shields.io/pypi/v/texlooxup_parser.svg)](https://pypi.org/project/texlooxup_parser/)
+[![Conda-Forge](https://img.shields.io/conda/vn/conda-forge/texlooxup_parser.svg)](https://anaconda.org/conda-forge/texlooxup_parser)
+[![Monthly Downloads](https://pepy.tech/badge/texlooxup_parser/month)](https://pepy.tech/project/texlooxup_parser)
+[![Twitter](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&label=Twitter)](https://twitter.com/texlooxup_parser)
 -->
 
 [![Project generated with PyScaffold](https://img.shields.io/badge/-PyScaffold-005CA0?logo=pyscaffold)](https://pyscaffold.org/)
 
-# texdict_generator
+# texlooxup_parser
 
 > Add a short description here!
 
