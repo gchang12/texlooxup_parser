@@ -28,7 +28,7 @@ from pathlib import Path
 
 AUX_FILES = ("config", "eplain", "fonts", "macros")
 
-
+# NOTE: Only this function is needed for the new draft, really. 
 def get_definition_list(section: str) -> List[str]:
     """
     Retrieves list of definitions delimited by \\enddesc and \\begindesc.
