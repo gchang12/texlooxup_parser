@@ -36,7 +36,7 @@ def unzip_file(src_file: PathLike | str, target_dir: PathLike | str):
 
 if __name__ == "__main__":
     import shutil
-    def get_src():
+    def compile_src():
         """
         Sets up 'input/' folder and its complementary files.
         """
