@@ -2,7 +2,7 @@
 """
 
 import unittest
-import texlooxup_parser.split_docs
+from texlooxup_parser import split_docs
 
 class GenOpsSource(unittest.TestCase):
     """
@@ -2619,11 +2619,9 @@ late), it is only useful to people who are preparing format files.
 \enddesc
 \enddescriptions \endchapter \byebye'''
 
-    def test_split_text_by_pattern(self):
+    def test_split_sections(self):
         """
         """
-        filetext = self.filetext
-        pattern = "\\section"
         expected = [
         r'''% $Id: genops.tex,v 1.6 2020/01/01 23:12:25 karl Exp $
 % This is part of the book TeX for the Impatient.
@@ -2640,7 +2638,7 @@ For an explanation of the conventions used in this section,
 see \headcit{Descriptions of the commands}{cmddesc}.
 \begindescriptions
 %==========================================================================''',
-r'''\section {Naming and modifying fonts}
+r''' {Naming and modifying fonts}
 \begindesc
 \bix^^{fonts//naming and modifying}
 \cts font {}
@@ -2824,7 +2822,7 @@ i.e., halfway between $1$ and $1.2$.
 \eix^^{fonts//naming and modifying}
 \enddesc
 %==========================================================================''',
-r'''\section {Converting information to tokens}
+r''' {Converting information to tokens}
 \subsection {Numbers}
 \begindesc
 \xrdef{convert}
@@ -3012,7 +3010,7 @@ for \<font>.  The filename is the \<font\-name> that was used to define
 \endexample
 \enddesc
 %==========================================================================''',
-r'''\section {Grouping}
+r''' {Grouping}
 \begindesc
 \bix^^{groups}
 %
@@ -3198,7 +3196,7 @@ Some arithmetic: \setme = 27
 \endexample
 \enddesc
 %==========================================================================''',
-r'''\section {Macros}
+r''' {Macros}
 %==========================================================================
 \subsection {Defining macros}
 \begindesc
@@ -3986,7 +3984,7 @@ It differs from |\relax| in that it disappears after macro expansion.
 \eix^^{macros}
 \enddesc
 %==========================================================================''',
-r'''\section {Registers}
+r''' {Registers}
 %==========================================================================
 \subsection {Using registers}
 \begindesc
@@ -4292,7 +4290,7 @@ Multiplied value of skip0 is \the\skip0.\par
 \eix^^{registers}
 \enddesc
 %==========================================================================''',
-r'''\section {Ending the job}
+r''' {Ending the job}
 \begindesc
 ^^{ending the job}
 \easy\ctspecial bye \ctsxrdef{@bye}
@@ -4309,7 +4307,7 @@ It does not fill out the page, however,
 so it's usually better to use |\bye| rather than |\end|.
 \enddesc
 %==========================================================================''',
-r'''\section {Input and output}
+r''' {Input and output}
 %==========================================================================
 \subsection {Operations on input files}
 \begindesc
@@ -4656,7 +4654,7 @@ be
 \endexample
 \enddesc
 %==========================================================================''',
-r'''\section {Controlling interaction with \TeX}
+r''' {Controlling interaction with \TeX}
 \begindesc
 \bix^^{controlling \TeX}
 \bix^^{running \TeX}
@@ -4707,7 +4705,7 @@ you can use this facility to insert ^|\show| commands (see below).
 \eix^^{controlling \TeX}
 \enddesc
 %==========================================================================''',
-r'''\section {Diagnostic aids}
+r''' {Diagnostic aids}
 \subsection{Displaying internal data}
 \begindesc
 \bix^^{tracing}
@@ -5209,7 +5207,7 @@ since the undefined control sequence |\oops| will cause another error.
 \eix^^{messages, sending}
 \eix^^{error messages}
 %==========================================================================''',
-r'''\section {Initializing \TeX}
+r''' {Initializing \TeX}
 \begindesc
 \cts dump {}
 \explain
@@ -5233,5 +5231,710 @@ late), it is only useful to people who are preparing format files.
 \enddesc
 \enddescriptions \endchapter \byebye''',
         ]
-        actual = split_docs.split_text_by_pattern(filetext, pattern)
+        filetext = self.filetext
+        actual = split_docs.split_sections(filetext)
         self.assertListEqual(actual, expected)
+
+    def test_extract_title(self):
+        """
+        """
+        filetext = r''' {Naming and modifying fonts}
+\begindesc
+\bix^^{fonts//naming and modifying}
+\cts font {}
+\aux\cts font {\<control sequence> = \<fontname>}
+\aux\cts font {\<control sequence> = \<fontname> {\bt scaled} \<number>}
+\aux\cts font {\<control sequence> = \<fontname> {\bt at} \<dimen>}
+\explain
+Used alone, the |\font| control sequence designates the current font.
+|\font| isn't a true command when it's used alone, 
+since it then can appear only as an argument to another command.
+For the other three forms of |\font|,
+\<font\-name> names a set of files that define a font.
+These forms of |\font|  are commands.  Each of these forms has two effects:
+{\tighten
+\olist
+\li It defines \<control sequence> as a name that selects
+the font \<font\-name>, possibly magnified (see below).
+\li It causes \TeX\ to load the font ^{metrics file}
+(^{\tfmfile}) for \<fontname>.
+\endolist
+}% end tighten
+\noindent
+The name of a font file usually indicates its design size.
+For example, |cmr10| indicates Computer Modern roman with a
+design size of $10$ points.
+The design size of a font is recorded in its metrics file.
+If neither |scaled| \<number> nor |at| \<dimen>
+is present, the font is used 
+at its design size---the size at which it usually looks best.
+Otherwise, a magnified version of the font is loaded:
+\ulist
+\li If |scaled| \<number>
+is present, the font is magnified by a factor of $\hbox{\<number>}/1000$.
+\li If |at| \<dimen> is present, the font is scaled to \<dimen> by magnifying
+it by $\hbox{\<dimen>}/ds$, where $ds$ is the design size of
+\<fontname>.
+\<dimen> and $ds$ are nearly always given in points.
+\endulist
+\noindent
+Magnifications of less than $1$ are possible; they reduce the size.
+You usually need to provide a shape file (\xref{shape}) for each
+magnification of a font that you load.
+However, some ^{device drivers} can utilize fonts that are resident
+in a printer. ^^{resident fonts}
+Such fonts don't need shape files.
+See \conceptcit{font} and
+\conceptcit{magnification} for further information.
+\example
+\font\tentt = cmtt10
+\font\bigttfont = cmtt10 scaled \magstep2
+\font\eleventtfont = cmtt10 at 11pt
+First we use {\tentt regular CM typewriter}.
+Then we use {\eleventtfont eleven-point CM typewriter}.
+Finally we use {\bigttfont big CM typewriter}.
+|
+\produces
+\font\regttfont = cmtt10
+\font\bigttfont = cmtt10 scaled \magstep 2
+\font\eleventtfont = cmtt10 at 11pt
+First we use {\regttfont regular CM typewriter}.
+Then we use {\eleventtfont eleven-point CM typewriter}.
+Finally we use {\bigttfont big CM typewriter}.
+\endexample
+\enddesc
+\begindesc
+\cts fontdimen {\<number> \<font>\param{dimen}}
+\explain
+^^{fonts//parameters of}
+These parameters specify various dimensions associated with
+the font named by the control sequence \<font>
+(as distinguished from the \<font\-name> that names the font files).
+Values of these parameters are specified in the metrics
+file for \<font>, but you can
+retrieve or change their values during a \TeX\ run.
+The numbers and meanings of the parameters are:
+\display{\halign{\hfil#\hfil\quad&#\hfil\cr
+\it Number&\it Meaning\cr
+\noalign{\vskip 1\jot}%
+1&slant per point\cr
+2&interword space\cr
+3&interword stretch\cr
+4&interword shrink\cr
+5&x-height (size of |1ex|)\cr
+6&quad width (size of |1em|)\cr
+7&extra space\cr}}
+\noindent
+\TeX\ uses the slant per point for positioning accents.
+It uses the interword parameters for producing interword spaces
+(see |\spaceskip|, \xref\spaceskip) and the extra space parameter
+for the additional space after a period (see |\xspaceskip|,
+\xref\xspaceskip).
+The values of these parameters for the
+\plainTeX\ fonts are enumerated on \knuth{page~433}.
+Math symbol fonts have $15$ additional parameters, which we won't discuss here.
+Beware: 
+assignments to these parameters are \emph{not} undone at the end
+of a group.
+If you want to change these parameters locally, you'll need to
+save and restore their original settings explicitly.
+\example
+Here's a line printed normally.\par
+\dimen0=\fontdimen2\font
+\fontdimen2\font=3\fontdimen2\font % triple word spacing
+\noindent Here's a really spaced-out line.
+\fontdimen2\font=\dimen0
+|
+\produces
+Here's a line printed normally.\par
+\dimen0=\fontdimen2\font
+\fontdimen2\font=3\fontdimen2\font % triple word spacing
+\noindent Here's a really spaced-out line.
+\fontdimen2\font=\dimen0
+\endexample
+\enddesc
+\begindesc
+\cts magnification {{\bt =} \<number>}
+\cts mag {\param{number}}
+\explain
+\margin{{\tt\\mag} and {\tt\\magnification} combined.}
+An assignment to |\magnification| establishes 
+the ``^{scale factor}'' $f$ that determines
+the \minref{magnification} ratio of your document \seeconcept{magnification}.
+The assignment to |\magni!-fication| must occur before the first page
+of your document has been shipped out.
+The assignment sets $f$ to \<number> and also
+sets |\hsize| and |\vsize|
+^^|\hsize//set by {\tt\\magnification}|
+^^|\vsize//set by {\tt\\magnification}|
+respectively to |6.5true in| and |8.9true in|,
+the values appropriate for an $8 \frac1/2$-%
+by-$11$-inch page.
+$f$ must be between $0$ and $32768$.
+The \minref{magnification} ratio of the
+document is $f/1000$.
+A scale factor
+of $1000$ provides unit magnification, i.e., it leaves the size of your
+document
+unchanged.  It's customary to use powers of $1.2$ as scale factors, and
+most libraries of fonts are based on such factors.  You can use the
+^|\magstep| and ^|\magstephalf| commands to specify magnifications by
+these factors.
+|\magnification| is not a parameter. You can't use it
+to \emph{retrieve} the scale factor.  If you write something like
+|\dimen0 = \mag!-nifi!-cation|, \TeX\ will complain about it.
+The |\mag| parameter contains the scale factor.
+Changing the value of |\mag| rescales the page dimensions, which is not
+usually what you want.
+Therefore it's usually better to change the magnification by
+assigning to |\magnification| rather than to |\mag|.
+\example
+\magnification = \magstep2 
+% magnify fonts by 1.44 (=1.2x1.2)
+|
+\endexample
+\enddesc
+\begindesc
+\cts magstep {\<number>}
+\explain
+This command expands to the \minref{magnification} ratio needed to
+magnify everything in your document 
+(other than |true| dimensions)
+by $1.2^r$, where $r$ is
+the value of \<number>. \<number> must be between $0$ and $5$.
+\example
+\magnification = \magstep1 % Magnify by ratio of 1.2.
+|
+\endexample
+\enddesc
+\begindesc
+\cts magstephalf {}
+\explain
+This command expands to the \minref{magnification} ratio needed to
+magnify everything in your document
+(other than |true| dimensions)
+by $\sqrt{1.2}$, 
+i.e., halfway between $1$ and $1.2$.
+\example
+\magnification = \magstephalf
+|
+\endexample
+\eix^^{fonts//naming and modifying}
+\enddesc
+%=========================================================================='''
+        expected = "Naming and modifying fonts"
+        actual = split_docs.extract_title(filetext)
+        self.assertEqual(actual, expected)
+
+    def test_extract_subsection(self):
+        """
+        """
+        filetext = r'''\section {Converting information to tokens}
+\subsection {Numbers}
+\begindesc
+\xrdef{convert}
+\bix^^{numbers//converting to characters}
+%
+\cts number {\<number>}
+\explain
+This command produces the representation of a \minref{number}
+as a sequence of
+character \minref{token}s.  The number can be either an explicit integer,
+a \<number> parameter, or a \<number> register.
+\example
+\number 24 \quad \count13 = -10000 \number\count13
+|
+\produces
+\number 24 \quad \count13 = -10000 \number\count13
+\endexample
+\enddesc
+\begindesc
+^^{Roman numerals}
+\easy\cts romannumeral {\<number>}
+\explain
+This command produces the roman numeral representation of a \minref{number}
+as a sequence of
+character \minref{token}s.  The number can be either an explicit integer,
+a \<number> parameter, or a \<number> register.
+If the number is zero or negative, |\romannumeral| produces
+no tokens.
+\example
+\romannumeral 24 \quad (\romannumeral -16)\quad
+\count13 = 6000 \romannumeral\count13
+|
+\produces
+\romannumeral 24 \quad (\romannumeral -16)\quad
+\count13 = 6000 \romannumeral\count13
+\endexample
+\eix^^{numbers//converting to characters}
+\enddesc
+%==========================================================================
+\subsection {Environmental information}
+\begindesc
+^^{time of day}
+\cts time {\param{number}}
+\explain
+\TeX\ sets this parameter to the 
+number of minutes that have elapsed since midnight (of the current day).
+At noon, for instance, |\time| is $720$.
+This command and the next three make use of the time and date as
+recorded in your computer.
+\TeX\ retrieves them just once, at the beginning of your run, so |\time|
+at the end of the run always has the same value as |\time| at the
+beginning of the run (unless you've explicitly changed it).
+\enddesc
+\bix^^{date}
+\begindesc
+\cts day {\param{number}}
+\explain
+\TeX\ sets this parameter to the current day of the month.  It is
+a number between $1$ and $31$.
+|\day| is set at the beginning of your run (see the comments on
+|\time| above).
+\enddesc
+\begindesc
+\cts month {\param{number}}
+\explain
+\TeX\ sets this parameter to the current month.  It is
+a number between $1$ and $12$.
+|\month| is set at the beginning of your run (see the comments on
+|\time| above).
+\enddesc
+\begindesc
+\cts year {\param{number}}
+\explain
+\TeX\ sets this parameter to the current year ({\sc A.D.}).
+It is a number such as $1991$.
+|\year| is set at the beginning of your run (see the comments on
+|\time| above).
+\eix^^{date}
+\enddesc
+\begindesc
+^^{version number}
+\cts fmtname {}
+\cts fmtversion {}
+\explain
+These commands produce the name and version number
+of the \TeX\ format,
+e.g., \minref{\plainTeX} or ^{\LaTeX}, that you're using.
+The |\fmtversion| string contains a long list of supported languages,
+so is omitted here.
+\example
+This book was produced with the \fmtname\ format.
+|
+\produces
+This book was produced with the \fmtname\ format.
+\endexample
+\enddesc
+\begindesc
+\cts jobname {}
+\explain
+This command produces the base 
+name of the file with which \TeX\ was invoked.
+For example, if your main input file is |hatter.tex|,
+|\jobname|
+{\parfillskip=0pt\par\eject\noindent}
+will expand to |hatter|.
+|\jobname| is most useful when you're
+creating an auxiliary file to be associated with a document.
+^^{auxiliary files}
+\example
+\newwrite\indexfile  \openout\indexfile = \jobname.idx
+% For input file `hatter.tex', open index file `hatter.idx'.
+|
+\endexample\enddesc
+%==========================================================================
+\subsection {Values of variables}
+\begindesc
+\cts meaning {\<token>}
+\explain
+^^{tokens//showing the meaning of}
+This command produces
+the meaning of \<token>.  It is useful for diagnostic output.
+You can use the ^|\the| command (\xref\the) in a similar way 
+to get information about the values of \minref{register}s and other
+\TeX\ entities.
+\example
+[{\tt \meaning\eject}] [\meaning\tenrm] [\meaning Y]
+|
+\produces
+[{\tt \meaning\eject}] [\meaning\tenrm] [\meaning Y]
+\endexample\enddesc
+\begindesc
+\cts string {\<control sequence>}
+\explain
+^^{control sequences//converting to strings}
+This command produces 
+the characters that form the name of \<control sequence>,
+including the \minref{escape character}.
+The escape character is represented by the current value of
+^|\escapechar|.
+^^{escape character//represented by \b\tt\\escapechar\e}
+\TeX\ gives the characters in the list a category code of $12$ (other).
+You can perform the reverse operation with
+the ^|\csname| command (\xref \csname),
+which turns a string into a control sequence.
+\example
+the control sequence {\tt \string\bigbreak}
+|
+\produces
+the control sequence {\tt \string\bigbreak}
+\endexample\enddesc
+\begindesc
+\cts escapechar {\param{number}}
+\explain
+This parameter specifies the \ascii\ code \minrefs{\ascii} of the
+character that \TeX\ uses to represent the \minref{escape character}
+^^{escape character//represented by \b\tt\\escapechar\e}
+when it's
+converting a control sequence name to a sequence of character tokens.
+This conversion occurs when you use the |\string| command and also when
+\TeX\ is producing diagnostic messages.  The default value of the escape
+character is $92$, the {\ascii} character code for a ^{backslash}.
+If |\escapechar| is not in the range $0$--$255$,
+\TeX\ does not include an escape character in the result of the conversion.
+\example
+\escapechar = `!!
+the control sequence {\tt \string\bigbreak}
+|
+\produces
+\escapechar = `!
+the control sequence {\tt \string\bigbreak}
+\endexample
+\enddesc
+\begindesc
+\cts fontname {\<font>}
+\explain
+^^{fonts//names of}
+This command produces the filename
+for \<font>.  The filename is the \<font\-name> that was used to define 
+\<font>. 
+\example
+\font\myfive=cmr5 [\fontname\myfive]
+|
+\produces
+\font\myfive=cmr5 [\fontname\myfive]
+\endexample
+\enddesc
+%=========================================================================='''
+        expected = [
+            r'''\section {Converting information to tokens}''',
+            r''' {Numbers}
+\begindesc
+\xrdef{convert}
+\bix^^{numbers//converting to characters}
+%
+\cts number {\<number>}
+\explain
+This command produces the representation of a \minref{number}
+as a sequence of
+character \minref{token}s.  The number can be either an explicit integer,
+a \<number> parameter, or a \<number> register.
+\example
+\number 24 \quad \count13 = -10000 \number\count13
+|
+\produces
+\number 24 \quad \count13 = -10000 \number\count13
+\endexample
+\enddesc
+\begindesc
+^^{Roman numerals}
+\easy\cts romannumeral {\<number>}
+\explain
+This command produces the roman numeral representation of a \minref{number}
+as a sequence of
+character \minref{token}s.  The number can be either an explicit integer,
+a \<number> parameter, or a \<number> register.
+If the number is zero or negative, |\romannumeral| produces
+no tokens.
+\example
+\romannumeral 24 \quad (\romannumeral -16)\quad
+\count13 = 6000 \romannumeral\count13
+|
+\produces
+\romannumeral 24 \quad (\romannumeral -16)\quad
+\count13 = 6000 \romannumeral\count13
+\endexample
+\eix^^{numbers//converting to characters}
+\enddesc
+%==========================================================================''',
+            r''' {Environmental information}
+\begindesc
+^^{time of day}
+\cts time {\param{number}}
+\explain
+\TeX\ sets this parameter to the 
+number of minutes that have elapsed since midnight (of the current day).
+At noon, for instance, |\time| is $720$.
+This command and the next three make use of the time and date as
+recorded in your computer.
+\TeX\ retrieves them just once, at the beginning of your run, so |\time|
+at the end of the run always has the same value as |\time| at the
+beginning of the run (unless you've explicitly changed it).
+\enddesc
+\bix^^{date}
+\begindesc
+\cts day {\param{number}}
+\explain
+\TeX\ sets this parameter to the current day of the month.  It is
+a number between $1$ and $31$.
+|\day| is set at the beginning of your run (see the comments on
+|\time| above).
+\enddesc
+\begindesc
+\cts month {\param{number}}
+\explain
+\TeX\ sets this parameter to the current month.  It is
+a number between $1$ and $12$.
+|\month| is set at the beginning of your run (see the comments on
+|\time| above).
+\enddesc
+\begindesc
+\cts year {\param{number}}
+\explain
+\TeX\ sets this parameter to the current year ({\sc A.D.}).
+It is a number such as $1991$.
+|\year| is set at the beginning of your run (see the comments on
+|\time| above).
+\eix^^{date}
+\enddesc
+\begindesc
+^^{version number}
+\cts fmtname {}
+\cts fmtversion {}
+\explain
+These commands produce the name and version number
+of the \TeX\ format,
+e.g., \minref{\plainTeX} or ^{\LaTeX}, that you're using.
+The |\fmtversion| string contains a long list of supported languages,
+so is omitted here.
+\example
+This book was produced with the \fmtname\ format.
+|
+\produces
+This book was produced with the \fmtname\ format.
+\endexample
+\enddesc
+\begindesc
+\cts jobname {}
+\explain
+This command produces the base 
+name of the file with which \TeX\ was invoked.
+For example, if your main input file is |hatter.tex|,
+|\jobname|
+{\parfillskip=0pt\par\eject\noindent}
+will expand to |hatter|.
+|\jobname| is most useful when you're
+creating an auxiliary file to be associated with a document.
+^^{auxiliary files}
+\example
+\newwrite\indexfile  \openout\indexfile = \jobname.idx
+% For input file `hatter.tex', open index file `hatter.idx'.
+|
+\endexample\enddesc
+%==========================================================================''',
+            r''' {Values of variables}
+\begindesc
+\cts meaning {\<token>}
+\explain
+^^{tokens//showing the meaning of}
+This command produces
+the meaning of \<token>.  It is useful for diagnostic output.
+You can use the ^|\the| command (\xref\the) in a similar way 
+to get information about the values of \minref{register}s and other
+\TeX\ entities.
+\example
+[{\tt \meaning\eject}] [\meaning\tenrm] [\meaning Y]
+|
+\produces
+[{\tt \meaning\eject}] [\meaning\tenrm] [\meaning Y]
+\endexample\enddesc
+\begindesc
+\cts string {\<control sequence>}
+\explain
+^^{control sequences//converting to strings}
+This command produces 
+the characters that form the name of \<control sequence>,
+including the \minref{escape character}.
+The escape character is represented by the current value of
+^|\escapechar|.
+^^{escape character//represented by \b\tt\\escapechar\e}
+\TeX\ gives the characters in the list a category code of $12$ (other).
+You can perform the reverse operation with
+the ^|\csname| command (\xref \csname),
+which turns a string into a control sequence.
+\example
+the control sequence {\tt \string\bigbreak}
+|
+\produces
+the control sequence {\tt \string\bigbreak}
+\endexample\enddesc
+\begindesc
+\cts escapechar {\param{number}}
+\explain
+This parameter specifies the \ascii\ code \minrefs{\ascii} of the
+character that \TeX\ uses to represent the \minref{escape character}
+^^{escape character//represented by \b\tt\\escapechar\e}
+when it's
+converting a control sequence name to a sequence of character tokens.
+This conversion occurs when you use the |\string| command and also when
+\TeX\ is producing diagnostic messages.  The default value of the escape
+character is $92$, the {\ascii} character code for a ^{backslash}.
+If |\escapechar| is not in the range $0$--$255$,
+\TeX\ does not include an escape character in the result of the conversion.
+\example
+\escapechar = `!!
+the control sequence {\tt \string\bigbreak}
+|
+\produces
+\escapechar = `!
+the control sequence {\tt \string\bigbreak}
+\endexample
+\enddesc
+\begindesc
+\cts fontname {\<font>}
+\explain
+^^{fonts//names of}
+This command produces the filename
+for \<font>.  The filename is the \<font\-name> that was used to define 
+\<font>. 
+\example
+\font\myfive=cmr5 [\fontname\myfive]
+|
+\produces
+\font\myfive=cmr5 [\fontname\myfive]
+\endexample
+\enddesc
+%==========================================================================''',
+        ]
+        actual = split_docs.split_subsections(filetext)
+        self.assertListEqual(actual, expected)
+
+    def test_split_descriptions(self):
+        """
+        """
+        filetext = r''' {Numbers}
+\begindesc
+\xrdef{convert}
+\bix^^{numbers//converting to characters}
+%
+\cts number {\<number>}
+\explain
+This command produces the representation of a \minref{number}
+as a sequence of
+character \minref{token}s.  The number can be either an explicit integer,
+a \<number> parameter, or a \<number> register.
+\example
+\number 24 \quad \count13 = -10000 \number\count13
+|
+\produces
+\number 24 \quad \count13 = -10000 \number\count13
+\endexample
+\enddesc
+\begindesc
+^^{Roman numerals}
+\easy\cts romannumeral {\<number>}
+\explain
+This command produces the roman numeral representation of a \minref{number}
+as a sequence of
+character \minref{token}s.  The number can be either an explicit integer,
+a \<number> parameter, or a \<number> register.
+If the number is zero or negative, |\romannumeral| produces
+no tokens.
+\example
+\romannumeral 24 \quad (\romannumeral -16)\quad
+\count13 = 6000 \romannumeral\count13
+|
+\produces
+\romannumeral 24 \quad (\romannumeral -16)\quad
+\count13 = 6000 \romannumeral\count13
+\endexample
+\eix^^{numbers//converting to characters}
+\enddesc
+%=========================================================================='''
+        expected = [
+            r'''\xrdef{convert}
+\bix^^{numbers//converting to characters}
+%
+\cts number {\<number>}
+\explain
+This command produces the representation of a \minref{number}
+as a sequence of
+character \minref{token}s.  The number can be either an explicit integer,
+a \<number> parameter, or a \<number> register.
+\example
+\number 24 \quad \count13 = -10000 \number\count13
+|
+\produces
+\number 24 \quad \count13 = -10000 \number\count13
+\endexample''',
+            r'''^^{Roman numerals}
+\easy\cts romannumeral {\<number>}
+\explain
+This command produces the roman numeral representation of a \minref{number}
+as a sequence of
+character \minref{token}s.  The number can be either an explicit integer,
+a \<number> parameter, or a \<number> register.
+If the number is zero or negative, |\romannumeral| produces
+no tokens.
+\example
+\romannumeral 24 \quad (\romannumeral -16)\quad
+\count13 = 6000 \romannumeral\count13
+|
+\produces
+\romannumeral 24 \quad (\romannumeral -16)\quad
+\count13 = 6000 \romannumeral\count13
+\endexample
+\eix^^{numbers//converting to characters}''',
+        ] 
+        actual = split_docs.split_descriptions(filetext)
+        self.assertEqual(actual, expected)
+
+    def test_extract_cts_names(self):
+        """
+        """
+        filetext = r''' {Numbers}
+\begindesc
+\xrdef{convert}
+\bix^^{numbers//converting to characters}
+%
+\cts number {\<number>}
+\explain
+This command produces the representation of a \minref{number}
+as a sequence of
+character \minref{token}s.  The number can be either an explicit integer,
+a \<number> parameter, or a \<number> register.
+\example
+\number 24 \quad \count13 = -10000 \number\count13
+|
+\produces
+\number 24 \quad \count13 = -10000 \number\count13
+\endexample
+\enddesc
+\begindesc
+^^{Roman numerals}
+\easy\cts romannumeral {\<number>}
+\explain
+This command produces the roman numeral representation of a \minref{number}
+as a sequence of
+character \minref{token}s.  The number can be either an explicit integer,
+a \<number> parameter, or a \<number> register.
+If the number is zero or negative, |\romannumeral| produces
+no tokens.
+\example
+\romannumeral 24 \quad (\romannumeral -16)\quad
+\count13 = 6000 \romannumeral\count13
+|
+\produces
+\romannumeral 24 \quad (\romannumeral -16)\quad
+\count13 = 6000 \romannumeral\count13
+\endexample
+\eix^^{numbers//converting to characters}
+\enddesc
+%=========================================================================='''
+        expected = [
+            "number",
+            "romannumeral",
+        ]
+        actual = split_docs.extract_cts_names(filetext)
+        self.assertEqual(actual, expected)
