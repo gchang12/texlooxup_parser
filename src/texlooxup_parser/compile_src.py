@@ -45,4 +45,4 @@ if __name__ == "__main__":
         response = download_src(SOURCE_URL)
         write_bytes_to_file(response.content, TARGET_FILE)
         unzip_file(TARGET_FILE, TARGET_DIR)
-    get_src()
+    compile_src()
