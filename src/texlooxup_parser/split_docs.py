@@ -7,7 +7,7 @@ from typing import (
 )
 import re
 
-def split_file(filetext: str) -> List[str]:
+def split_text_by_pattern(filetext: str, pattern: str) -> List[str]:
     """
     """
 
@@ -16,4 +16,10 @@ def parse_section(filetext: str) -> List[dict[Any]]:
     """
 
 if __name__ == "__main__":
-    pass
+    TFTI_CHAPTERS = (
+        "genops",
+        "math",
+        "modes",
+        "pages",
+        "paras",
+    )
