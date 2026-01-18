@@ -5993,7 +5993,7 @@ no tokens.
         """
         line = r"\ctsdisplay beta {}"
         expected = True
-        actual = split_docs.is_cts_line(line)
+        actual = split_docs._is_cts_line(line)
         self.assertIs(actual, expected)
 
     def test_is_cts_line__false(self):
@@ -6001,7 +6001,7 @@ no tokens.
         """
         line = r"\cstdisplay beta {}"
         expected = False
-        actual = split_docs.is_cts_line(line)
+        actual = split_docs._is_cts_line(line)
         self.assertIs(actual, expected)
 
     def test_extract_titled_descriptions(self):

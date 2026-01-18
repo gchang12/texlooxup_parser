@@ -2,7 +2,6 @@
 """
 
 from typing import (
-    Callable,
     Any,
     List,
     Iterable,
@@ -69,21 +68,21 @@ def extract_cts_lines(filetext: str) -> Iterable[str]:
     cts_lines = filter(lambda line: re.search(pattern, line) is not None, filelines)
     return cts_lines
 
-def is_cts_line(line: str) -> bool:
+def _is_cts_line(line: str) -> bool:
     """
     """
     pattern = r"\\cts[a-z]* ([^ ]+?) "
     match = re.search(pattern, line)
     return match is not None
 
-def extract_titled_descriptions(filetext: str, cts_lines: List[str], is_cts_line: Callable[[str], bool] = is_cts_line) -> List[str]:
+def extract_titled_descriptions(filetext: str, cts_lines: List[str]) -> List[str]:
     """
     """
     titled_descriptions = []
     filelines = filetext.splitlines()
     for cts_line in cts_lines:
         titled_filelines = filter(
-            lambda line: not is_cts_line(line) or (is_cts_line(line) and line == cts_line),
+            lambda line: not _is_cts_line(line) or (_is_cts_line(line) and line == cts_line),
             filelines,
         )
         titled_descriptions.append("\n".join(titled_filelines))
