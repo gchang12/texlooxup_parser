@@ -1,8 +1,19 @@
 ## The following requirements were added by pip freeze:
+cachetools==6.2.4
 certifi==2026.1.4
+chardet==5.2.0
 charset-normalizer==3.4.4
+colorama==0.4.6
+distlib==0.4.0
+filelock==3.20.3
 idna==3.11
+packaging==25.0
+platformdirs==4.5.1
+pluggy==1.6.0
 pypandoc_binary==1.16.2
+pyproject-api==1.10.0
 requests==2.32.5
--e git+https://github.com/gchang12/texlooxup_parser.git@51a48816a8e0581edae5f64ba5aa7cd5df4d5e95#egg=texlooxup_parser
+-e git+https://github.com/gchang12/texlooxup_parser.git@601a822c772866917fc6a9408fdd110a4c69eaaf#egg=texlooxup_parser
+tox==4.34.1
 urllib3==2.6.2
+virtualenv==20.36.1
