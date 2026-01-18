@@ -22,8 +22,10 @@ def extract_title(filetext: str) -> str:
     """
     """
     first_line = filetext[:filetext.index("\n")]
-    title = re.search("{(.+?)}", first_line).group(1)
-    return title
+    match = re.search("{(.+?)}", first_line)
+    if match is None:
+        return None
+    return match.group(1)
 
 def split_sections(filetext: str) -> List[str]:
     """
@@ -49,7 +51,7 @@ def split_descriptions(filetext: str) -> List[str]:
 def extract_cts_names(filetext: str) -> List[str]:
     """
     """
-    pattern = r"\\cts ([^ ]+?) "
+    pattern = r"\\cts[a-z]* ([^ ]+?) "
     # search for line containing '\cts'
     cts_names = re.findall(pattern, filetext)
     return cts_names
@@ -57,7 +59,7 @@ def extract_cts_names(filetext: str) -> List[str]:
 def extract_cts_lines(filetext: str) -> Iterable[str]:
     """
     """
-    pattern = r"\\cts ([^ ]+?) "
+    pattern = r"\\cts[a-z]* ([^ ]+?) "
     # search for line containing '\cts'
     filelines = filetext.splitlines()
     cts_lines = filter(lambda line: re.search(pattern, line) is not None, filelines)
@@ -66,26 +68,22 @@ def extract_cts_lines(filetext: str) -> Iterable[str]:
 def is_cts_line(line: str) -> bool:
     """
     """
-    pattern = r"\\cts ([^ ]+?) "
+    pattern = r"\\cts[a-z]* ([^ ]+?) "
     match = re.search(pattern, line)
     return match is not None
 
-def get_cts_name(line: str) -> bool:
+def extract_titled_descriptions(filetext: str, cts_lines: List[str]) -> List[str]:
     """
     """
-    pattern = r"\\cts ([^ ]+?) "
-    match = re.search(pattern, line)
-    return match.group(1)
-
-def get_subsection_name(filetext: str) -> str| None:
-    """
-    """
-    first_line = filetext.splitlines()[0]
-    pattern = " {(.+?)}"
-    subsection_match = re.fullmatch(pattern, first_line)
-    if subsection_match is None:
-        return None
-    return subsection_match.group(1)
+    titled_descriptions = []
+    filelines = filetext.splitlines()
+    for cts_line in cts_lines:
+        titled_filelines = filter(
+            lambda line: not is_cts_line(line) or (is_cts_line(line) and line == cts_line),
+            filelines,
+        )
+        titled_descriptions.append("\n".join(titled_filelines))
+    return titled_descriptions
 
 if __name__ == "__main__":
     TFTI_CHAPTERS = (
@@ -95,35 +93,31 @@ if __name__ == "__main__":
         "pages",
         "paras",
     )
+
     def compile_cts_prefixes():
         """
         """
         prefixes = set()
         for chapter in TFTI_CHAPTERS:
-            filename = SOURCE_DIR + chapter + ".tex"
-            filetext = Path(filename).read_text(encoding="utf-8")
+            filetext = Path(SOURCE_DIR, chapter + ".tex").read_text(encoding="utf-8")
             cts_lines = extract_cts_lines(filetext)
             for line in cts_lines:
                 prefix = line[:line.index(" ")]
                 prefixes.add(prefix)
         return prefixes
-    #prefixes = compile_cts_prefixes()
-    #print(prefixes)
+    #prefixes = compile_cts_prefixes(); print(prefixes)
+
     def compile_cts_names():
         """
         """
         names = set()
         for chapter in TFTI_CHAPTERS:
-            filename = SOURCE_DIR + chapter + ".tex"
-            filetext = Path(filename).read_text(encoding="utf-8")
-            cts_lines = extract_cts_lines(filetext)
-            for line in cts_lines:
-                name = get_cts_name(line)
-                names.add(name)
+            filetext = Path(SOURCE_DIR, chapter + ".tex").read_text(encoding="utf-8")
+            names.update(extract_cts_names(filetext))
         return names
-    #names = compile_cts_names()
-    #print(names, len(names))
-    def make_subsection_subdirectories():
+    #names = compile_cts_names(); print(names)
+
+    def make_section_subdirectories():
         """
         """
         for chapter in TFTI_CHAPTERS:
@@ -131,16 +125,37 @@ if __name__ == "__main__":
             output_dir.mkdir(exist_ok=True, parents=True)
             filetext = Path(SOURCE_DIR, chapter + ".tex").read_text(encoding="utf-8")
             sections = split_sections(filetext)
-            #print("\nChapter: ", chapter)
-            #print("=========")
-            for subsection in sections:
-                subsection_name = get_subsection_name(subsection)
-                if subsection_name is None:
+            for section in sections:
+                section_name = extract_title(section)
+                if section_name is None:
                     continue
-                output_dir.joinpath(subsection_name).mkdir(exist_ok=True, parents=True)
-    make_subsection_subdirectories()
-    # for each file:
-    # split into sections
-    # make new directory for each section
-    # for each section, create subsections as necessary
-    # for each section, write description
+                output_dir.joinpath(section_name).mkdir(exist_ok=True, parents=True)
+    #make_section_subdirectories()
+
+    def populate_section_subdirectories():
+        """
+        """
+        for chapter in TFTI_CHAPTERS:
+            filetext = Path(SOURCE_DIR, chapter + ".tex").read_text(encoding="utf-8")
+            sections = split_sections(filetext)
+            for index_no, section in enumerate(sections[1:]):
+                section_name = extract_title(section)
+                if section_name is None:
+                    output_dir = Path(TARGET_DIR, chapter)
+                else:
+                    output_dir = Path(TARGET_DIR, chapter, section_name)
+                subsections = split_subsections(section)
+                for subsection in subsections:
+                    descriptions = split_descriptions(subsection)
+                    for description in descriptions:
+                        cts_lines = extract_cts_lines(description)
+                        titled_descriptions = extract_titled_descriptions(description, cts_lines)
+                        for titled_desc in titled_descriptions:
+                            cts_name = extract_cts_names(titled_desc).pop()
+                            output_file = output_dir.joinpath(cts_name + ".tex")
+                            instance_no = 1
+                            while output_file.exists():
+                                instance_no += 1
+                                output_file = output_dir.joinpath(cts_name + "%d.tex" % instance_no)
+                            output_file.write_text(titled_desc, encoding="utf-8")
+    populate_section_subdirectories()

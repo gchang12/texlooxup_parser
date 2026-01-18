@@ -5937,4 +5937,231 @@ no tokens.
             "romannumeral",
         ]
         actual = split_docs.extract_cts_names(filetext)
-        self.assertEqual(actual, expected)
+        self.assertListEqual(actual, expected)
+
+    def test_extract_cts_lines(self):
+        """
+        """
+        filetext = r''' {Numbers}
+\begindesc
+\xrdef{convert}
+\bix^^{numbers//converting to characters}
+%
+\cts number {\<number>}
+\explain
+This command produces the representation of a \minref{number}
+as a sequence of
+character \minref{token}s.  The number can be either an explicit integer,
+a \<number> parameter, or a \<number> register.
+\example
+\number 24 \quad \count13 = -10000 \number\count13
+|
+\produces
+\number 24 \quad \count13 = -10000 \number\count13
+\endexample
+\enddesc
+\begindesc
+^^{Roman numerals}
+\easy\cts romannumeral {\<number>}
+\explain
+This command produces the roman numeral representation of a \minref{number}
+as a sequence of
+character \minref{token}s.  The number can be either an explicit integer,
+a \<number> parameter, or a \<number> register.
+If the number is zero or negative, |\romannumeral| produces
+no tokens.
+\example
+\romannumeral 24 \quad (\romannumeral -16)\quad
+\count13 = 6000 \romannumeral\count13
+|
+\produces
+\romannumeral 24 \quad (\romannumeral -16)\quad
+\count13 = 6000 \romannumeral\count13
+\endexample
+\eix^^{numbers//converting to characters}
+\enddesc
+%=========================================================================='''
+        expected = [
+            r"\cts number {\<number>}",
+            r"\easy\cts romannumeral {\<number>}",
+        ]
+        actual = split_docs.extract_cts_lines(filetext)
+        self.assertListEqual(list(actual), expected)
+
+    def test_is_cts_line__true(self):
+        """
+        """
+        line = r"\ctsdisplay beta {}"
+        expected = True
+        actual = split_docs.is_cts_line(line)
+        self.assertIs(actual, expected)
+
+    def test_is_cts_line__false(self):
+        """
+        """
+        line = r"\cstdisplay beta {}"
+        expected = False
+        actual = split_docs.is_cts_line(line)
+        self.assertIs(actual, expected)
+
+    def test_extract_titled_descriptions(self):
+        """
+        """
+        filetext = r'''\bix^^{Greek letters}
+\dothreecolumns 40
+\easy\ctsdisplay alpha {}
+\ctsdisplay beta {}
+\ctsdisplay Delta {}
+\egroup
+\explain
+These commands produce Greek letters suitable for mathematics.
+You can only use them
+within a math formula, so if you need a Greek letter within ordinary
+text you must enclose it in dollar signs (|$|).  \TeX\ does not have
+commands for Greek letters that look like their roman
+counterparts, since you can get them by using those roman
+counterparts.  For example, you can get a lowercase
+^{omicron} in a formula by writing the letter `o', i.e.,
+`|{\rm o}|' or an uppercase ^{beta} (`B') by writing
+`|{\rm B}|'.
+ 
+Don't confuse the following letters:
+\ulist \compact
+\li |\upsilon| (`$\upsilon$'), |{\rm v}| (`v'), and |\nu| (`$\nu$').
+\li |\varsigma| (`$\varsigma$') and |\zeta| (`$\zeta$').
+\endulist
+ 
+You can get slanted capital Greek letters by using the math italic 
+(|\mit|) \minref{font}.
+ 
+\TeX\ treats Greek letters as ordinary symbols when it's figuring how
+much space to put around them.
+ 
+\example
+If $\rho$ and $\theta$ are both positive, then $f(\theta)
+-{\mit \Gamma}_{\theta} < f(\rho)-{\mit \Gamma}_{\rho}$.
+|
+\produces
+If $\rho$ and $\theta$ are both positive, then
+$f(\theta)-{\mit \Gamma}_{\theta} < f(\rho)-{\mit \Gamma}_{\rho}$.
+\endexample
+\eix^^{Greek letters}'''
+        expected = [
+            r'''\bix^^{Greek letters}
+\dothreecolumns 40
+\easy\ctsdisplay alpha {}
+\egroup
+\explain
+These commands produce Greek letters suitable for mathematics.
+You can only use them
+within a math formula, so if you need a Greek letter within ordinary
+text you must enclose it in dollar signs (|$|).  \TeX\ does not have
+commands for Greek letters that look like their roman
+counterparts, since you can get them by using those roman
+counterparts.  For example, you can get a lowercase
+^{omicron} in a formula by writing the letter `o', i.e.,
+`|{\rm o}|' or an uppercase ^{beta} (`B') by writing
+`|{\rm B}|'.
+ 
+Don't confuse the following letters:
+\ulist \compact
+\li |\upsilon| (`$\upsilon$'), |{\rm v}| (`v'), and |\nu| (`$\nu$').
+\li |\varsigma| (`$\varsigma$') and |\zeta| (`$\zeta$').
+\endulist
+ 
+You can get slanted capital Greek letters by using the math italic 
+(|\mit|) \minref{font}.
+ 
+\TeX\ treats Greek letters as ordinary symbols when it's figuring how
+much space to put around them.
+ 
+\example
+If $\rho$ and $\theta$ are both positive, then $f(\theta)
+-{\mit \Gamma}_{\theta} < f(\rho)-{\mit \Gamma}_{\rho}$.
+|
+\produces
+If $\rho$ and $\theta$ are both positive, then
+$f(\theta)-{\mit \Gamma}_{\theta} < f(\rho)-{\mit \Gamma}_{\rho}$.
+\endexample
+\eix^^{Greek letters}''',
+        r'''\bix^^{Greek letters}
+\dothreecolumns 40
+\ctsdisplay beta {}
+\egroup
+\explain
+These commands produce Greek letters suitable for mathematics.
+You can only use them
+within a math formula, so if you need a Greek letter within ordinary
+text you must enclose it in dollar signs (|$|).  \TeX\ does not have
+commands for Greek letters that look like their roman
+counterparts, since you can get them by using those roman
+counterparts.  For example, you can get a lowercase
+^{omicron} in a formula by writing the letter `o', i.e.,
+`|{\rm o}|' or an uppercase ^{beta} (`B') by writing
+`|{\rm B}|'.
+ 
+Don't confuse the following letters:
+\ulist \compact
+\li |\upsilon| (`$\upsilon$'), |{\rm v}| (`v'), and |\nu| (`$\nu$').
+\li |\varsigma| (`$\varsigma$') and |\zeta| (`$\zeta$').
+\endulist
+ 
+You can get slanted capital Greek letters by using the math italic 
+(|\mit|) \minref{font}.
+ 
+\TeX\ treats Greek letters as ordinary symbols when it's figuring how
+much space to put around them.
+ 
+\example
+If $\rho$ and $\theta$ are both positive, then $f(\theta)
+-{\mit \Gamma}_{\theta} < f(\rho)-{\mit \Gamma}_{\rho}$.
+|
+\produces
+If $\rho$ and $\theta$ are both positive, then
+$f(\theta)-{\mit \Gamma}_{\theta} < f(\rho)-{\mit \Gamma}_{\rho}$.
+\endexample
+\eix^^{Greek letters}''',
+        r'''\bix^^{Greek letters}
+\dothreecolumns 40
+\ctsdisplay Delta {}
+\egroup
+\explain
+These commands produce Greek letters suitable for mathematics.
+You can only use them
+within a math formula, so if you need a Greek letter within ordinary
+text you must enclose it in dollar signs (|$|).  \TeX\ does not have
+commands for Greek letters that look like their roman
+counterparts, since you can get them by using those roman
+counterparts.  For example, you can get a lowercase
+^{omicron} in a formula by writing the letter `o', i.e.,
+`|{\rm o}|' or an uppercase ^{beta} (`B') by writing
+`|{\rm B}|'.
+ 
+Don't confuse the following letters:
+\ulist \compact
+\li |\upsilon| (`$\upsilon$'), |{\rm v}| (`v'), and |\nu| (`$\nu$').
+\li |\varsigma| (`$\varsigma$') and |\zeta| (`$\zeta$').
+\endulist
+ 
+You can get slanted capital Greek letters by using the math italic 
+(|\mit|) \minref{font}.
+ 
+\TeX\ treats Greek letters as ordinary symbols when it's figuring how
+much space to put around them.
+ 
+\example
+If $\rho$ and $\theta$ are both positive, then $f(\theta)
+-{\mit \Gamma}_{\theta} < f(\rho)-{\mit \Gamma}_{\rho}$.
+|
+\produces
+If $\rho$ and $\theta$ are both positive, then
+$f(\theta)-{\mit \Gamma}_{\theta} < f(\rho)-{\mit \Gamma}_{\rho}$.
+\endexample
+\eix^^{Greek letters}''',
+        ]
+        actual = split_docs.extract_titled_descriptions(filetext, cts_lines=[
+            r"\easy\ctsdisplay alpha {}",
+            r"\ctsdisplay beta {}",
+            r"\ctsdisplay Delta {}",
+            ])
+        self.assertListEqual(actual, expected)
