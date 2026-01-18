@@ -10,10 +10,11 @@ idna==3.11
 packaging==25.0
 platformdirs==4.5.1
 pluggy==1.6.0
+pypandoc==1.16.2
 pypandoc_binary==1.16.2
 pyproject-api==1.10.0
 requests==2.32.5
--e git+https://github.com/gchang12/texlooxup_parser.git@601a822c772866917fc6a9408fdd110a4c69eaaf#egg=texlooxup_parser
+-e git+https://github.com/gchang12/texlooxup_parser.git@4b098e3cb61e4af2e65e8a42f16837849844c54c#egg=texlooxup_parser
 tox==4.34.1
 urllib3==2.6.2
 virtualenv==20.36.1
