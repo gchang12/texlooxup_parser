@@ -2,6 +2,7 @@
 """
 
 from typing import (
+    Callable,
     Any,
     List,
     Iterable,
@@ -75,7 +76,7 @@ def is_cts_line(line: str) -> bool:
     match = re.search(pattern, line)
     return match is not None
 
-def extract_titled_descriptions(filetext: str, cts_lines: List[str]) -> List[str]:
+def extract_titled_descriptions(filetext: str, cts_lines: List[str], is_cts_line: Callable[[str], bool] = is_cts_line) -> List[str]:
     """
     """
     titled_descriptions = []
