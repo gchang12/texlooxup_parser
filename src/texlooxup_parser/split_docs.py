@@ -24,7 +24,11 @@ def _split_text_by_pattern(filetext: str, pattern: str) -> List[str]:
 def extract_title(filetext: str) -> str:
     """
     """
-    first_line = filetext[:filetext.index("\n")]
+    try:
+        first_line = filetext[:filetext.index("\n")]
+    except ValueError:
+        print(filetext)
+        raise ValueError
     match = re.search("{(.+?)}", first_line)
     if match is None:
         return None
@@ -42,7 +46,8 @@ def split_subsections(filetext: str) -> List[str]:
     """
     pattern = r"\\subsection"
     subsection_list = _split_text_by_pattern(filetext, pattern)
-    return subsection_list
+    # first item contains the section header
+    return subsection_list[1:]
 
 def split_descriptions(filetext: str) -> List[str]:
     """
@@ -136,6 +141,10 @@ if __name__ == "__main__":
                 if section_name is None:
                     continue
                 output_dir.joinpath(section_name).mkdir(exist_ok=True, parents=True)
+                subsections = split_subsections(section)
+                for subsection in subsections:
+                    subsection_name = extract_title(subsection)
+                    output_dir.joinpath(section_name, subsection_name).mkdir(exist_ok=True, parents=True)
                 write_report[chapter] += 1
         logger.info("Directory creation successful. Report: %r", write_report)
 
@@ -184,7 +193,26 @@ if __name__ == "__main__":
                 # \subsection...
                 for subsection in subsections:
                     descriptions = split_descriptions(subsection)
+                    subsection_name = extract_title(subsection)
+                    output_subdir = output_dir.joinpath(subsection_name)
                     # \begindesc...\enddesc
+                    for description in descriptions:
+                        cts_lines = extract_cts_lines(description)
+                        titled_descriptions = extract_titled_descriptions(description, cts_lines)
+                        for titled_desc in titled_descriptions:
+                            cts_name = extract_cts_names(titled_desc).pop().replace("/", "_SOLIDUS_")
+                            output_file = output_subdir.joinpath(cts_name + ".tex")
+                            instance_no = 1
+                            while output_file.exists():
+                                instance_no += 1
+                                output_file = output_subdir.joinpath(cts_name + "%d.tex" % instance_no)
+                            bytes_written = output_file.write_text(titled_desc, encoding="utf-8")
+                            if bytes_written == 0:
+                                logger.warning("Article file '%s' is empty.", output_file)
+                            write_report[section_name].append((output_file.name.replace('.tex', ''), bytes_written))
+                else:
+                    descriptions = split_descriptions(section)
+                    section_name = extract_title(section)
                     for description in descriptions:
                         cts_lines = extract_cts_lines(description)
                         titled_descriptions = extract_titled_descriptions(description, cts_lines)
@@ -206,6 +234,7 @@ if __name__ == "__main__":
         """
         cleanup()
         make_section_subdirectories()
+        generate_section_indices()
         populate_section_subdirectories()
 
     split_docs()
